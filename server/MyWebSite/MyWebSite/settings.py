@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
     "users",
     "mainpage",
-
+    "authapp",
 ]
 
 MIDDLEWARE = [
@@ -125,5 +125,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# указываем где установлена папка static
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+# для работы с медиафайлами (картинки)
+MEDIA_URL = '/media/'
+# указываем куда будут загружатся медиафайлы
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.CustomUser"
+
