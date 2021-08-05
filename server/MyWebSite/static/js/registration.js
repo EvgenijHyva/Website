@@ -1,6 +1,7 @@
 const form = document.getElementById("form");
-const password1El = document.getElementById("password1");
-const password2El = document.getElementById("password2");
+const password1El = document.querySelector("input[name=password1]");
+const password2El = document.querySelector("input[name=password2]");
+//const password2El = document.getElementById("password2");
 const messageContainer = document.querySelector("div[class=message-container]");
 const message = document.getElementById("message");
 
@@ -33,25 +34,11 @@ function validateForm() {
         message.textContent = "Successfully Registered!"
         message.style.color = "green"
         messageContainer.style.borderColor = "green"
-        storeFormData()
     }
-}
-
-function storeFormData() {
-    const user = {
-        name: form.name.value,
-        phone: form.phone.value,
-        email: form.email.value,
-        website: form.website.value,
-        password: form.password.value
-    }
-    form.reset()
-    form.name.focus()
-    console.log(user)
 }
 
 function processFormData(e) {
-    e.preventDefault();
+    //e.preventDefault();
     validateForm();
 }
 

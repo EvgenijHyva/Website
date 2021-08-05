@@ -1,7 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from users.models import CustomUser
 
-######################################################
 class UserLoginForm(AuthenticationForm):
     class Meta:
         model = CustomUser
@@ -22,7 +21,7 @@ class UserLoginForm(AuthenticationForm):
 class UserRegisterForm(UserCreationForm):  # форма регистрации register.html
     class Meta:
         model = CustomUser
-        fields = ("username", "email", "first_name", "last_name", "password1", "password2", "phone")
+        fields = ("username", "email", "first_name", "last_name", "password1", "password2", "phone", "gender")
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
@@ -34,6 +33,8 @@ class UserRegisterForm(UserCreationForm):  # форма регистрации r
         self.fields["email"].widget.attrs['placeholder'] = "your@mail.domen"
         self.fields["email"].widget.attrs['required'] = True
 
+        self.fields["gender"].widget.attrs['required'] = True
+
         self.fields["first_name"].widget.attrs['placeholder'] = "Your name"
         self.fields["first_name"].widget.attrs['required'] = True
         self.fields["last_name"].widget.attrs['placeholder'] = "Your lastname "
@@ -44,6 +45,8 @@ class UserRegisterForm(UserCreationForm):  # форма регистрации r
         self.fields["password1"].widget.attrs['required'] = True
 
         self.fields["password2"].widget.attrs['placeholder'] = "Confirm password"
+        self.fields["password2"].widget.attrs['pattern'] = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$"
+
         for field_name, field in self.fields.items():
             field.widget.attrs["class"] = "form-control py-4"
             field.help_text = ''

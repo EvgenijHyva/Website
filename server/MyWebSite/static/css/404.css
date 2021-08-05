@@ -1,0 +1,95 @@
+body {
+  background: linear-gradient(to right, #f12711, #f5af19);
+  position: relative;
+}
+
+
+.container {
+  margin: auto;
+  width: 800px;
+  position: relative;
+}
+.video-background {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: 100vh;
+}
+video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor:pointer
+}
+.message {
+  position: absolute;
+  top: 30px;
+  left: 25%;
+  color: goldenrod;
+  background: linear-gradient(to right, #870000, #190a05);
+  font-size: 30px;
+  cursor:none;
+  padding:3px 8px 3px 8px ;
+  border-radius: 5px;
+  animation: blinking 3s infinite;
+}
+
+.link {
+  position: absolute;
+  right: 35%;
+  background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 200px;
+  top: 570px;
+}
+
+a {
+  text-decoration: none;
+  color:honeydew;
+}
+
+@media screen and  (max-width: 400px) {
+  .video-background {
+    height: 60vh;
+    width: 100vw;
+  }
+  .message {
+    position: fixed;
+    top: 7%;
+    left: 3.5%;
+    background-color: black;
+    font-size: 25px;
+  }
+  .link {
+    position: fixed;
+    right: 15%;
+    bottom: 7%;
+    font-size: 20px;
+    max-width: 250px;
+    top: auto;
+  }
+}
+
+@keyframes blinking {
+  0% {
+    color: #870000;
+  }
+  25% {
+    color: cornflowerblue;
+  }
+  50% {
+    color: antiquewhite;
+  }
+  75% {
+    color:coral;
+  }
+  100%{
+    color: tan;
+  }
+
+}
+
+

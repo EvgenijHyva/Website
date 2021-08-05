@@ -4,22 +4,16 @@ from django.shortcuts import render
 from django.urls import reverse
 from authapp.forms import UserRegisterForm, UserLoginForm
 
-#def logout(request):
- #   auth.logout(request)
-  #  return HttpResponseRedirect(reverse('index'))
-
 def register(request):
     if request.method == 'POST':
+        print("ok")
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()  # метод сохраняет данные формы в БД
             messages.success(request, "Вы успешно зарегистрировались")  # при регистрации
-            return HttpResponseRedirect(reverse("auth:register"))
-            #return HttpResponseRedirect(reverse("auth:login"))
-
+            return HttpResponseRedirect(reverse("auth:login"))
         else:
             print(form.errors)
-
     else:
         form = UserRegisterForm()
     content = {
@@ -41,7 +35,6 @@ def login(request):
             if user and user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse("api_users:current_user"))
-
     else:
         form = UserLoginForm()
     content = {
@@ -49,3 +42,8 @@ def login(request):
         "title": "GeekShop - Авторизация"
     }
     return render(request, "authapp/login.html", content)
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse("auth:register"))
+    #return HttpResponseRedirect(reverse("main"))

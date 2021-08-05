@@ -133,6 +133,7 @@ label {
 }
 
 .container {
+  min-height: 630px;
   width: 480px;
   background-color: var(--on-background-alt);
   display: flex;
@@ -145,12 +146,27 @@ label {
 .message-container {
   border:1px solid var(--primary-variant);
   border-radius: 5px;
-  width: 90%;
   margin-top: 20px;
+  width:90%;
   display: flex;
   justify-content: center;
   color: var(--primary-variant);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+.btn-link {
+    margin-bottom:10px;
+}
+.login {
+    min-height: 320px !important;
+}
+.gender{
+    height:35px;
+}
+
+select {
+    border-radius: 10px;
+    background-color: #DFDBE5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 @media screen and (max-width: 800px) {

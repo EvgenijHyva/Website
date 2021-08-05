@@ -2,27 +2,18 @@
 {% load staticfiles %}
 
 {% block css %}
-    <link href="{% static 'css/register_form_style.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/registration_and_login_style.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  {% if form.errors %}
-  <div class="alert alert-warning alert-dismissible fade show" role="alert"
-                             style="margin-top: 50px;">
-
-    <strong>Holy guacamole!</strong> {{form.errors|escape}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  {% endif %}
         <h1>Sign Up Today!</h1>
         <form id="form" method="post" action="{% url 'auth:register' %}">
             {% csrf_token %}
             <!-- Full name -->
             <div class="form-group">
-                <label for="{{ form.first_name.id_for_label }}">Full name</label>
-                {{ form.first_name }}
+                <label for="{{ form.username.id_for_label }}">Full name</label>
+                {{ form.username }}
             </div>
 
             <div class="form-group">
@@ -39,7 +30,11 @@
                 <label for="{{ form.first_name.id_for_label }}>"> Your firstname </label>
                 {{ form.first_name }}
             </div>
-                <div class="form-group">
+            <div class="form-group gender">
+                <label for="{{ form.gender.id_for_label }}>"> Gender </label>
+                {{ form.gender }}
+            </div>
+            <div class="form-group">
                 <label for="{{ form.last_name.id_for_label }}>"> Your lastname </label>
                 {{ form.last_name }}
             </div>
@@ -48,9 +43,8 @@
                 {{ form.password1 }}
             </div>
             <div class="form-group">
-                <label for="password2"> Confirm password </label>
-                <input type="password" id="password2" placeholder="Repeat password"
-                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required name="password">
+                <label for="{{ form.password2.id_for_label }}>"> Confirm password</label>
+                {{ form.password2 }}
             </div>
             <div class="button-container">
                 <button type="submit">Register</button>
@@ -61,6 +55,10 @@
         <div class="message-container">
             <h3 id="message">Don't Hesitate!</h3>
         </div>
-
+    <a class="btn btn-link" href="{% url 'auth:login' %}">login</a>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/registration.js' %}"></script>
 {% endblock %}

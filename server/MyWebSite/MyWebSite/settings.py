@@ -137,3 +137,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+# срабатывает когда нужно зайти на страицу авторизованым
+LOGIN_URL = "/auth/login/"
