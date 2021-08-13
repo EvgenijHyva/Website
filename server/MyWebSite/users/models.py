@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
         (TRANS, "Transgender"),
         (OTHER, "Other")
     )
-    avatar = models.ImageField(upload_to="users_avatar", blank=True)
+    avatar = models.ImageField(upload_to="users_avatar", blank=True, null=True)
     age = models.PositiveIntegerField(blank=True, null=True)
     city = models.CharField(max_length=150, help_text='Required. 150 characters or fewer. Letters, digits and '
                                                       '@/./+/-/_ only.', blank=True, null=True)

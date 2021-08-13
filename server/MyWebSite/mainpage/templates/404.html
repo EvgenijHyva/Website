@@ -1,15 +1,16 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'css/404.css' %}">
     <title>Page not found!</title>
 </head>
 <body>
     <div class="container">
-        <video src="../flamingo.mp4" loop autoplay controls class="video-background" type="video/mp4" onloadstart="this.volume=0.15"></video>
+        <video src="/media/video/flamingo.mp4" loop autoplay controls class="video-background" type="video/mp4" onloadstart="this.volume=0.15"></video>
         <div class="message">Uuups, 404 error: Page not found</div>
         <div class="link"><a href="#">Back to website</a>  |  <a href="https://google.com">Google page</a></div>
     </div>

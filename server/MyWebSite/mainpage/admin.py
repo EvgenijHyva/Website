@@ -7,15 +7,15 @@ from mainpage.models import PageContent, Contacts, PageSettings
 @admin.register(PageContent)
 class AdminPageContent(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
-    list_display = ("title", "created_at")
+    list_display = ("title", "created_at", "id")
     fields = (("title", "created_at"), "home", ("image", "show_image"), "about", "updated_at",)
-    ordering = ("created_at",)
+    ordering = ("-created_at",)
     search_fields = ("title",)
 
 @admin.register(Contacts)
 class AdminContacts(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
-    ordering = ("pk", )
+    ordering = ("-pk", )
     search_fields = ("pk", "updated_at")
 
 

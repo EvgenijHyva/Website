@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import rest_framework.authentication
+
+import MyWebSite.site_permisions
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -25,7 +29,7 @@ SECRET_KEY = '^r34la!xs$wj=fo_fhv05j=#-q-i-^yegrs89qrk&450gl-ja*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -40,6 +44,8 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "rest_framework.authtoken",
+
+    "webpack_loader",
 
     "users",
     "mainpage",
@@ -139,3 +145,22 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 # срабатывает когда нужно зайти на страицу авторизованым
 LOGIN_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication"
+    ),
+    "DEFAULT_PAGINATION_CLASS":
+        "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "BUNDLE_DIR_NAME": "dist/",
+        "STATS_FILE": os.path.join(BASE_DIR, "websitefront", "webpack-stats.json"),
+    }
+}

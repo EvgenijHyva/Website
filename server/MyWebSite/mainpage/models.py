@@ -7,6 +7,7 @@ class PageContent(models.Model):
     class Meta:
         verbose_name = "контент на страницу главная"
         verbose_name_plural = "Главная (контент страницы)"
+        ordering = ("-created_at",)
 
     title = models.CharField(max_length=120, default="Default Title", verbose_name="Заголовок")
     home = models.TextField(blank=True, verbose_name="Home")
@@ -25,13 +26,20 @@ class Contacts(models.Model):
     class Meta:
         verbose_name = "Контакты"
         verbose_name_plural = "Контакты"
+        ordering = ("-created_at",)
 
-    github = models.CharField(max_length=256, unique=True, verbose_name="Сылка на Гитхаб", blank=True)
-    vk = models.CharField(max_length=256, unique=True, verbose_name="Сылка на vk", blank=True)
-    facebook = models.CharField(max_length=256, unique=True, verbose_name="Сылка на facebook", blank=True)
-    instagram = models.CharField(max_length=256, unique=True, verbose_name="Сылка на instagram", blank=True)
-    telegram = models.CharField(max_length=256, unique=True, verbose_name="телефон", blank=True)
-    WhatsApp = models.CharField(max_length=256, unique=True, verbose_name="Телефон для whatsapp", blank=True)
+    github = models.CharField(max_length=256, unique=True, verbose_name="Сылка на Гитхаб",
+                              blank=True, null=True, default=None)
+    vk = models.CharField(max_length=256, unique=True, verbose_name="Сылка на vk",
+                          blank=True, null=True, default=None)
+    facebook = models.CharField(max_length=256, unique=True, verbose_name="Сылка на facebook",
+                                blank=True, null=True, default=None)
+    instagram = models.CharField(max_length=256, unique=True, verbose_name="Сылка на instagram",
+                                 blank=True, null=True, default=None)
+    telegram_username = models.CharField(max_length=256, unique=True,
+                                verbose_name="имя пользователя для Телеграм", blank=True, null=True, default=None)
+    whatsapp = models.CharField(max_length=256, unique=True, verbose_name="Телефон для whatsapp",
+                                blank=True, null=True, default=None)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="дата обновления")
