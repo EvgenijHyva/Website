@@ -1,5 +1,6 @@
 <template>
     <section id="contact" v-if="this.contacts !== null && this.contacts.user_is_authorized">
+      <h1>Contact</h1>
         <div class="social-icons">
             <a :href="this.contacts.github" target="blank" class="social-link"><i class="fab fa-github-square"></i></a>
             <a :href="this.contacts.vk" target="blank" class="social-link"><i class="fab fa-vk"></i></a>
@@ -41,51 +42,14 @@ export default {
   font-size: 100px;
   margin-right: 50px;
   cursor: pointer;
-  color: var(--primary-color);
+  color: var(--contact-icons);
+  text-shadow: 4px 6px 5px var(--contact-shaddow);
 }
 
 .fab:hover {
   color: var(--on-background);
 }
 
-
-.slider {
-  background: #ccc;
-  bottom: 0;
-  cursor: pointer;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: 0.4s;
-}
-
-.slider::before {
-  background: #fff;
-  bottom: 4px;
-  content: "";
-  height: 26px;
-  left: 4px;
-  position: absolute;
-  transition: 0.4s;
-  width: 26px;
-}
-
-input:checked + .slider {
-  background: var(--primary-color);
-}
-
-input:checked + .slider::before {
-  transform: translateX(26px);
-}
-
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round::before {
-  border-radius: 50%;
-}
 .social-link, .social-link:hover, .social-link:focus {
   text-decoration: none;
   border-bottom: none;

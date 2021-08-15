@@ -1,11 +1,11 @@
 <template>
-  <section id="about">
+  <section id="about" v-if="this.content">
     <!-- About -->
         <h1>Undraw Illustrations</h1>
         <div class="about-container">
             <div class="image-container">
                 <h2>Savings</h2>
-                <img src="images/Light_undraw_Savings_re_eq4w.svg" alt="Savings" id="image1">
+                <img :src="this.content.image" alt="Photo" id="image1">
             </div>
             <div class="image-container">
                 <h2>Photos</h2>
@@ -27,6 +27,9 @@ export default {
       required: true
     }
   },
+  beforeUnmount() {
+    console.log("unmounded about")
+  }
 }
 </script>
 

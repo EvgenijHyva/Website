@@ -1,9 +1,9 @@
 <template>
     <div>
-        <Home :content="this.pageContent"/>
-        <About :content="this.pageContent"/>
-        <Projects/>
-        <Contacts/>
+        <home :content="this.pageContent" />
+        <about :content="this.pageContent" />
+        <projects />
+        <contacts />
     </div>
 </template>
 
@@ -30,8 +30,11 @@ export default {
             pageContent: null,
         }
     }, 
-    beforeMount: function() {
+    created: function() {
         this.getPageContent()
+    },
+    beforeUnmount: function () {
+        console.log("unmount MainPage")
     }
 }
 </script>

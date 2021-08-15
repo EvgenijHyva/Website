@@ -1,8 +1,14 @@
 <template>
   <div class="container">
-    <NavbarComponent/>
-    <Mainpage/>
-</div>
+    <navbar-component 
+    :project="activeProject" 
+    @project-change="changeActiveProject" 
+    />
+    
+    <!-- name of component should be imported to component -->
+    <component :is="activeProject"></component>
+
+  </div>
 </template>
 
 <script>
@@ -13,6 +19,16 @@ export default {
   name: "App",
   components: {
     NavbarComponent, Mainpage,
+  },
+  data() {
+    return {
+      activeProject: "Mainpage",
+    }
+  },
+  methods: {
+    changeActiveProject(value) {
+      this.activeProject = value
+    }
   }
 }
 </script>
@@ -41,6 +57,21 @@ export default {
   --on-background-alt: rgba(66, 66, 66, 0.7);
   --background: rgb(255, 255, 255);
   --box-shadow: 0 5px 20px 1px rgba(0, 0, 0, 0.5);
+  --title-alt: #0d062b9e; 
+  --title-shadow: #de868670 ;
+  --home: #005aa742, #f3f1d8b0;
+  --home-shadow: #f314001; 
+  --select: rgb(255 255 255 / 50%);
+  --nav: rgb(255 255 255 / 50%);
+  --auth-method: #08085dc2;
+  --mode: #ff5c5c ;
+  --mode-text: #ff5c5c ;
+  --mode-brightness: 1.1;
+  --auth-hover: rgb(111 181 59);
+  --help-text: var(--primary-variant); 
+  --help-text-background: #7c7c7d ;
+  --contact-icon: var(--primary-color);
+  --contact-shaddow: #9393e6;
 }
 
 [data-theme="dark"] {
@@ -48,9 +79,24 @@ export default {
   --primary-variant: #6c63ff;
   --secondary-color: coral;
   --on-primary: #000;
-  --on-background: rgba(255, 255, 255, 0.9);
+  --on-background: rgb(249 246 255);
   --on-background-alt: rgba(255, 255, 255, 0.7);
   --background: #121212;
+  --title-alt: #9dc10cc7;
+  --title-shadow: #4d12b970;
+  --home: #9f61f742, #756d07b0;
+  --home-shadow: #2900f3;
+  --select: rgb(98 91 99 / 0%);
+  --nav: rgb(98 91 99 / 50%);
+  --auth-method: #f1b037;
+  --mode: #6563d0;
+  --mode-text: #170340;
+  --mode-brightness: 1.2;
+  --auth-hover: #ff1a02;
+  --help-text: #abdc16; 
+  --help-text-background: #0ee25f30 ;
+  --contact-icon: rgb(160 66 245);
+  --contact-shaddow: #fb2323de;
 }
 
 html {
@@ -74,18 +120,5 @@ section {
   align-items: center;
   flex-direction: column;
 }
-
-h1 {
-  font-family: Caveat, sans-serif ;
-  font-size: 100px;
-  margin-bottom: 0;
-}
-
-h2 {
-  font-size: 32px;
-  font-weight: normal;
-  color: var(--on-background-alt);
-}
-
 
 </style>
