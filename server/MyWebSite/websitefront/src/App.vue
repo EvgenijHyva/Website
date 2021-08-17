@@ -4,31 +4,40 @@
     :project="activeProject" 
     @project-change="changeActiveProject" 
     />
-    
+    <!-- <mainpage v-if="activeProject=='Mainpage'" />  -->
     <!-- name of component should be imported to component -->
-    <component :is="activeProject"></component>
-
+    <transition name="change" mode="out-in">
+      <component :is="activeProject"></component>
+    </transition>
+    <!-- <keep-alive> component </keep-alive> to store in memory-->
   </div>
 </template>
 
 <script>
-import NavbarComponent from "./components/Navbar.vue"
-import Mainpage from "./components/MainPage.vue"
+import NavbarComponent from "./components/Navbar.vue";
+import Mainpage from "./components/MainPage.vue";
+import Project from "./components/Project.vue";
+import Slider from "./components/Slider.vue";
+import AuthModal from "./components/Auth.vue";
+
+//import { apiService } from "../common/api.service";
+//const settingsEndpoint = "/api/settings/";
 
 export default {
   name: "App",
   components: {
-    NavbarComponent, Mainpage,
+    NavbarComponent, Mainpage, Project, Slider, AuthModal
   },
   data() {
     return {
-      activeProject: "Mainpage",
+      activeProject: localStorage.getItem("Project") || "Mainpage",
     }
   },
   methods: {
     changeActiveProject(value) {
-      this.activeProject = value
-    }
+      this.activeProject = value;
+      localStorage.setItem("Project", this.activeProject)
+    },
   }
 }
 </script>
@@ -70,8 +79,10 @@ export default {
   --auth-hover: rgb(111 181 59);
   --help-text: var(--primary-variant); 
   --help-text-background: #7c7c7d ;
-  --contact-icon: var(--primary-color);
+  --contact-icons: var(--primary-color);
+  --contact-hover: #464a68;
   --contact-shaddow: #9393e6;
+  --text-box: rgb(0 0 0 / 50%) ;
 }
 
 [data-theme="dark"] {
@@ -95,8 +106,10 @@ export default {
   --auth-hover: #ff1a02;
   --help-text: #abdc16; 
   --help-text-background: #0ee25f30 ;
-  --contact-icon: rgb(160 66 245);
+  --contact-icons: rgb(160 66 245);
+  --contact-hover: rgb(152 7 7);
   --contact-shaddow: #fb2323de;
+  --text-box: rgb(255 255 255 / 50%);
 }
 
 html {
@@ -119,6 +132,25 @@ section {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.change-enter-from {
+  opacity: 0;
+}
+.change-enter-active {
+  transition: all 1s linear;
+}
+.change-enter-to {
+  opacity: 1;
+}
+.change-leave-from {
+  opacity: 1;
+}
+.change-leave-active {
+  transition: all 1s ;
+}
+.change-leave-to {
+  opacity: 0;
 }
 
 </style>

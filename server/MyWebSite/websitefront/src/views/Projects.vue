@@ -80,7 +80,7 @@ button:hover:not(.outline) {
 .text-box {
   width: 40%;
   text-align: justify;
-  background: rgb(0 0 0 / 50%);
+  background-color: var(--text-box);
   color: var(--on-primary);
   border-radius: 10px;
   padding: 30px;

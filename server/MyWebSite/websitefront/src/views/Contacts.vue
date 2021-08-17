@@ -47,7 +47,7 @@ export default {
 }
 
 .fab:hover {
-  color: var(--on-background);
+  color: var(--contact-hover);
 }
 
 .social-link, .social-link:hover, .social-link:focus {

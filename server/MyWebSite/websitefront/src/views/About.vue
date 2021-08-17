@@ -28,7 +28,7 @@ export default {
     }
   },
   beforeUnmount() {
-    console.log("unmounded about")
+    console.log("unmounting about comp")
   }
 }
 </script>

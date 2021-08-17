@@ -2,11 +2,11 @@
     <nav id="nav">
         <!-- Auth -->
         <div class="auth" v-if="!this.userSettings">
-          <span class="auth-method" href="#">Registration 
+          <span class="auth-method register" href="#">Registration 
             <i class="fas fa-money-check icon"></i>
           </span>
           <span class="separator">|</span>
-          <span class="auth-method" href="#">Login 
+          <span class="auth-method login" href="#">Login 
             <i class="fas fa-sign-in-alt icon"></i>
           </span>   
         </div>
@@ -23,8 +23,8 @@
         <!-- Theme switch -->
         <div class="theme-switch-wrapper">
         <span id="toggle-icon">
-            <span id="toggle-text" class="toggle-text">Light Mode</span>
-            <i class="mode fas fa-sun"></i>
+            <span id="toggle-text" class="toggle-text">{{ this.dark? "Dark mode":"Light Mode"}}</span>
+            <i class="mode fas " :class="{'fa-sun': !this.dark, 'fa-moon': this.dark}"></i>
         </span>
         <label class="theme-switch">
             <input type="checkbox" v-model="dark" >
@@ -34,10 +34,11 @@
         <!-- Navigations -->
         <div class="main-nav">
           <select name="projects" id="projects" :value="project" @change="changeProject" >
-              <option value="Mainpage"><a href="#projects">MainPage</a></option>
-              <option value="proj1"><a href="#projects">Project1</a></option>
+              <option value="Mainpage"><span>Mainpage</span></option>
+              <option value="Project"><span>Project1</span></option>
+              <option value="Slider"><span>Slider</span></option>
           </select>
-          <a href="#home">Home</a>
+          <a href="/#home">Home</a>
           <a href="#about">About</a>
           <a href="#contact" v-show="userSettings !== (undefined || null)">Contact</a>
         </div>
@@ -60,10 +61,13 @@ export default {
     data() {
         return {
             userSettings: undefined,
-            dark: false || localStorage.getItem("Dark"),
+            dark: localStorage.getItem("Dark") || false,
         }
     },
     methods: {
+        toggleAuthModal() {
+          this.$store.state.authModalShow != this.$store.state.authModalShow
+        },
         getUserSettings() {  
             apiService(settingsEndpoint)
                 .then(settings => {
@@ -98,7 +102,7 @@ export default {
       
     },
     created: function () {
-        this.getUserSettings();
+        //this.getUserSettings();
         //this.changeUserSettings()
     },
     
@@ -202,6 +206,9 @@ a .user {
   visibility: visible;
   opacity: 1;
 }
+.login:hover, .register:hover {
+  color: #029008;
+}
 
 .fa-user:hover {
   text-shadow: 0px 0px 7px #348eaf8f;
@@ -214,16 +221,16 @@ a .user {
   z-index: 100;
   position: fixed;
   right: 25px;
-  top: 20px;
+  top: 27px;
 }
 
 .auth {
-  position: absolute;
+    position: fixed;
+    top: 27px;
 }
 .auth-method {
     text-shadow: 10px 20px 10px var(--mode-text);
     color: var(--auth-method);
-    top: -8px;
     position: relative;
     margin-right: 0;
     font-size: 1rem;
@@ -235,7 +242,6 @@ a .user {
 }
 .separator {
   color: var(--auth-method);
-  top: -8px;
   font-size: 1.5rem;
   position: relative;
 }
