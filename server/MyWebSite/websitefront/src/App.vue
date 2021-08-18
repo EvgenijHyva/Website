@@ -20,8 +20,8 @@ import Project from "./components/Project.vue";
 import Slider from "./components/Slider.vue";
 import AuthModal from "./components/Auth.vue";
 
-//import { apiService } from "../common/api.service";
-//const settingsEndpoint = "/api/settings/";
+import { apiService } from "./common/api.service";
+const settingsEndpoint = "/api/settings/";
 
 export default {
   name: "App",
@@ -31,6 +31,8 @@ export default {
   data() {
     return {
       activeProject: localStorage.getItem("Project") || "Mainpage",
+
+      userSettings : null,
     }
   },
   methods: {
@@ -38,7 +40,24 @@ export default {
       this.activeProject = value;
       localStorage.setItem("Project", this.activeProject)
     },
-  }
+
+    getUserSettings() {  
+      apiService(settingsEndpoint)
+        .then(settings => {
+        //console.log(data), // settings object
+          if (settings){
+            this.$store.state.authModalShow = false, 
+            this.$store.state.userDarkThemeMode = settings.dark,
+            this.$store.state.user = settings.user
+            this.userSettings = settings
+            
+          }
+        }).catch(err=> console.log(err))
+    },
+  },
+  beforeMount: function () {
+    this.getUserSettings()
+  },
 }
 </script>
 

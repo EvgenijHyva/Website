@@ -2,8 +2,9 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    authModalShow: false,
-    userDarkThemeMode: false,
+    authModalShow: true,
+    user: "Anonym",
+    userDarkThemeMode: localStorage.getItem("Dark") || false,
   },
   mutations: {
   },

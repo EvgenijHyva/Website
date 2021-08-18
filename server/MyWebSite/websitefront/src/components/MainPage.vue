@@ -12,8 +12,10 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import Projects from "../views/Projects.vue";
 import Contacts from "../views/Contacts.vue";
+
 import { apiService } from "../common/api.service";
 const pageContentEndpoint = "/api/page_content/";
+
 export default {
     name: "Mainpage",
     components: {

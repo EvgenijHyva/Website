@@ -1,7 +1,7 @@
 <template>
     <nav id="nav">
         <!-- Auth -->
-        <div class="auth" v-if="!this.userSettings">
+        <div class="auth" v-if="this.$store.state.authModalShow">
           <span class="auth-method register" href="#">Registration 
             <i class="fas fa-money-check icon"></i>
           </span>
@@ -10,8 +10,8 @@
             <i class="fas fa-sign-in-alt icon"></i>
           </span>   
         </div>
-        <div class="auth" v-else-if="this.userSettings">
-          <span class="auth-method user">{{this.userSettings.user}}
+        <div class="auth" v-else-if="!this.$store.state.authModalShow">
+          <span class="auth-method user">{{this.$store.state.user}}
             <i class="fas fa-user icon"></i>
             <span class="tooltiptext">edit profile</span>
             </span> 
@@ -23,11 +23,13 @@
         <!-- Theme switch -->
         <div class="theme-switch-wrapper">
         <span id="toggle-icon">
-            <span id="toggle-text" class="toggle-text">{{ this.dark? "Dark mode":"Light Mode"}}</span>
-            <i class="mode fas " :class="{'fa-sun': !this.dark, 'fa-moon': this.dark}"></i>
+            <span id="toggle-text" class="toggle-text">{{ this.$store.state.userDarkThemeMode ? "Dark mode": "Light Mode"}}</span>
+            <i class="mode fas " :class="{'fa-sun': this.$store.state.userDarkThemeMode, 'fa-moon': !this.$store.state.userDarkThemeMode }"></i>
         </span>
         <label class="theme-switch">
-            <input type="checkbox" v-model="dark" >
+            <input type="checkbox" 
+            v-model="this.$store.state.userDarkThemeMode" 
+            @change="this.setThemeMode">
             <div class="slider round"></div>
         </label>
         </div>
@@ -40,7 +42,7 @@
           </select>
           <a href="/#home">Home</a>
           <a href="#about">About</a>
-          <a href="#contact" v-show="userSettings !== (undefined || null)">Contact</a>
+          <a href="#contact" v-show="!this.$store.state.authModalShow">Contact</a>
         </div>
     </nav>
 </template>
@@ -55,60 +57,35 @@ export default {
       project: {
         type: String,
         required: true
-      }
+      },
     },
     emits: ["project-change"],
-    data() {
-        return {
-            userSettings: undefined,
-            dark: localStorage.getItem("Dark") || false,
-        }
-    },
     methods: {
-        toggleAuthModal() {
-          this.$store.state.authModalShow != this.$store.state.authModalShow
-        },
-        getUserSettings() {  
-            apiService(settingsEndpoint)
-                .then(settings => {
-                    //console.log(data), // settings object
-                    this.userSettings = settings 
-                    this.dark = settings.dark
-                }).catch(err=> console.log(err))
-        },
-        changeUserSettings() {
-            const method = "PUT";
-            const data = {
-                "dark": this.dark,
-                "tagline": "update via comput"
-            }
-            apiService(settingsEndpoint, method, data)
-        },
-        changeProject(event) {
-          this.$emit("project-change", event.target.value)
-        },
-    }, 
-    computed: {
-      darkTheme() {
-          this.dark ? document.documentElement.setAttribute("data-theme", "dark") : 
-          document.documentElement.setAttribute("data-theme", "light") 
-          return this.dark
+      changeProject(event) {
+        this.$emit("project-change", event.target.value)
       },
-      themeChange() {
-        this.changeUserSettings();
-        localStorage.setItem("Dark", this.dark)
-        return this.dark
-      }
-      
+        
+      setThemeMode() {  
+        document.documentElement.setAttribute("data-theme", !this.$store.state.userDarkThemeMode ?  "light" :"dark" )
+        localStorage.setItem("Dark", this.$store.state.userDarkThemeMode)
+        this.uploadUserSettings();
+      },
+
+      toggleAuthModal() {
+        this.$store.state.authModalShow != this.$store.state.authModalShow
+      },
+      uploadUserSettings() {
+          const method = "PUT";
+          const data = {
+              "dark": this.$store.state.userDarkThemeMode,
+            }
+        apiService(settingsEndpoint, method, data)
+      }, 
     },
-    created: function () {
-        //this.getUserSettings();
-        //this.changeUserSettings()
-    },
-    
-}
-//const DARK_THEME = "dark";
-//const LIGHT_THEME = "light";
+    beforeUpdate () {
+      this.setThemeMode()
+    }
+  }
 //const currentTheme = localStorage.getItem("theme");
 </script>
 
