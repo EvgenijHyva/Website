@@ -1,7 +1,7 @@
 <template>
     <nav id="nav">
         <!-- Auth -->
-        <div class="auth" v-if="this.$store.state.authModalShow">
+        <div class="auth" v-if="this.authModalShow">
           <span class="auth-method register" href="#">Registration 
             <i class="fas fa-money-check icon"></i>
           </span>
@@ -10,8 +10,8 @@
             <i class="fas fa-sign-in-alt icon"></i>
           </span>   
         </div>
-        <div class="auth" v-else-if="!this.$store.state.authModalShow">
-          <span class="auth-method user">{{this.$store.state.user}}
+        <div class="auth" v-else>
+          <span class="auth-method user">{{this.user}}
             <i class="fas fa-user icon"></i>
             <span class="tooltiptext">edit profile</span>
             </span> 
@@ -23,8 +23,8 @@
         <!-- Theme switch -->
         <div class="theme-switch-wrapper">
         <span id="toggle-icon">
-            <span id="toggle-text" class="toggle-text">{{ this.$store.state.userDarkThemeMode ? "Dark mode": "Light Mode"}}</span>
-            <i class="mode fas " :class="{'fa-sun': this.$store.state.userDarkThemeMode, 'fa-moon': !this.$store.state.userDarkThemeMode }"></i>
+            <span id="toggle-text" class="toggle-text">{{ this.userDarkThemeMode ? "Dark mode": "Light Mode"}}</span>
+            <i class="mode fas " :class="{'fa-sun': this.userDarkThemeMode, 'fa-moon': !this.userDarkThemeMode }"></i>
         </span>
         <label class="theme-switch">
             <input type="checkbox" 
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { apiService } from "../common/api.service";
 const settingsEndpoint = "/api/settings/";
 
@@ -60,29 +61,33 @@ export default {
       },
     },
     emits: ["project-change"],
+    computed: {
+      //array or object can be used
+      ...mapState(["authModalShow", "user", "userDarkThemeMode"]) // maping state doesn need getter
+    },
     methods: {
       changeProject(event) {
         this.$emit("project-change", event.target.value)
       },
         
       setThemeMode() {  
-        document.documentElement.setAttribute("data-theme", !this.$store.state.userDarkThemeMode ?  "light" :"dark" )
-        localStorage.setItem("Dark", this.$store.state.userDarkThemeMode)
-        this.uploadUserSettings();
+        document.documentElement.setAttribute("data-theme", !this.userDarkThemeMode ?  "light" :"dark" )
+        localStorage.setItem("Dark", this.userDarkThemeMode)
+        if (this.user !== "Anonymous") {
+          this.uploadUserSettings();
+        }    
       },
 
-      toggleAuthModal() {
-        this.$store.state.authModalShow != this.$store.state.authModalShow
-      },
       uploadUserSettings() {
           const method = "PUT";
           const data = {
-              "dark": this.$store.state.userDarkThemeMode,
+              "dark": this.userDarkThemeMode,
             }
         apiService(settingsEndpoint, method, data)
       }, 
     },
     beforeUpdate () {
+      console.log("theme beforeUpdate")
       this.setThemeMode()
     }
   }

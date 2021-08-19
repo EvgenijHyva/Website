@@ -12,7 +12,10 @@ class PageSettingsSerializer(serializers.ModelSerializer):
     flag = serializers.SerializerMethodField(read_only=True)
 
     def get_additions(self, instance):
-        return instance.addition_code
+        if instance.insert_addition_code:
+            return instance.addition_code
+        else:
+            return None
 
     def get_flag(self, instance):
         return instance.insert_addition_code
@@ -43,4 +46,16 @@ class ContactsSerializer(serializers.ModelSerializer):
 class PageContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PageContent
-        exclude = ("created_at", "updated_at")
+        exclude = ("created_at", "updated_at", "show_image", "id", )
+    post_number = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
+
+    def get_image(self, instance):
+        if instance.show_image:
+            print(instance.__dict__)
+            return instance.image if instance.image else None
+        else:
+            return None
+
+    def get_post_number(self, instance):
+        return instance.id

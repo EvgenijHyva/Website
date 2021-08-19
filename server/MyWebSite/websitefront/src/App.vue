@@ -50,7 +50,9 @@ export default {
             this.$store.state.userDarkThemeMode = settings.dark,
             this.$store.state.user = settings.user
             this.userSettings = settings
-            
+          }
+          else {
+            this.$store.state.authModalShow = true
           }
         }).catch(err=> console.log(err))
     },

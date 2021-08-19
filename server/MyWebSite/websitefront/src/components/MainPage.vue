@@ -3,7 +3,7 @@
         <home :content="this.pageContent" />
         <about :content="this.pageContent" />
         <projects />
-        <contacts />
+        <contacts v-if="!this.$store.state.authModalShow" />
     </div>
 </template>
 
