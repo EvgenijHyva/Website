@@ -2,9 +2,7 @@
   <div class="container">
     <navbar-component 
     :project="activeProject" 
-    @project-change="changeActiveProject" 
-    />
-    <!-- <mainpage v-if="activeProject=='Mainpage'" />  -->
+    @project-change="changeActiveProject" />
     <!-- name of component should be imported to component -->
     <transition name="change" mode="out-in">
       <component :is="activeProject"></component>
@@ -18,7 +16,8 @@ import NavbarComponent from "./components/Navbar.vue";
 import Mainpage from "./components/MainPage.vue";
 import Project from "./components/Project.vue";
 import Slider from "./components/Slider.vue";
-import AuthModal from "./components/Auth.vue";
+import Calculator from "./components/Calculator.vue";
+import AuthModal from "./components/AuthModal.vue";
 
 import { apiService } from "./common/api.service";
 const settingsEndpoint = "/api/settings/";
@@ -26,7 +25,7 @@ const settingsEndpoint = "/api/settings/";
 export default {
   name: "App",
   components: {
-    NavbarComponent, Mainpage, Project, Slider, AuthModal
+    NavbarComponent, Mainpage, Project, Slider, Calculator, AuthModal
   },
   data() {
     return {

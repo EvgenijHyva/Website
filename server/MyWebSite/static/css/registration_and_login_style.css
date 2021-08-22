@@ -154,8 +154,14 @@ label {
   margin-bottom: 10px;
 }
 .btn-link {
+    filter: brightness(2.5);
+    text-decoration: none;
     margin-bottom:10px;
 }
+.btn-link:hover {
+    filter: brightness(0.5);
+}
+
 .login {
     min-height: 320px !important;
 }

@@ -52,7 +52,6 @@ class PageContentSerializer(serializers.ModelSerializer):
 
     def get_image(self, instance):
         if instance.show_image:
-            print(instance.__dict__)
             return instance.image if instance.image else None
         else:
             return None

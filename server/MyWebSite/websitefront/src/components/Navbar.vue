@@ -1,8 +1,11 @@
 <template>
     <nav id="nav">
         <!-- Auth -->
-        <div class="auth" v-if="this.authModalShow">
-          <span class="auth-method register" href="#">Registration 
+        <div class="auth" 
+        v-if="this.authModalShow" 
+        >
+          <span class="auth-method register" 
+          href="#">Registration 
             <i class="fas fa-money-check icon"></i>
           </span>
           <span class="separator">|</span>
@@ -16,7 +19,8 @@
             <span class="tooltiptext">edit profile</span>
             </span> 
           <span class="separator">|</span>
-          <span class="auth-method sign-out">Logout
+          <span class="auth-method sign-out"
+          >Logout
             <i class="fas fa-sign-out-alt icon"></i>
             </span> 
         </div>
@@ -24,12 +28,12 @@
         <div class="theme-switch-wrapper">
         <span id="toggle-icon">
             <span id="toggle-text" class="toggle-text">{{ this.userDarkThemeMode ? "Dark mode": "Light Mode"}}</span>
-            <i class="mode fas " :class="{'fa-sun': this.userDarkThemeMode, 'fa-moon': !this.userDarkThemeMode }"></i>
+            <i class="mode fas " :class="{'fa-sun': !this.userDarkThemeMode, 'fa-moon': this.userDarkThemeMode }"></i>
         </span>
         <label class="theme-switch">
             <input type="checkbox" 
             v-model="this.$store.state.userDarkThemeMode" 
-            @change="this.setThemeMode">
+            @change="this.uploadUserSettings">
             <div class="slider round"></div>
         </label>
         </div>
@@ -37,8 +41,10 @@
         <div class="main-nav">
           <select name="projects" id="projects" :value="project" @change="changeProject" >
               <option value="Mainpage"><span>Mainpage</span></option>
-              <option value="Project"><span>Project1</span></option>
               <option value="Slider"><span>Slider</span></option>
+              <option value="Project"><span>Project</span></option>
+              <option value="Calculator"><span>Calculator</span></option>
+              <option value="AuthModal"><span>Auth-modal</span></option>
           </select>
           <a href="/#home">Home</a>
           <a href="#about">About</a>
@@ -70,26 +76,26 @@ export default {
         this.$emit("project-change", event.target.value)
       },
         
-      setThemeMode() {  
+      setThemeMode() { 
+        console.log("theme on Update")      
         document.documentElement.setAttribute("data-theme", !this.userDarkThemeMode ?  "light" :"dark" )
         localStorage.setItem("Dark", this.userDarkThemeMode)
-        if (this.user !== "Anonymous") {
-          this.uploadUserSettings();
-        }    
+        this.uploadUserSettings(); 
       },
 
       uploadUserSettings() {
+        if (this.user !== "Anonymous") {
           const method = "PUT";
           const data = {
               "dark": this.userDarkThemeMode,
             }
         apiService(settingsEndpoint, method, data)
+        }
       }, 
     },
-    beforeUpdate () {
-      console.log("theme beforeUpdate")
+    updated () {
       this.setThemeMode()
-    }
+    },
   }
 //const currentTheme = localStorage.getItem("theme");
 </script>

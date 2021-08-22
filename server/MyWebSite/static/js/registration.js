@@ -7,6 +7,7 @@ const message = document.getElementById("message");
 
 let isValid = false;
 let passwordsMatch = false;
+let isDark = JSON.parse(localStorage.getItem("Dark")) || false;
 
 function validateForm() {
     // Using Constraint API
@@ -34,17 +35,21 @@ function validateForm() {
         message.textContent = "Successfully Registered!"
         message.style.color = "green"
         messageContainer.style.borderColor = "green"
+        setInterval(send , 3000)
     }
 }
 
 function processFormData(e) {
-    //e.preventDefault();
+    e.preventDefault();
     validateForm();
+}
+
+function send() {
+    console.log("Form sended")
+    form.submit();
 }
 
 form.addEventListener("submit", processFormData)
 
 
-
-
-//document.documentElement.setAttribute("data-theme", "dark")
+document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light")

@@ -74,3 +74,5 @@ class UserEditForm(UserChangeForm):
         if data < 18:
             raise forms.ValidationError("Вы слишком молоды")
         return data
+
+

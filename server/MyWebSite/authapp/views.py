@@ -7,7 +7,6 @@ from authapp.forms import UserRegisterForm, UserLoginForm, UserEditForm
 
 def register(request):
     if request.method == 'POST':
-        print("ok")
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()  # метод сохраняет данные формы в БД
@@ -35,7 +34,7 @@ def login(request):
             # messages.success(request, "Вы успешно авторизовались")
             if user and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse("api_users:current_user"))
+                return HttpResponseRedirect(reverse("entry_point"))
     else:
         form = UserLoginForm()
     content = {
@@ -46,8 +45,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse("auth:register"))
-    #return HttpResponseRedirect(reverse("main"))
+    return HttpResponseRedirect(reverse("entry_point"))
 
 
 ##################################### for refactoring
