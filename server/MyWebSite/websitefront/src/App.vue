@@ -18,6 +18,7 @@ import Project from "./components/Project.vue";
 import Slider from "./components/Slider.vue";
 import Calculator from "./components/Calculator.vue";
 import AuthModal from "./components/AuthModal.vue";
+import QuoteGenerator from "./components/QuoteGenerator.vue"
 
 import { apiService } from "./common/api.service";
 const settingsEndpoint = "/api/settings/";
@@ -25,7 +26,8 @@ const settingsEndpoint = "/api/settings/";
 export default {
   name: "App",
   components: {
-    NavbarComponent, Mainpage, Project, Slider, Calculator, AuthModal
+    NavbarComponent, Mainpage, Project, Slider, Calculator, AuthModal,
+    QuoteGenerator
   },
   data() {
     return {
@@ -103,6 +105,9 @@ export default {
   --contact-hover: #464a68;
   --contact-shaddow: #9393e6;
   --text-box: rgb(0 0 0 / 50%) ;
+  --calculator-shadow: 9px 22px 27px 25px rgb(163 18 18 / 50%);
+  --calculator-background: #e4e896;
+  --calculator-display-num-color: #cc9544;
 }
 
 [data-theme="dark"] {
@@ -130,6 +135,9 @@ export default {
   --contact-hover: rgb(152 7 7);
   --contact-shaddow: #fb2323de;
   --text-box: rgb(255 255 255 / 50%);
+  --calculator-shadow: 10px 9px 33px 7px rgb(101 101 149 / 50%);
+  --calculator-background: #f0f0f0;
+  --calculator-display-num-color: #2f9af5;
 }
 
 html {

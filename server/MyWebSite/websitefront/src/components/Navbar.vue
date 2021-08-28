@@ -32,8 +32,7 @@
         </span>
         <label class="theme-switch">
             <input type="checkbox" 
-            v-model="this.$store.state.userDarkThemeMode" 
-            @change="this.uploadUserSettings">
+            v-model="this.$store.state.userDarkThemeMode" >
             <div class="slider round"></div>
         </label>
         </div>
@@ -45,6 +44,7 @@
               <option value="Project"><span>Project</span></option>
               <option value="Calculator"><span>Calculator</span></option>
               <option value="AuthModal"><span>Auth-modal</span></option>
+              <option value="QuoteGenerator"><span>Quotes</span></option>
           </select>
           <a href="/#home">Home</a>
           <a href="#about">About</a>
@@ -67,6 +67,11 @@ export default {
       },
     },
     emits: ["project-change"],
+    data() {
+      return {
+        initial : true,
+      }
+    },
     computed: {
       //array or object can be used
       ...mapState(["authModalShow", "user", "userDarkThemeMode"]) // maping state doesn need getter
@@ -80,11 +85,14 @@ export default {
         console.log("theme on Update")      
         document.documentElement.setAttribute("data-theme", !this.userDarkThemeMode ?  "light" :"dark" )
         localStorage.setItem("Dark", this.userDarkThemeMode)
-        this.uploadUserSettings(); 
+        if (!this.initial)
+          this.uploadUserSettings(); 
+        this.initial = false;
       },
 
       uploadUserSettings() {
         if (this.user !== "Anonymous") {
+          console.log("uploaded")
           const method = "PUT";
           const data = {
               "dark": this.userDarkThemeMode,
