@@ -14,26 +14,26 @@
 <script>
 import NavbarComponent from "./components/Navbar.vue";
 import Mainpage from "./components/MainPage.vue";
-import Project from "./components/Project.vue";
+import Bookmarks from "./components/Bookmarks.vue";
 import Slider from "./components/Slider.vue";
 import Calculator from "./components/Calculator.vue";
 import AuthModal from "./components/AuthModal.vue";
-import QuoteGenerator from "./components/QuoteGenerator.vue"
+import QuoteGenerator from "./components/QuoteGenerator.vue";
+import SpockRockGame from "./components/SpockRockGame.vue";
 
 import { apiService } from "./common/api.service";
-const settingsEndpoint = "/api/settings/";
 
 export default {
   name: "App",
   components: {
-    NavbarComponent, Mainpage, Project, Slider, Calculator, AuthModal,
-    QuoteGenerator
+    NavbarComponent, Mainpage, Bookmarks, Slider, Calculator, AuthModal,
+    QuoteGenerator, SpockRockGame
   },
   data() {
     return {
       activeProject: localStorage.getItem("Project") || "Mainpage",
-
       userSettings : null,
+      settingsEndpoint: "/api/settings/",
     }
   },
   methods: {
@@ -43,13 +43,13 @@ export default {
     },
 
     getUserSettings() {  
-      apiService(settingsEndpoint)
+      apiService(this.settingsEndpoint)
         .then(settings => {
         //console.log(data), // settings object
           if (settings){
             this.$store.state.authModalShow = false, 
             this.$store.state.userDarkThemeMode = settings.dark,
-            this.$store.state.user = settings.user
+            this.$store.state.user = settings.user,
             this.userSettings = settings
           }
           else {
@@ -58,9 +58,11 @@ export default {
         }).catch(err=> console.log(err))
     },
   },
-  beforeMount: function () {
-    this.getUserSettings()
+  async created() {
+    await this.getUserSettings()
   },
+  /*beforeMount: function () {
+  }*/
 }
 </script>
 
@@ -108,6 +110,25 @@ export default {
   --calculator-shadow: 9px 22px 27px 25px rgb(163 18 18 / 50%);
   --calculator-background: #e4e896;
   --calculator-display-num-color: #cc9544;
+  --quote-container-background: rgb(193 214 244 / 68%);
+  --quote-loader: #c2b6258c;
+  --quote-loader-alt: #b52d2d;
+  --quote-button-shadow: 4px 0.3rem rgb(218 117 30 / 42%);
+  --quote-icons: rgb(252 160 23 / 87%);
+  --quote-icons-shadow:#7979d5c7;
+  --bookmarks-root: #7450ab;
+  --border-radius: 5px;   
+  --bookmarks-title-shadow:#ffffff;
+  --bookmarks-link: #3aff92;
+  --bookmarks-link-background: rgb(24 22 151 / 60%);
+  --Spock-rock-game-primary-color: whitesmoke;
+  --header: dodgerblue;
+  --container-shadow-color: rgba(0, 0 ,0, 0.5);  
+  --computer-select-color: rgb(180,43,52);
+  --mode-brightness: 50%;
+  --selected-icon: black;
+  --selected-icon-color: #9ff7a4;
+  --score-info: #000000;
 }
 
 [data-theme="dark"] {
@@ -138,6 +159,24 @@ export default {
   --calculator-shadow: 10px 9px 33px 7px rgb(101 101 149 / 50%);
   --calculator-background: #f0f0f0;
   --calculator-display-num-color: #2f9af5;
+  --quote-container-background: rgb(160 146 16 / 71%);
+  --quote-loader: #ff4e4e8c;
+  --quote-loader-alt: #2d5db5;
+  --quote-button-shadow: 4px 0.3rem rgb(226 15 142 / 42%);
+  --quote-icons: rgb(160 66 245);
+  --quote-icons-shadow:#fb2323de ;
+  --bookmarks-root: #7450ab;
+  --bookmarks-title-shadow:#01830570;
+  --bookmarks-link: #7d8ffa;
+  --bookmarks-link-background: rgb(151 106 22 / 50%);
+  --Spock-rock-game-primary-color: rgb(244 246 246 / 65%);
+  --header: #5c3f84;
+  --container-shadow-color: rgba(0, 0 ,0, 0.5); /* test */
+  --computer-select-color: rgb(180,25, 25); /* test */
+  --mode-brightness: 50%; /* test */
+  --selected-icon: black; /* test */
+  --selected-icon-color: #9ff7a4;
+  --score-info: #fefe0285;
 }
 
 html {

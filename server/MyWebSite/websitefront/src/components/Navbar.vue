@@ -39,12 +39,13 @@
         <!-- Navigations -->
         <div class="main-nav">
           <select name="projects" id="projects" :value="project" @change="changeProject" >
-              <option value="Mainpage"><span>Mainpage</span></option>
-              <option value="Slider"><span>Slider</span></option>
-              <option value="Project"><span>Project</span></option>
-              <option value="Calculator"><span>Calculator</span></option>
-              <option value="AuthModal"><span>Auth-modal</span></option>
-              <option value="QuoteGenerator"><span>Quotes</span></option>
+              <option value="Mainpage"><span title="Website mainpage">Mainpage</span></option>
+              <option value="Slider"><span title="Pickture slider">Slider</span></option>
+              <option value="Bookmarks"><span title="Add your bookmarks">Bookmarks</span></option>
+              <option value="Calculator"><span title="Simple calculator">Calculator</span></option>
+              <option value="AuthModal"><span title="Auth-modal">Auth</span></option>
+              <option value="QuoteGenerator"><span title="Quote generator">Quotes</span></option>
+              <option value="SpockRockGame"><span title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</span></option>
           </select>
           <a href="/#home">Home</a>
           <a href="#about">About</a>
@@ -56,7 +57,6 @@
 <script>
 import { mapState } from "vuex";
 import { apiService } from "../common/api.service";
-const settingsEndpoint = "/api/settings/";
 
 export default {
     name: "NavbarComponent",
@@ -70,6 +70,7 @@ export default {
     data() {
       return {
         initial : true,
+        settingsEndpoint : "/api/settings/"
       }
     },
     computed: {
@@ -97,7 +98,7 @@ export default {
           const data = {
               "dark": this.userDarkThemeMode,
             }
-        apiService(settingsEndpoint, method, data)
+        apiService(this.settingsEndpoint, method, data)
         }
       }, 
     },
