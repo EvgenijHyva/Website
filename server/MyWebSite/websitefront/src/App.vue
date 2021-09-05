@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      activeProject: localStorage.getItem("Project") || "Mainpage",
+      activeProject: "Mainpage",
       userSettings : null,
       settingsEndpoint: "/api/settings/",
     }
@@ -39,7 +39,7 @@ export default {
   methods: {
     changeActiveProject(value) {
       this.activeProject = value;
-      localStorage.setItem("Project", this.activeProject)
+      localStorage.Project = this.activeProject;
     },
 
     getUserSettings() {  
@@ -61,8 +61,10 @@ export default {
   async created() {
     await this.getUserSettings()
   },
-  /*beforeMount: function () {
-  }*/
+  beforeMount: function () {
+    if (localStorage.Project)
+      this.activeProject = localStorage.Project
+  }
 }
 </script>
 
@@ -76,8 +78,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
-
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Comfortaa&family=Kaushan+Script&family=Lobster&family=Ma+Shan+Zheng&family=Parisienne&display=swap');
 
@@ -126,7 +126,7 @@ export default {
   --container-shadow-color: rgba(0, 0 ,0, 0.5);  
   --computer-select-color: rgb(180,43,52);
   --mode-brightness: 50%;
-  --selected-icon: black;
+  --selected-icon: #98201a;
   --selected-icon-color: #9ff7a4;
   --score-info: #000000;
 }
@@ -174,7 +174,7 @@ export default {
   --container-shadow-color: rgba(0, 0 ,0, 0.5); /* test */
   --computer-select-color: rgb(180,25, 25); /* test */
   --mode-brightness: 50%; /* test */
-  --selected-icon: black; /* test */
+  --selected-icon: rgb(83, 35, 255); /* test */
   --selected-icon-color: #9ff7a4;
   --score-info: #fefe0285;
 }
