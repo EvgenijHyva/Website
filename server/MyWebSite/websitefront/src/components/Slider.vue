@@ -7,7 +7,7 @@
                 <span class="loading-text"> Loading from <a href="https://api.unsplash.com" target="_blank"> https://api.unsplash.com</a></span>
             </div>    
         
-        <div class="image-container" v-else>  
+        <div class="image-container" v-else >  
             <div class="image-wrapper animated" v-for="image in photosArray" :key="image.id">
                 <img class="image" :src="image.urls.regular" 
                 :title="image.location.title ? image.location.title : 'Untitled'" 
@@ -94,18 +94,24 @@ export default {
 h1 {
     font-size: 50px;
     font-family: lato, Lobster;
-    margin-bottom: 15px;
+    margin-bottom: 1vh;
+    margin-top: 12vh ;
 }
-
+img {
+    height: 32.3vh;
+    width: 25vw;
+}
 .image-container {
-    width: 80vw;
-    height: 65vh;
+    margin: auto;
+    width: 90vw;
+    height: 66vh;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     overflow-x: hidden; /* scroll add a scroll bar*/
     overflow-y: hidden ;
     padding: 0;
+    background: var(--slider-background);
 }
 
 @keyframes scroll-grid {
@@ -113,7 +119,7 @@ h1 {
         -webkit-transform: translate3d(0,0,0);
     }
     100% {
-        -webkit-transform: translate3d(-2420px, 0, 0)
+        -webkit-transform: translate3d(-2500px, 0, 0)
     }
 }
 .animated {
@@ -178,15 +184,15 @@ h1 {
 }
 .modal-image {
     overflow-y: hidden;
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 10; /* Sit on top */
+    display: none; 
+    position: fixed; 
+    z-index: 10; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.5); 
 }
 .show {
     display: block;
@@ -225,61 +231,12 @@ h1 {
     animation-duration: 1s;
 }
 
-/* Next & previous buttons */
-.prev,
-.next {
-  cursor: pointer;
-  position: absolute;
-  top: 40%;
-  width: auto;
-  padding: 16px;
-  margin-top: -50px;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-/* Position the "next button" to the right */
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover,
-.next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
 /* Container for image text */
 .caption-container {
   text-align: center;
   background-color: #222;
   padding: 2px 16px;
   color: white;
-}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.column {
-  float: left;
-  width: 16.66%;
-}
-
-.demo {
-  opacity: 0.5;
-}
-
-.active,
-.demo:hover {
-  opacity: 1;
 }
 
 @media screen and (max-width: 1024px) {
@@ -291,14 +248,24 @@ h1 {
         max-width: 90vw;
     }
     ::-webkit-scrollbar {
-    height: 5px;
-}
+        height: 5px;
+    }
+    img {
+        height: 22vh;
+    }
 }
 
 @media screen and (max-width: 375px) {
+    img {
+        width: 87vw;
+        height: 37vh;
+    }
     section {
         margin: 2.5vw;
         align-items:unset;
+    }
+    .image {
+        margin-right: 0 ;
     }
     .image-container {
         width: 95vw;
@@ -331,7 +298,7 @@ h1 {
         -webkit-transform: translate3d(0,0,0);
     }
     100% {
-        -webkit-transform: translate3d(0, -2420px, 0)
+        -webkit-transform: translate3d(0, -2500px, 0)
     }
 }
 }

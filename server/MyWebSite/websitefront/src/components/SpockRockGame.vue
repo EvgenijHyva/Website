@@ -32,11 +32,11 @@
                     <span id="small-container" >
                          <span id="small-container" >
                             <i class="far" 
-                            :class="{ 'fa-hand-paper': playerChoice === 'paper', 
-                                    'fa-hand-rock': playerChoice === 'rock',
-                                    'fa-hand-scissors': playerChoice === 'scissors',
-                                    'fa-hand-lizard': playerChoice === 'lizard',
-                                    'fa-hand-spock': playerChoice === 'spock'}" 
+                            :class="{ 'fa-hand-paper': computerChoice === 'paper', 
+                                    'fa-hand-rock': computerChoice === 'rock',
+                                    'fa-hand-scissors': computerChoice === 'scissors',
+                                    'fa-hand-lizard': computerChoice === 'lizard',
+                                    'fa-hand-spock': computerChoice === 'spock'}" 
                             id="small"></i>
                         </span>
                     </span>

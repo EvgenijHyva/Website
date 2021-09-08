@@ -53,7 +53,18 @@ export default {
 .social-link, .social-link:hover, .social-link:focus {
   text-decoration: none;
   border-bottom: none;
+  margin: 1vw auto;
 }
 
+@media screen and (max-width: 375px) {
+  .fab {
+    font-size: 10vh;
+    margin: 1vh auto;
+  }
+  .social-icons {
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 </style>

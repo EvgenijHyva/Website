@@ -40,16 +40,16 @@
         <div class="main-nav">
           <select name="projects" id="projects" :value="project" @change="changeProject" >
               <option value="Mainpage"><span title="Website mainpage">Mainpage</span></option>
-              <option value="Slider"><span title="Pickture slider">Slider</span></option>
+              <option value="Slider"><span title="Slider">Slider Api</span></option>
               <option value="Bookmarks"><span title="Add your bookmarks">Bookmarks</span></option>
               <option value="Calculator"><span title="Simple calculator">Calculator</span></option>
-              <option value="AuthModal"><span title="Auth-modal">Auth</span></option>
+              <option value="AuthModal"><span title="Auth-modal">Auth Forms</span></option>
               <option value="QuoteGenerator"><span title="Quote generator">Quotes</span></option>
               <option value="SpockRockGame"><span title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</span></option>
           </select>
-          <a href="/#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#contact" v-show="!this.$store.state.authModalShow">Contact</a>
+          <a href="/#home" v-show="project === 'Mainpage'">Home</a>
+          <a href="#about" v-show="project === 'Mainpage'">About</a>
+          <a href="#contact" v-if="!this.$store.state.authModalShow" v-show="project === 'Mainpage'">Contact</a>
         </div>
     </nav>
 </template>
@@ -93,7 +93,7 @@ export default {
 
       uploadUserSettings() {
         if (this.user !== "Anonymous") {
-          console.log("uploaded")
+          console.log("uploaded Navbar")
           const method = "PUT";
           const data = {
               "dark": this.userDarkThemeMode,
@@ -112,7 +112,7 @@ export default {
 <style>
 /* Navigation */
 #nav {
-  padding: 30px;
+  padding: 3.3vh;
 }
 
 #nav a {
@@ -128,13 +128,12 @@ nav {
   position: fixed;
   font-size: 24px;
   letter-spacing: 3px;
-  padding: 25px;
   width: 100vw;
   background: var(--nav);
 }
 
 a {
-  margin-right: 25px;
+  margin-right: 2vw;
   color: var(--primary-color);
   text-decoration: none;
   border-bottom: 3px solid transparent;
@@ -146,7 +145,7 @@ select {
     font-size: 24px;
     font-weight: bold;
     border-width: 0;
-    margin-right: 25px;
+    margin-right: 2vw;
     cursor: pointer;
     color: var(--primary-color);
     background: var(--select);
@@ -191,9 +190,9 @@ a .user {
   z-index: 1;
   opacity: 0;
   transition: opacity 2s;
-  margin-top: 55px;
+  margin-top: 8vh;
   font-size: 10px;
-  margin-left: 53px;
+  margin-left: 6.5vh;
   width: 55px;
   letter-spacing: 0.1px;
   filter: brightness(1.5);
@@ -217,13 +216,14 @@ a .user {
   align-items: center;
   z-index: 100;
   position: fixed;
-  right: 25px;
-  top: 27px;
+  right: 3vw;
+  top: 3.1vh;
 }
 
 .auth {
     position: fixed;
-    top: 27px;
+    top: 3.1vh;
+    left: 2.2vw;
 }
 .auth-method {
     text-shadow: 10px 20px 10px var(--mode-text);
@@ -244,7 +244,7 @@ a .user {
 }
 
 .theme-switch-wrapper span {
-  margin-right: 10px;
+  margin-right: .5vw;
     color:var(--mode-text);
     text-shadow: 10px 20px 10px var(--mode-text);
     font-size: 1.1rem;
@@ -281,7 +281,7 @@ a .user {
 }
 .icon {
   font-size: 20px;
-  margin-left: 7px;
+  margin-left: .5vw;
 }
 .slider {
   background: #716f6f;
@@ -322,6 +322,30 @@ input:checked + .slider::before {
 }
 .main-nav, select {
   text-shadow: -1px 3px 5px;
+}
+
+@media screen and (max-width: 1024px) { 
+  span {
+    margin: 0;
+  }
+  .theme-switch-wrapper {
+    right: 1vw;
+  }
+  .toggle-text {
+    top: -3vh;
+    right: -11vw;
+  }
+}
+
+@media screen and (max-width: 375px) { 
+  .text {
+    margin: 1vh;
+    padding: 10vw;
+  }
+  .toggle-text {
+    top: 5vh;
+    right: -28vw;
+  }
 }
 
 </style>

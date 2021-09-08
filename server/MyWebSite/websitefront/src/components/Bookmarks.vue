@@ -1,15 +1,20 @@
 <template>
     <section>
-        <h1 id="show-modal" @click="showModal = !showModal">Add Bookmark</h1>
-        <div class="container" id="bookmarks-container">
-            <div class="item"  v-for="item in bookmarks" :key="item.websiteUrl">
-                <i class="fas fa-times" id="delete-bookmark" @click="deleteBookmark" :data-url="item.websiteUrl"></i>
-                <div class="name">
-                    <img :src="item.icon" alt="img">
-                    <a :href="item.websiteUrl" target="_blank" :title="item.websiteName">{{item.websiteName}}</a>
+        <h1 id="show-modal" @click="showModal = !showModal" >Add Bookmark</h1>
+          <div class="container" id="bookmarks-container">
+            <transition-group name="flip"
+                        enter-active-class="animate__animated animate__flipInX"
+                        leave-to-class="animate__animated animate__flipOutX" >
+                <div class="item"  v-for="item in bookmarks" :key="item.websiteUrl">
+                    <i class="fas fa-times" id="delete-bookmark" @click="deleteBookmark" :data-url="item.websiteUrl"></i>
+                    <div class="name">
+                        <img :src="item.icon" alt="img">
+                        <a :href="item.websiteUrl" target="_blank" :title="item.websiteName">{{item.websiteName}}</a>
+                    </div>
                 </div>
-            </div>
-        </div>
+              </transition-group>
+          </div>
+        
         <div class="modal-container" id="modal" :class="{ 'show-modal': showModal }">
             <div class="modal">
                 <i class="fas fa-times close-icon" id="close-modal" @click="showModal = !showModal"></i>
@@ -80,6 +85,10 @@ export default {
 </script>
 
 <style scoped>
+.animate__animated{
+  animation-duration: 1s;
+}
+
 
 h1 {
   text-align: center;

@@ -90,4 +90,13 @@ p {
   margin: 0;
   line-height: 25px;
 }
+
+@media screen and (max-width: 375px) { 
+  button {
+    font-size: 12px;
+    min-width: 25vw;
+    height: 4.5vh;
+    margin: 2vw;
+  }
+}
 </style>

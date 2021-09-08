@@ -4,7 +4,7 @@ export default createStore({
   state: {
     authModalShow: true,
     user: "Anonymous",
-    userDarkThemeMode: localStorage.getItem("Dark") || false,
+    userDarkThemeMode: localStorage.getItem("Dark") || false
   },
   mutations: {
 

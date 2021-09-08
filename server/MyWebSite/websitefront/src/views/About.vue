@@ -53,4 +53,16 @@ img {
   height: 300px;
   width: 300px;
 }
+@media screen and (max-width: 375px) {
+  .about-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1vh;
+  }
+  .image-container {
+    margin: 1vh; 
+  }
+}
+
+
 </style>

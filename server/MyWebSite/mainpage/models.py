@@ -58,7 +58,7 @@ class PageSettings(models.Model):
                                 related_name="user_settings", db_index=True,
                                 primary_key=True)  # primary_key use only users pk
     dark = models.BooleanField(default=False, verbose_name="Ночной режим")
-    tagline = models.CharField(verbose_name="Теги", max_length=128, blank=True)
+    background = models.CharField(verbose_name="Background", max_length=128, blank=True)
     modified_at = models.DateTimeField(auto_now=True, verbose_name="Дата Обновления")
     addition_code = models.TextField(blank=True, verbose_name="Доп. код")
     insert_addition_code = models.BooleanField(default=False, verbose_name="добавить код")

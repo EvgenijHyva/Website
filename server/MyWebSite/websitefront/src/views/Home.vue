@@ -79,4 +79,15 @@ h2 {
   opacity: 0;
 }
 
+@media screen and (max-width: 375px) {
+  h2 {
+    font-size: 25px
+  }
+  .home {
+    margin: 1vh;
+    padding: 10vw;
+  }
+
+}
+
 </style>

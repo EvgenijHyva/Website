@@ -8,6 +8,7 @@
       <component :is="activeProject"></component>
     </transition>
     <!-- <keep-alive> component </keep-alive> to store in memory-->
+    <backgrounds />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import Calculator from "./components/Calculator.vue";
 import AuthModal from "./components/AuthModal.vue";
 import QuoteGenerator from "./components/QuoteGenerator.vue";
 import SpockRockGame from "./components/SpockRockGame.vue";
+import Backgrounds from "./components/Backgrounds.vue";
 
 import { apiService } from "./common/api.service";
 
@@ -27,13 +29,13 @@ export default {
   name: "App",
   components: {
     NavbarComponent, Mainpage, Bookmarks, Slider, Calculator, AuthModal,
-    QuoteGenerator, SpockRockGame
+    QuoteGenerator, SpockRockGame, Backgrounds
   },
   data() {
     return {
+      settingsEndpoint: "/api/settings/",
       activeProject: "Mainpage",
       userSettings : null,
-      settingsEndpoint: "/api/settings/",
     }
   },
   methods: {
@@ -50,6 +52,7 @@ export default {
             this.$store.state.authModalShow = false, 
             this.$store.state.userDarkThemeMode = settings.dark,
             this.$store.state.user = settings.user,
+            this.$store.state.background = settings.background
             this.userSettings = settings
           }
           else {
@@ -87,6 +90,7 @@ export default {
   --secondary-color: #1b9999;
   --on-primary: rgb(250, 250, 250);
   --on-background: rgb(66, 66, 66);
+  --on-background-secondary: rgb(125 132 138);
   --on-background-alt: rgba(66, 66, 66, 0.7);
   --background: rgb(223 219 226);
   --box-shadow: 0 5px 20px 1px rgba(0, 0, 0, 0.5);
@@ -131,6 +135,8 @@ export default {
   --score-info: #000000;
   --slider-loader: rgb(56 70 138 / 30%);
   --slider-scroll: #d84747;
+  --slider-background: var(--background);
+  --toggle-background: #585858bd;
 }
 
 [data-theme="dark"] {
@@ -139,6 +145,7 @@ export default {
   --secondary-color: coral;
   --on-primary: #000;
   --on-background: rgb(249 246 255);
+  --on-background-secondary: var(--background);
   --on-background-alt: rgba(255, 255, 255, 0.7);
   --background: #121212;
   --title-alt: #9dc10cc7;
@@ -149,7 +156,7 @@ export default {
   --nav: rgb(98 91 99 / 50%);
   --auth-method: #f1b037;
   --mode: #6563d0;
-  --mode-text: #170340;
+  --mode-text: #7a950d;
   --mode-brightness: 1.2;
   --auth-hover: #ff1a02;
   --help-text: #abdc16; 
@@ -181,6 +188,8 @@ export default {
   --score-info: #fefe0285;
   --slider-loader: rgb(165 52 52 / 30%);
   --slider-scroll: #5872ee;
+  --slider-background: #121212e0;
+  --toggle-background: #6c63ff59 ;
 }
 
 html {
@@ -236,4 +245,13 @@ section {
     animation: animated-scrolling 180s linear infinite; /*HERE TO animate*/
 }
 
+
+@media screen and (max-width: 375px) { 
+  section {
+    width: 100vw;
+  }
+  h1 {
+    font-size: 5vh;
+  }
+}
 </style>
