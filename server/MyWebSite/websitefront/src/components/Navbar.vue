@@ -70,12 +70,13 @@ export default {
     data() {
       return {
         initial : true,
-        settingsEndpoint : "/api/settings/"
+        settingsEndpoint : "/api/settings/",
       }
     },
     computed: {
       //array or object can be used
-      ...mapState(["authModalShow", "user", "userDarkThemeMode"]) // maping state doesn need getter
+      ...mapState(["authModalShow", "user", "userDarkThemeMode"]), // maping state doesn need getter
+
     },
     methods: {
       changeProject(event) {
@@ -102,9 +103,11 @@ export default {
         }
       }, 
     },
-    updated () {
-      this.setThemeMode()
-    },
+    watch: {
+      userDarkThemeMode : function () {
+        this.setThemeMode()
+      }
+    }
   }
 //const currentTheme = localStorage.getItem("theme");
 </script>
