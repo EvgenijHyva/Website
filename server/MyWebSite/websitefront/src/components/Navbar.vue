@@ -46,6 +46,11 @@
               <option value="AuthModal"><span title="Auth-modal">Auth Forms</span></option>
               <option value="QuoteGenerator"><span title="Quote generator">Quotes</span></option>
               <option value="SpockRockGame"><span title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</span></option>
+              <option value="Kanban"><span title="Kanban board">Kanban</span></option>
+              <option value="MathSprint"><span title="Math sprint game">Math game</span></option>
+              <option value="CountDown"><span title="Custom countdown">Countdown</span></option>
+              <option value="NasaApod"><span title="Nasa Apod">Nasa Apod</span></option>
+
           </select>
           <a href="/#home" v-show="project === 'Mainpage'">Home</a>
           <a href="#about" v-show="project === 'Mainpage'">About</a>

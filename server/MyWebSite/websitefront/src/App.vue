@@ -22,6 +22,11 @@ import AuthModal from "./components/AuthModal.vue";
 import QuoteGenerator from "./components/QuoteGenerator.vue";
 import SpockRockGame from "./components/SpockRockGame.vue";
 import Backgrounds from "./components/Backgrounds.vue";
+import Kanban from "./components/Kanban.vue";
+import MathSprint from "./components/MathSprint.vue";
+import CountDown from "./components/Countdown.vue";
+import NasaApod from "./components/NasaApod.vue";
+
 
 import { apiService } from "./common/api.service";
 
@@ -29,7 +34,8 @@ export default {
   name: "App",
   components: {
     NavbarComponent, Mainpage, Bookmarks, Slider, Calculator, AuthModal,
-    QuoteGenerator, SpockRockGame, Backgrounds
+    QuoteGenerator, SpockRockGame, Backgrounds, Kanban, MathSprint,
+    CountDown, NasaApod
   },
   data() {
     return {
