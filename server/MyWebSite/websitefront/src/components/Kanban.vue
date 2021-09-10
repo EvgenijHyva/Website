@@ -18,6 +18,7 @@
                           v-for="item, key in columns['Backlog']" :key="key"
                           @dragstart="drag"
                           @blur="updateItem"
+                          :contenteditable="!dragging"
                           title="Edit">
                                 {{item}}
                             </li>
@@ -28,7 +29,7 @@
                         <span class="plus-sign">+</span>
                         <span>Add Item</span>
                     </div>
-                    <div class="add-btn solid" @click="hideInputBox">
+                    <div class="add-btn solid" @click="saveAndHideInputBox">
                         <span>Save Item</span>
                     </div>
                 </div>
@@ -53,6 +54,7 @@
                           v-for="item, key in columns['Progress']" :key="key"
                           @dragstart="drag"
                           @blur="updateItem"
+                          :contenteditable="!dragging"
                           title="Edit">
                           {{item}}
                       </li>
@@ -63,7 +65,7 @@
                         <span class="plus-sign">+</span>
                         <span >Add Item</span>
                     </div>
-                    <div class="add-btn solid" @click="hideInputBox">
+                    <div class="add-btn solid" @click="saveAndHideInputBox">
                         <span>Save Item</span>
                     </div>
                 </div>
@@ -89,6 +91,7 @@
                           v-for="item, key in columns['OnHold']" :key="key"
                           @dragstart="drag"
                           @blur="updateItem"
+                          :contenteditable="!dragging"
                           title="Edit">
                           {{item}}
                       </li>
@@ -99,7 +102,7 @@
                         <span class="plus-sign">+</span>
                         <span >Add Item</span>
                     </div>
-                    <div class="add-btn solid" @click="hideInputBox" >
+                    <div class="add-btn solid" @click="saveAndHideInputBox" >
                         <span>Save Item</span>
                     </div>
                 </div>
@@ -124,6 +127,7 @@
                           v-for="item, key in columns['Complete']" :key="key"
                           @dragstart="drag"
                           @blur="updateItem"
+                          :contenteditable="!dragging"
                           title="Edit">
                           {{item}}
                       </li>
@@ -134,7 +138,7 @@
                         <span class="plus-sign">+</span>
                         <span >Add Item</span>
                     </div>
-                    <div class="add-btn solid" @click="hideInputBox" >
+                    <div class="add-btn solid" @click="saveAndHideInputBox" >
                         <span>Save Item</span>
                     </div>
                 </div>
@@ -179,43 +183,66 @@ export default {
         },
         drop(e) {
             let column = e.target.parentElement.dataset.column
-            
-            //assign property inside a Drop object
+            //assign property inside a Drop column
             if (this.draggedColumn !== column) {
-              this.columns[column][this.draggedTask.textContent 
-              +`${'_item_'+Object.keys(this.columns[column]).length}`] 
-              = this.draggedTask.textContent
-
-            //delete property from Dragged column
-            delete this.columns[this.draggedColumn][this.draggedTask.dataset.key]
+              let key = this.draggedTask.textContent +`${'_item_'+Object.keys(this.columns[column]).length}`
+              let item = this.draggedTask.textContent
+              this.columns[column][key] = item
+              //delete property from Dragged column
+              delete this.columns[this.draggedColumn][this.draggedTask.dataset.key]
             }
+            this.dragging = false
             this.enterColumn = ""
         },
         updateItem(event) {
-            console.log("UpdateItemFunction", event.target)
+            let item = event.target.textContent
+            let key = event.target.dataset.key
+            let column = event.target.parentElement.dataset.column
+            if (item)
+              this.columns[column][key] = item
+            else
+              delete this.columns[column][key]
         },
         showInputBox(event) {
           let column = event.currentTarget.parentElement.dataset.column // currentTarget = component with event
           this.$refs[column].style.display = "flex" //shows a text field 
           this.$refs[column].children[0].focus() // focus on text field
           this.$refs[column].parentElement.children[2].children[1].style.display="flex" // show hidden button
-
         },
-        hideInputBox(event) {
+        saveAndHideInputBox(event) {
           let column = event.currentTarget.parentElement.dataset.column
-          console.log( this.$refs[column].children[0].textContent, "test", Object.keys(this.columns[column]).length)
-          let item =  this.$refs[column].children[0].textContent
-          if (item) {
-            this.columns[column][item + `${'_item_'+ Object.keys(this.columns[column]).length}`] = item
-            this.$refs[column].children[0].textContent = ""
-          }
           this.$refs[column].style.display = "none" //hide a text field
           this.$refs[column].parentElement.children[2].children[1].style.display="none" //hide button
+          let item =  this.$refs[column].children[0].textContent
+          if (item) {
+            let key = item + `${'_item_'+ Object.keys(this.columns[column]).length}`
+            this.columns[column][key] = item
+            this.$refs[column].children[0].textContent = ""
+          }
+        },
+        saveToLocalStorage() {
+          localStorage.setItem("Kanban", JSON.stringify(this.columns))
+        },
+        getFromLocalStorage() {
+          let local = localStorage.getItem("Kanban")
+          if (local) {
+            this.columns = JSON.parse(local)
+          }
+        },
+        saveToDB() {
+          //actions to load data to Data Base
         }
-
     },
     beforeMount: function () {
-
+      this.getFromLocalStorage()
+    },
+    watch: {
+      columns : {
+        handler () {
+          this.saveToLocalStorage()
+        },
+        deep:true
+      },
     }
 }
 </script>
