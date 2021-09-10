@@ -47,6 +47,9 @@ import { localQuotes } from "../common/localQuotes";
 
 export default {
     name: "QuoteGenerator",
+    title() {
+      return "Quote Generator"
+    },
     data() {
         return {
             apiQuotes : [],

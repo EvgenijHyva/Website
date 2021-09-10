@@ -12,8 +12,10 @@
     <div id="app">
 
     </div>
-    <footer class="text">
-        Today is {% now "d-n-o" %} &copy; Jekku-battery. Week: {% now "W" %}
+    <footer>
+        <h4 class="text"><i class="fas fa-calendar-day"></i> {% now "d-n-o" %}
+            <i class="fas fa-calendar-week"></i> {% now "W" %}</h4>
+        <h3 class="text">{% now "T" %} &copy; Jekku-battery. </h3>
     </footer>
     {% render_bundle "app" %}
 </body>

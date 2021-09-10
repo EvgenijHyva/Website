@@ -32,6 +32,9 @@
 <script>
 export default {
     name: "Calculator",
+    title() {
+      return "Simple calculator"
+    },
     data() {
         return {
             calcHistory: [],

@@ -50,6 +50,9 @@
 <script>
 export default {
     name: "Bookmarks",
+    title() {
+      return "Your bookmarks"
+    },
     data() {
         return {
             bookmarks: {},

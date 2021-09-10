@@ -7,6 +7,9 @@
 <script>
 export default {
     name: "NasaApod",
+    title() {
+      return "Nasa API"
+    },
     data() {
         return {
 

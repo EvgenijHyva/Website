@@ -24,7 +24,6 @@ import SpockRockGame from "./components/SpockRockGame.vue";
 import Backgrounds from "./components/Backgrounds.vue";
 import Kanban from "./components/Kanban.vue";
 import MathSprint from "./components/MathSprint.vue";
-import CountDown from "./components/Countdown.vue";
 import NasaApod from "./components/NasaApod.vue";
 
 
@@ -32,10 +31,13 @@ import { apiService } from "./common/api.service";
 
 export default {
   name: "App",
+  title() {
+      return "Main page"
+  },
   components: {
     NavbarComponent, Mainpage, Bookmarks, Slider, Calculator, AuthModal,
     QuoteGenerator, SpockRockGame, Backgrounds, Kanban, MathSprint,
-    CountDown, NasaApod
+    NasaApod
   },
   data() {
     return {
@@ -143,6 +145,17 @@ export default {
   --slider-scroll: #d84747;
   --slider-background: var(--background);
   --toggle-background: #585858bd;
+  --column-1: #a2622d;
+  --column-1-alt: #a2622d74;
+  --column-2: #1b6161;
+  --column-2-alt: #1b616157;
+  --column-3: #248224;
+  --column-3-alt: #24822458;
+  --column-4: #bd2517;
+  --column-4-alt: #8a0d027a;
+  --kanban-li-back: rgb(231 232 228 / 0.7);
+  --kanban-drag-column: rgba(0, 0, 0, 0.7);
+
 }
 
 [data-theme="dark"] {
@@ -162,7 +175,7 @@ export default {
   --nav: rgb(98 91 99 / 50%);
   --auth-method: #f1b037;
   --mode: #6563d0;
-  --mode-text: #7a950d;
+  --mode-text: #6a5ffb;
   --mode-brightness: 1.2;
   --auth-hover: #ff1a02;
   --help-text: #abdc16; 
@@ -196,6 +209,8 @@ export default {
   --slider-scroll: #5872ee;
   --slider-background: #121212e0;
   --toggle-background: #6c63ff59 ;
+  --kanban-li-back: #e8785f66;
+  --kanban-drag-column: rgba(0, 0, 0, 0.8);
 }
 
 html {

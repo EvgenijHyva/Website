@@ -48,7 +48,6 @@
               <option value="SpockRockGame"><span title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</span></option>
               <option value="Kanban"><span title="Kanban board">Kanban</span></option>
               <option value="MathSprint"><span title="Math sprint game">Math game</span></option>
-              <option value="CountDown"><span title="Custom countdown">Countdown</span></option>
               <option value="NasaApod"><span title="Nasa Apod">Nasa Apod</span></option>
 
           </select>
@@ -88,8 +87,7 @@ export default {
         this.$emit("project-change", event.target.value)
       },
         
-      setThemeMode() { 
-        console.log("theme on Update")      
+      setThemeMode() {     
         document.documentElement.setAttribute("data-theme", !this.userDarkThemeMode ?  "light" :"dark" )
         localStorage.setItem("Dark", this.userDarkThemeMode)
         if (!this.initial)
@@ -99,7 +97,6 @@ export default {
 
       uploadUserSettings() {
         if (this.user !== "Anonymous") {
-          console.log("uploaded Navbar")
           const method = "PUT";
           const data = {
               "dark": this.userDarkThemeMode,

@@ -7,6 +7,9 @@
 <script>
 export default {
     name: "MathSprint",
+    title() {
+      return "Math sprint game"
+    },
     data () {
         return {
             

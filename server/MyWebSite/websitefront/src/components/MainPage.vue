@@ -18,6 +18,9 @@ const pageContentEndpoint = "/api/page_content/";
 
 export default {
     name: "Mainpage",
+    title() {
+      return "Main page"
+    },
     components: {
         Home, About, Projects, Contacts,
     }, 
@@ -41,3 +44,17 @@ export default {
 }
 </script>
 
+<style>
+footer {
+    padding: 3vh;
+    background: linear-gradient(360deg, #0000007a, transparent);
+}
+footer .text {
+    text-align: center;
+    color: var(--title-alt);
+}
+.fa-calendar-week, .fa-calendar-day {
+    font-size: 20px;
+    margin-right: 3px;
+}
+</style>

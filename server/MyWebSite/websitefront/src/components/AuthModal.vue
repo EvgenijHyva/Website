@@ -12,10 +12,13 @@ import AppLoginForm from './LoginForm.vue';
 import AppRegisterForm from './RegisterForm.vue';
 
 export default {
+    name: "AuthModal",
+    title() {
+      return "Authentication"
+    },
     components: { 
       AppRegisterForm, AppLoginForm 
     },
-    name: "AuthModal",
     data() {
         return {
             tab: "login",

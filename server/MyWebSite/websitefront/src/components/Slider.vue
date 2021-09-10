@@ -48,6 +48,9 @@ import { apiService } from "../common/api.service";
 
 export default {
     name: "Slider",
+    title() {
+      return "Slider API"
+    },
     data() {
         return { 
             pictureCount: 30,

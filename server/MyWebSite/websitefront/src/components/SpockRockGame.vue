@@ -61,6 +61,9 @@
 
 export default {
     name: "SpockRockGame",
+    title() {
+      return "Rock-Paper-Scissors-Lizard-Spock game"
+    },
     data() {
         return {
             choices : {
