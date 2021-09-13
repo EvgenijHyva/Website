@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VeeValidatePlugin from "./includes/validation"
-import titleMixin from "./mixins/titleMixin"
+import VeeValidatePlugin from './includes/validation'
+import titleMixin from './mixins/titleMixin'
 
 createApp(App)
 .use(VeeValidatePlugin)

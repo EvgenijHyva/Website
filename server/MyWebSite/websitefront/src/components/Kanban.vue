@@ -14,14 +14,18 @@
                         :class="{ 'over' : enterColumn==='Backlog'}"
                         @dragover.prevent
                         @dragenter="dragEnter">
+                      <transition-group name="Animate_tasks"
+                        enter-active-class="animate__animated animate__flipInX"
+                        leave-to-class="animate__animated animate__flipOutX">
                         <li class="drag-item" draggable="true" :data-key="key"
                           v-for="item, key in columns['Backlog']" :key="key"
                           @dragstart="drag"
                           @blur="updateItem"
                           :contenteditable="!dragging"
                           title="Edit">
-                                {{item}}
-                            </li>
+                            {{item}} 
+                        </li>
+                      </transition-group>
                     </ul>
                 </div>
                 <div class="add-btn-group" data-column="Backlog">
@@ -36,9 +40,10 @@
                 <div class="add-container" ref="Backlog" >
                     <div class="add-item" contenteditable="true"></div>
                 </div>
+                
             </li>
         </ul>
-        <ul class="drag-list">
+        <ul class="drag-list" >
             <!-- Progress -->
             <li class="drag-column progress-column">
                 <span class="header">
@@ -50,14 +55,18 @@
                       :class="{ 'over' : enterColumn==='Progress'}"
                       @dragover.prevent
                       @dragenter="dragEnter" >
-                      <li class="drag-item" draggable="true" :data-key="key"
-                          v-for="item, key in columns['Progress']" :key="key"
-                          @dragstart="drag"
-                          @blur="updateItem"
-                          :contenteditable="!dragging"
-                          title="Edit">
-                          {{item}}
-                      </li>
+                      <transition-group name="Animate_tasks"
+                        enter-active-class="animate__animated animate__flipInX"
+                        leave-to-class="animate__animated animate__flipOutX">
+                        <li class="drag-item" draggable="true" :data-key="key"
+                            v-for="item, key in columns['Progress']" :key="key"
+                            @dragstart="drag"
+                            @blur="updateItem"
+                            :contenteditable="!dragging"
+                            title="Edit">
+                            {{item}}
+                        </li>
+                      </transition-group>
                     </ul>
                 </div>
                 <div class="add-btn-group" data-column="Progress">
@@ -75,7 +84,7 @@
 
             </li>
         </ul>
-        <ul class="drag-list">
+        <ul class="drag-list" >
             <!-- On-hold -->
             <li class="drag-column on-hold-column">
                 <span class="header">
@@ -87,14 +96,18 @@
                       :class="{ 'over' : enterColumn==='OnHold'}"
                       @dragover.prevent
                       @dragenter="dragEnter" >
-                      <li class="drag-item" draggable="true" :data-key="key"
-                          v-for="item, key in columns['OnHold']" :key="key"
-                          @dragstart="drag"
-                          @blur="updateItem"
-                          :contenteditable="!dragging"
-                          title="Edit">
-                          {{item}}
-                      </li>
+                      <transition-group name="Animate_tasks"
+                        enter-active-class="animate__animated animate__flipInX"
+                        leave-to-class="animate__animated animate__flipOutX">
+                        <li class="drag-item" draggable="true" :data-key="key"
+                            v-for="item, key in columns['OnHold']" :key="key"
+                            @dragstart="drag"
+                            @blur="updateItem"
+                            :contenteditable="!dragging"
+                            title="Edit">
+                            {{item}}
+                        </li>
+                      </transition-group>
                     </ul>
                 </div>
                 <div class="add-btn-group" data-column="OnHold">
@@ -123,14 +136,18 @@
                       :class="{ 'over' : enterColumn==='Complete'}"
                       @dragover.prevent
                       @dragenter="dragEnter" >
-                      <li class="drag-item" draggable="true" :data-key="key"
-                          v-for="item, key in columns['Complete']" :key="key"
-                          @dragstart="drag"
-                          @blur="updateItem"
-                          :contenteditable="!dragging"
-                          title="Edit">
-                          {{item}}
-                      </li>
+                      <transition-group name="Animate_tasks"
+                        enter-active-class="animate__animated animate__flipInX"
+                        leave-to-class="animate__animated animate__flipOutX">
+                        <li class="drag-item" draggable="true" :data-key="key"
+                            v-for="item, key in columns['Complete']" :key="key"
+                            @dragstart="drag"
+                            @blur="updateItem"
+                            :contenteditable="!dragging"
+                            title="Edit">
+                            {{item}}
+                        </li>
+                      </transition-group>
                     </ul>
                 </div>
                 <div class="add-btn-group" data-column="Complete">
@@ -141,7 +158,7 @@
                     <div class="add-btn solid" @click="saveAndHideInputBox" >
                         <span>Save Item</span>
                     </div>
-                </div>
+                </div> 
                 <div class="add-container" ref="Complete" >
                     <div class="add-item" contenteditable="true"></div>
                 </div>
@@ -160,10 +177,10 @@ export default {
     data() {
         return {
             columns : {
-              "Backlog" : {"back_item": "back"},
-              "Progress" : {"prog_item":" prog"},
-              "OnHold" : { "on_item":"on"},
-              "Complete": {"comp_item": "comp"}
+              "Backlog" : {},
+              "Progress" : {},
+              "OnHold" : {},
+              "Complete": {}
             },
             draggedColumn: "",
             draggedTask : "",
@@ -198,7 +215,7 @@ export default {
             let item = event.target.textContent
             let key = event.target.dataset.key
             let column = event.target.parentElement.dataset.column
-            if (item)
+            if (item && item.trim().length)
               this.columns[column][key] = item
             else
               delete this.columns[column][key]
@@ -214,7 +231,7 @@ export default {
           this.$refs[column].style.display = "none" //hide a text field
           this.$refs[column].parentElement.children[2].children[1].style.display="none" //hide button
           let item =  this.$refs[column].children[0].textContent
-          if (item) {
+          if (item && item.trim().length) {
             let key = item + `${'_item_'+ Object.keys(this.columns[column]).length}`
             this.columns[column][key] = item
             this.$refs[column].children[0].textContent = ""
@@ -227,7 +244,7 @@ export default {
           let local = localStorage.getItem("Kanban")
           if (local) {
             this.columns = JSON.parse(local)
-          }
+          }     
         },
         saveToDB() {
           //actions to load data to Data Base
@@ -249,6 +266,9 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+.animate__animated {
+  animation-duration: 1.5s;
+}
 
 h1 {
   letter-spacing: 2px;
@@ -286,6 +306,7 @@ ul {
 
 /* Columns */
 .drag-column {
+  max-height: 50vh;
   flex:1;
   margin: 0 10px;
   position: relative;
@@ -476,7 +497,6 @@ ul {
   body {
     overflow-y: auto;
   }
-
   .drag-container {
     margin: 0;
     /* changed*/
@@ -492,10 +512,25 @@ ul {
   }
 
   .drag-column {
+    
     margin: 10px;
     /* changed */
     width: 45vw;
-    max-height: 45vh;
+    max-height: 35vh;
   }
+  .header {
+    padding: 5px;
+    margin: 5px;
+    position: sticky;
+    top: 0;
+  }
+  .main-title {
+    font-size: 2.3rem;
+  }
+  .add-item {
+    box-sizing: border-box;
+    min-height: 5vh;
+  }
+
 }
 </style>

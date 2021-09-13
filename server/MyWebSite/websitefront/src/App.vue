@@ -153,9 +153,14 @@ export default {
   --column-3-alt: #24822458;
   --column-4: #bd2517;
   --column-4-alt: #8a0d027a;
+  --screen-width: 80vh;
+  --header-screen-width: 10vh;
   --kanban-li-back: rgb(231 232 228 / 0.7);
   --kanban-drag-column: rgba(0, 0, 0, 0.7);
-
+  --math-primary-color: dodgerblue;
+  --select-color: dodgerblue;
+  --success: rgb(15, 158, 2);
+  --danger: rgb(214, 23, 23);
 }
 
 [data-theme="dark"] {
@@ -211,6 +216,10 @@ export default {
   --toggle-background: #6c63ff59 ;
   --kanban-li-back: #e8785f66;
   --kanban-drag-column: rgba(0, 0, 0, 0.8);
+  --math-primary-color: dodgerblue;
+  --select-color: dodgerblue;
+  --success: rgb(15, 158, 2);
+  --danger: rgb(214, 23, 23);
 }
 
 html {
@@ -254,6 +263,23 @@ section {
   opacity: 0;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 0;
+}
+::-webkit-scrollbar-track {
+  background: #5872ee;/*#d84747;*/
+  border-radius: 50px;
+  margin-right: 0;
+}
+::-webkit-scrollbar-thumb {
+  background:  linear-gradient(to right, #ff4e50, #f9d423); /*#7778af*/
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d84747;
+}
+
 @keyframes animated-scrollig {
     0% { 
         -webkit-transform: translate3d(0,0,0);
@@ -275,4 +301,6 @@ section {
     font-size: 5vh;
   }
 }
+
+
 </style>
