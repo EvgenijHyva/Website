@@ -105,6 +105,7 @@ img {
     width: 25vw;
 }
 .image-container {
+    border: none;
     margin: auto;
     width: 90vw;
     height: 66vh;
@@ -329,23 +330,6 @@ img {
     color: var(--on-background);
 }
 
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-enter-to {
-  opacity: 1;
-}
-.fade-enter-active {
-  transition: all 1s linear;
-}
-.fade-leave-from {
-  opacity: 1;
-}
-.fade-leave-active {
-  transition: all 1s linear;
-}
-.fade-leave-to {
-  opacity: 0;
-}
+
 
 </style>
