@@ -16,8 +16,8 @@ function apiService(endpoint, method, data) {
         }
     }
     return fetch(endpoint, config)
-    .then(getJSON)
-    .catch(err => console.log(err))
+        .then(getJSON)
+        .catch(err => console.log(err))
 }
 
 

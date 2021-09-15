@@ -55,7 +55,6 @@ export default {
     getUserSettings() {  
       apiService(this.settingsEndpoint)
         .then(settings => {
-        //console.log(data), // settings object
           if (settings){
             this.$store.state.authModalShow = false, 
             this.$store.state.userDarkThemeMode = settings.dark,
@@ -65,8 +64,10 @@ export default {
           }
           else {
             this.$store.state.authModalShow = true
+            console.log("Unauthorized user")
           }
-        }).catch(err=> console.log(err))
+        })
+        .catch(err=> console.log(err))
     },
   },
   async created() {

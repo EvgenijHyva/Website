@@ -19,8 +19,7 @@
             <span class="tooltiptext">edit profile</span>
             </span> 
           <span class="separator">|</span>
-          <span class="auth-method sign-out"
-          >Logout
+          <span class="auth-method sign-out" @click="logout">Logout
             <i class="fas fa-sign-out-alt icon"></i>
             </span> 
         </div>
@@ -114,6 +113,25 @@ export default {
       }, 
       toggleNav() {
         this.showMobileMenu = !this.showMobileMenu
+      },
+      logout() {
+        const endpoint = "/auth/logout/"
+        fetch(endpoint)
+        .then(data => {
+          if (data.status ===200) {
+            console.log("loging out")
+            this.$store.state.authModalShow = true
+            this.$store.state.user = "Anonymous"
+          }
+        })
+      }
+    },
+    mounted() {
+      if (!this.userDarkThemeMode) {
+        let storedLocal = localStorage.getItem("Dark")
+        if (storedLocal) {
+          this.$store.state.userDarkThemeMode = JSON.parse(storedLocal)
+        }
       }
     },
     watch: {

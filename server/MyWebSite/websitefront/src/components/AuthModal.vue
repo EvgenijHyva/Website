@@ -31,8 +31,13 @@ export default {
 </script>
 
 <style >
-.error-message, label {
+ label {
     color: #029008;
+    margin: .5vh;
+}
+
+.error-message {
+    color: #d24610;
     margin: .5vh;
 }
 </style>
