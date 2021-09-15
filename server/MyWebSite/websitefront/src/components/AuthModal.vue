@@ -1,9 +1,7 @@
 <template>
     <section>
-        <h1>Auth-form</h1>
         <app-register-form v-if="tab==='register'" />
         <app-login-form v-else-if="tab==='login'" />
-        <button @click="toggle"> {{ tab }}</button>
     </section>
 </template>
 
@@ -21,14 +19,20 @@ export default {
     },
     data() {
         return {
-            tab: "login",
+            tab: "register",
         }
     },
     methods: {
         toggle() {
-            console.log("test")
             this.tab = this.tab === 'register'? 'login': 'register'
         }
     }
 }
 </script>
+
+<style >
+.error-message, label {
+    color: #029008;
+    margin: .5vh;
+}
+</style>

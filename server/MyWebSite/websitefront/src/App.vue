@@ -90,11 +90,28 @@ export default {
   color: #2c3e50;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Comfortaa&family=Kaushan+Script&family=Lobster&family=Ma+Shan+Zheng&family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Comfortaa&family=Kaushan+Script&family=Lobster&family=Ma+Shan+Zheng&family=Parisienne&family=Texturina&Allan&family=Carter+One&family=Karantina&family=VT323&display=swap');
 
 :root {
   --nav-small-menu: #d8d8d8f5;
   --nav-animated-bars: black;
+  --auth-primary-color: rgb(255, 92, 92);
+  --auth-primary-variant: rgb(7, 7, 7);
+  --auth-secondary-color: whitesmoke;
+  --auth-secondary-color-variant: rgb(24, 24, 21);
+  --auth-on-primary: rgb(250, 250, 250);
+  --auth-background: #c9ced3;
+  --auth-on-background-alt: whitesmoke;
+  --auth-background-button: black;
+  --auth-on-background: rgb(255, 255, 255);
+  --auth-box-shadow: 0 5px 20px 1px rgba(14, 10, 10, 0.795);
+  --auth-primary-background: rgba(210, 210, 210, 0.69);
+  --auth-shadow: rgba(0, 0 , 0, 0.6);
+  --auth-shadow-buttons: rgb(191, 183, 183);
+  --auth-valid: lightgreen;
+  --auth-invalid: rgb(80 33 33);
+  --auth-button-hover: rgb(22, 22, 22);
+  --auth-input-brighness:75%;
   --primary-color: rgb(255, 92, 92);
   --primary-variant: #ff2d2d;
   --secondary-color: #1b9999;
@@ -168,6 +185,21 @@ export default {
 [data-theme="dark"] {
   --nav-small-menu: #4e0a3ce8;
   --nav-animated-bars:#fff;
+  --auth-primary-color: rgb(150, 65, 255);
+  --auth-primary-variant: #6c63ff;
+  --auth-secondary-color: coral;
+  --auth-secondary-color-variant: #c1f523;
+  --auth-on-primary: #000;
+  --auth-on-background: #023a2fe8;
+  --auth-background-button: #0e0696;
+  --auth-on-background-alt: rgb(0 0 0 / 75%);
+  --auth-background: #1e1a54d6;
+  --auth-shadow: #6c63ff73;
+  --auth-shadow-buttons: #f3710180;
+  --auth-valid: #1f3e19;
+  --auth-invalid: #31212e;
+  --auth-button-hover: rgb(70, 8, 145);
+  --auth-input-brighness: 200%;
   --primary-color: rgb(150, 65, 255);
   --primary-variant: #6c63ff;
   --secondary-color: coral;
