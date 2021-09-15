@@ -93,6 +93,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Comfortaa&family=Kaushan+Script&family=Lobster&family=Ma+Shan+Zheng&family=Parisienne&display=swap');
 
 :root {
+  --nav-small-menu: #d8d8d8f5;
+  --nav-animated-bars: black;
   --primary-color: rgb(255, 92, 92);
   --primary-variant: #ff2d2d;
   --secondary-color: #1b9999;
@@ -164,6 +166,8 @@ export default {
 }
 
 [data-theme="dark"] {
+  --nav-small-menu: #4e0a3ce8;
+  --nav-animated-bars:#fff;
   --primary-color: rgb(150, 65, 255);
   --primary-variant: #6c63ff;
   --secondary-color: coral;
@@ -206,7 +210,7 @@ export default {
   --header: #5c3f84;
   --container-shadow-color: rgba(0, 0 ,0, 0.5); /* test */
   --computer-select-color: rgb(180,25, 25); /* test */
-  --mode-brightness: 50%; /* test */
+  --mode-brightness: 90%; /* test */
   --selected-icon: rgb(83, 35, 255); /* test */
   --selected-icon-color: #9ff7a4;
   --score-info: #fefe0285;

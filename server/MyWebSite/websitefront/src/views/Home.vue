@@ -87,7 +87,6 @@ h2 {
     margin: 1vh;
     padding: 10vw;
   }
-
 }
 
 </style>

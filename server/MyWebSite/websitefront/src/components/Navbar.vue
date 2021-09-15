@@ -1,9 +1,9 @@
 <template>
-    <nav id="nav">
+  <div class="nav-container">
+    <nav id="nav" :class="{'show': showMobileMenu , 'hide': !showMobileMenu}">
         <!-- Auth -->
         <div class="auth" 
-        v-if="this.authModalShow" 
-        >
+        v-if="this.authModalShow" >
           <span class="auth-method register" 
           href="#">Registration 
             <i class="fas fa-money-check icon"></i>
@@ -56,6 +56,13 @@
           <a href="#contact" v-if="!this.$store.state.authModalShow" v-show="project === 'Mainpage'">Contact</a>
         </div>
     </nav>
+        <div class="menu-bars" id="menu-bars" :class="{'change': showMobileMenu}"
+          @click="toggleNav">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+  </div>
 </template>
 
 <script>
@@ -75,6 +82,7 @@ export default {
       return {
         initial : true,
         settingsEndpoint : "/api/settings/",
+        showMobileMenu: false,
       }
     },
     computed: {
@@ -104,6 +112,9 @@ export default {
         apiService(this.settingsEndpoint, method, data)
         }
       }, 
+      toggleNav() {
+        this.showMobileMenu = !this.showMobileMenu
+      }
     },
     watch: {
       userDarkThemeMode : function () {
@@ -129,12 +140,15 @@ export default {
 }
 
 nav {
-  z-index: 10;
+  z-index: 11;
   position: fixed;
   font-size: 24px;
   letter-spacing: 3px;
   width: 100vw;
   background: var(--nav);
+}
+.menu-bars {
+  display: none;
 }
 
 a {
@@ -348,8 +362,81 @@ input:checked + .slider::before {
     padding: 10vw;
   }
   .toggle-text {
-    top: 5vh;
-    right: -28vw;
+    top: -8vh;
+    right: -32vw;
+  }
+  
+  .menu-bars {
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    z-index: 15;
+    display: inline;
+    cursor: pointer;
+  }
+  .bar1,
+  .bar2,
+  .bar3 {
+    width: 35px;
+    height: 2px;
+    background-color: var(--nav-animated-bars);
+    margin: 8px 0;
+    transition: 0.4s;
+  }
+  .change .bar1 {
+    transform: rotate(-45deg) translate(-7px, 8px);
+  }
+  .change .bar2 {
+    opacity: 0;
+  }
+  .change .bar3 {
+    transform: rotate(45deg) translate(-6px, -8px);
+  }
+  #nav {
+    height: 100vh;
+    background: var(--nav-small-menu);
+    padding: 0;
+  }
+  .hide {
+    animation: hideMenu 2s;
+    display: none;
+  }
+  .show{
+    display: flex !important;
+    flex-direction: column;
+    animation: showMenu 2s;
+  }
+  .auth {
+    position: unset;
+    margin: 15vh 0 ;
+  }
+  .theme-switch-wrapper {
+    position: unset;
+  }
+  .main-nav {
+    display: flex;
+    flex-direction: column;
+    margin: 10vh 0 auto;
+  }
+  .main-nav select {
+    margin: auto;
+    width: 42vw;
+  }
+  @keyframes showMenu {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes hideMenu {
+   from {
+     opacity: 1;
+   } 
+   to {
+     opacity: 0;
+   }
   }
 }
 

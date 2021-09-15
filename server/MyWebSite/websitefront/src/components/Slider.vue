@@ -264,8 +264,10 @@ img {
         width: 87vw;
         height: 37vh;
     }
+    h1 {
+        margin-top:  5vh;
+    }
     section {
-        margin: 2.5vw;
         align-items:unset;
     }
     .image {
