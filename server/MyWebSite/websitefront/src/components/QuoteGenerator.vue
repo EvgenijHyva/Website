@@ -199,6 +199,11 @@ button:active {
         font-size: 2.5rem;
     }
 }
+@media screen and (max-width: 600px) {
+    .fab {
+        margin: auto;
+    }
+}
 
 
 

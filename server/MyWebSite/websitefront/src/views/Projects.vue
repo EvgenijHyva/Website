@@ -91,7 +91,7 @@ p {
   line-height: 25px;
 }
 
-@media screen and (max-width: 375px) { 
+@media screen and (max-width: 600px) { 
   button {
     font-size: 12px;
     min-width: 25vw;

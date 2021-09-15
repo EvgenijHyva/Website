@@ -56,7 +56,7 @@ export default {
   margin: 1vw auto;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 600px) {
   .fab {
     font-size: 10vh;
     margin: 1vh auto;

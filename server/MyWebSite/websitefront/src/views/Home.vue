@@ -79,7 +79,7 @@ h2 {
   opacity: 0;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 600px) {
   h2 {
     font-size: 25px
   }

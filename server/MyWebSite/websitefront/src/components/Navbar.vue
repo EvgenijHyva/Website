@@ -356,7 +356,7 @@ input:checked + .slider::before {
   }
 }
 
-@media screen and (max-width: 375px) { 
+@media screen and (max-width: 600px) { 
   .text {
     margin: 1vh;
     padding: 10vw;

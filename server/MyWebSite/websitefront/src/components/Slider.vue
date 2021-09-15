@@ -259,7 +259,7 @@ img {
     }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 600px) {
     img {
         width: 87vw;
         height: 37vh;

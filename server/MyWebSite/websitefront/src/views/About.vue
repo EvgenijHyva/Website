@@ -53,7 +53,7 @@ img {
   height: 300px;
   width: 300px;
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 600px) {
   .about-container {
     display: flex;
     flex-direction: column;

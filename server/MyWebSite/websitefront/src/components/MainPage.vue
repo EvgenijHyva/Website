@@ -57,7 +57,7 @@ footer .text {
     font-size: 20px;
     margin-right: 3px;
 }
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 600px) {
     footer .text {
         margin: 3vh;
         padding: 3vw;
