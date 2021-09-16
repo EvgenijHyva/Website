@@ -4,20 +4,37 @@
         <!-- Auth -->
         <div class="auth" 
         v-if="this.authModalShow" >
+        <router-link :to="{ name : 'Auth', params: { tab: 'register'} }"  tag="span" 
+            @click="this.$store.state.showAuth = !this.$store.state.showAuth,
+            showMobileMenu = false" 
+            replace> 
           <span class="auth-method register" 
           href="#">Registration 
             <i class="fas fa-money-check icon"></i>
           </span>
+          </router-link> 
           <span class="separator">|</span>
-          <span class="auth-method login" href="#">Login 
+
+          <router-link :to="{ name : 'Auth', params: { tab: 'login'} }"  tag="span" 
+           @click="this.$store.state.showAuth = !this.$store.state.showAuth,
+           showMobileMenu = false" 
+           replace> 
+          <span class="auth-method login" >Login 
             <i class="fas fa-sign-in-alt icon"></i>
-          </span>   
+          </span> 
+          </router-link>  
+        
         </div>
         <div class="auth" v-else>
+        <router-link :to="{ name : 'Auth', params: { tab: 'edit'} }"  tag="span" 
+            @click="this.$store.state.showAuth = !this.$store.state.showAuth,
+            showMobileMenu = false" 
+            replace> 
           <span class="auth-method user">{{this.user}}
-            <i class="fas fa-user icon"></i>
+            <i class="fas fa-user icon" @click="editProfile"></i>
             <span class="tooltiptext">edit profile</span>
             </span> 
+          </router-link> 
           <span class="separator">|</span>
           <span class="auth-method sign-out" @click="logout">Logout
             <i class="fas fa-sign-out-alt icon"></i>
@@ -42,13 +59,11 @@
               <option value="Slider"><span title="Slider">Slider Api</span></option>
               <option value="Bookmarks"><span title="Add your bookmarks">Bookmarks</span></option>
               <option value="Calculator"><span title="Simple calculator">Calculator</span></option>
-              <option value="AuthModal"><span title="Auth-modal">Auth Forms</span></option>
               <option value="QuoteGenerator"><span title="Quote generator">Quotes</span></option>
               <option value="SpockRockGame"><span title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</span></option>
               <option value="Kanban"><span title="Kanban board">Kanban</span></option>
               <option value="MathSprint"><span title="Math sprint game">Math game</span></option>
               <option value="NasaApod"><span title="Nasa Apod">Nasa Apod</span></option>
-
           </select>
           <a href="/#home" v-show="project === 'Mainpage'">Home</a>
           <a href="#about" v-show="project === 'Mainpage'">About</a>
@@ -82,6 +97,7 @@ export default {
         initial : true,
         settingsEndpoint : "/api/settings/",
         showMobileMenu: false,
+        timeout: null,
       }
     },
     computed: {
@@ -97,9 +113,6 @@ export default {
       setThemeMode() {     
         document.documentElement.setAttribute("data-theme", !this.userDarkThemeMode ?  "light" :"dark" )
         localStorage.setItem("Dark", this.userDarkThemeMode)
-        if (!this.initial)
-          this.uploadUserSettings(); 
-        this.initial = false;
       },
 
       uploadUserSettings() {
@@ -122,9 +135,13 @@ export default {
             console.log("loging out")
             this.$store.state.authModalShow = true
             this.$store.state.user = "Anonymous"
-          }
+          } 
         })
-      }
+        .catch(err => console.log(err))
+      },
+      editProfile() {
+        console.log("editing") // TODO edit profile
+      },
     },
     mounted() {
       if (!this.userDarkThemeMode) {
@@ -137,6 +154,11 @@ export default {
     watch: {
       userDarkThemeMode : function () {
         this.setThemeMode()
+        if (!this.initial) {
+          clearTimeout(this.timeout)
+          this.timeout = setTimeout(this.uploadUserSettings, 5000)
+        }
+        this.initial = false;
       }
     }
   }
@@ -229,7 +251,7 @@ a .user {
   transition: opacity 2s;
   margin-top: 8vh;
   font-size: 10px;
-  margin-left: 6.5vh;
+  margin-left: 3.5vw;
   width: 55px;
   letter-spacing: 0.1px;
   filter: brightness(1.5);
@@ -262,6 +284,10 @@ a .user {
     top: 3.1vh;
     left: 2.2vw;
 }
+.auth a  {
+  margin-right: auto;
+}
+
 .auth-method {
     text-shadow: 10px 20px 10px var(--mode-text);
     color: var(--auth-method);

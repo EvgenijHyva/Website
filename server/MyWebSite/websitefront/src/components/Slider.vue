@@ -102,7 +102,7 @@ h1 {
 }
 img {
     height: 32.3vh;
-    width: 25vw;
+    width: 20vw;
 }
 .image-container {
     border: none;

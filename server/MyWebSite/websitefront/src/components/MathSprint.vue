@@ -539,7 +539,7 @@ button:active {
 .score-container h1{
     font-family: PT Mono, sans-serif;
     margin: 1vh 20px 1vh 10px;
-    font-size: 4vh;
+    font-size: 3vh;
     color: var(--mode-text);
 }
 

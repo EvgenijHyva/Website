@@ -4,10 +4,16 @@
     :project="activeProject" 
     @project-change="changeActiveProject" />
     <!-- name of component should be imported to component -->
+    <router-view v-slot="{ Component }" >
+      <transition name="change" mode="out-in">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
     <transition name="change" mode="out-in">
       <component :is="activeProject"></component>
     </transition>
-    <!-- <keep-alive> component </keep-alive> to store in memory-->
     <backgrounds />
   </div>
 </template>
@@ -18,7 +24,6 @@ import Mainpage from "./components/MainPage.vue";
 import Bookmarks from "./components/Bookmarks.vue";
 import Slider from "./components/Slider.vue";
 import Calculator from "./components/Calculator.vue";
-import AuthModal from "./components/AuthModal.vue";
 import QuoteGenerator from "./components/QuoteGenerator.vue";
 import SpockRockGame from "./components/SpockRockGame.vue";
 import Backgrounds from "./components/Backgrounds.vue";
@@ -35,9 +40,9 @@ export default {
       return "Main page"
   },
   components: {
-    NavbarComponent, Mainpage, Bookmarks, Slider, Calculator, AuthModal,
+    NavbarComponent, Bookmarks, Slider, Calculator, 
     QuoteGenerator, SpockRockGame, Backgrounds, Kanban, MathSprint,
-    NasaApod
+    NasaApod, Mainpage 
   },
   data() {
     return {
