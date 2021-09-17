@@ -19,7 +19,7 @@ const pageContentEndpoint = "/api/page_content/";
 export default {
     name: "Mainpage",
     title() {
-      return "Main page"
+      return "Mainpage"
     },
     components: {
         Home, About, Projects, Contacts,

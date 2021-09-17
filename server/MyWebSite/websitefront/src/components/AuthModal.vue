@@ -14,6 +14,9 @@ import { mapState } from "vuex";
 
 export default {
     name: "AuthModal",
+    title() {
+        return "Mainpage"
+    },
     data() {
         return {
             previous: null,
@@ -28,7 +31,7 @@ export default {
         }
     },
     computed: {
-      ...mapState(["user", "showAuth"]), // maping state doesn need getter
+      ...mapState(["user", "showAuth"]),
     }, 
     methods: {
         hideAuth(event) {
@@ -44,8 +47,15 @@ export default {
             } else if (this.previous !== oldVal)
                 this.previous = oldVal
             this.$store.state.showAuth = true
+            }
+        },
+        showAuth: function () {
+            if (!this.showAuth) {
+                this.$router.push("/")
+                if (this.$options.title)
+                    document.title = this.$options.title.call(this)
+            }
         }
-      }
     }
 }
 </script>

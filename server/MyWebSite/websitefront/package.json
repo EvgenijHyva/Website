@@ -10,6 +10,7 @@
   "dependencies": {
     "@vee-validate/rules": "^4.4.7",
     "core-js": "^3.6.5",
+    "firebase": "8",
     "vee-validate": "^4.4.9",
     "vue": "^3.0.0",
     "vue-confetti": "^2.2.2",

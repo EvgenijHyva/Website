@@ -66,3 +66,4 @@ def edit(request):
     })
 
     return render(request, "authapp/change_form.html", context)
+

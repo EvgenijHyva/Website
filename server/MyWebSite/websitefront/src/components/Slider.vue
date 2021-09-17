@@ -8,7 +8,7 @@
             </div>    
         
         <div class="image-container" v-else >  
-            <div class="image-wrapper animated" v-for="image in photosArray" :key="image.id">
+            <div class="image-wrapper animated" v-for="image in photosArray" :key="image.id" >
                 <img class="image" :src="image.urls.regular" 
                 :title="image.location.title ? image.location.title : 'Untitled'" 
                 :alt="image.alt_descriptiong ? image.alt_descriptiong : 'Image loading failed'" 
@@ -85,7 +85,8 @@ export default {
     },
     beforeMount: function () {
         this.getPhotos();
-    }
+    },
+    
 }
 
 </script>
