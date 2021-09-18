@@ -10,7 +10,7 @@ from users.models import CustomUser
 
 def index(request):
     context = {
-        "title": "MainPage"
+        "title": "Mainpage"
     }
     return render(request, "mainpage/index.html", context)
 

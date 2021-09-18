@@ -15,4 +15,4 @@ function getCookie(name) {
 }
 let CSRF_TOKEN = getCookie("csrftoken");
 
-export {CSRF_TOKEN };
+export { CSRF_TOKEN, getCookie };

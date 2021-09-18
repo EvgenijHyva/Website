@@ -121,23 +121,28 @@ export default {
           const data = {
               "dark": this.userDarkThemeMode,
             }
-        apiService(this.settingsEndpoint, method, data)
+          apiService(this.settingsEndpoint, method, data)
         }
       }, 
       toggleNav() {
         this.showMobileMenu = !this.showMobileMenu
       },
       logout() {
-        const endpoint = "/auth/logout/"
-        fetch(endpoint)
-        .then(data => {
-          if (data.status ===200) {
-            console.log("loging out")
-            this.$store.state.authModalShow = true
-            this.$store.state.user = "Anonymous"
-          } 
-        })
-        .catch(err => console.log(err))
+        const endPoint = "/api/dj-rest-auth/logout/"
+        const method = "POST"
+        apiService(endPoint, method)
+          .then(request => {
+            if (request.detail) {
+              console.log("loging out")
+              this.$store.state.authModalShow = true
+              this.$store.state.user = "Anonymous"
+            } else {
+              console.log("warning",request)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       },
       editProfile() {
         console.log("editing") // TODO edit profile
@@ -162,7 +167,6 @@ export default {
       }
     }
   }
-//const currentTheme = localStorage.getItem("theme");
 </script>
 
 <style>

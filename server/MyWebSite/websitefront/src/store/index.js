@@ -5,7 +5,8 @@ export default createStore({
     authModalShow: true,
     user: "Anonymous",
     userDarkThemeMode: false,
-    showAuth: false // this property allow to hide and show Auth component.
+    showAuth: false, // this property allow to hide and show Auth component.
+    key: null,
   },
   mutations: {
 

@@ -46,9 +46,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
 
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
 
     "webpack_loader",
 
@@ -170,7 +174,7 @@ LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 
 REST_AUTH_REGISTER_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
+    'REGISTER_SERIALIZER': 'users.serializer.AppRegisterSerializer',
 }
 
 REST_FRAMEWORK = {

@@ -33,6 +33,7 @@ import NasaApod from "./components/NasaApod.vue";
 
 
 import { apiService } from "./common/api.service";
+import { mapState } from "vuex";
 
 export default {
   name: "App",
@@ -75,12 +76,21 @@ export default {
         .catch(err=> console.log(err))
     },
   },
+  computed: {
+      ...mapState(["key",]),
+
+  },
   async created() {
     await this.getUserSettings()
   },
   beforeMount: function () {
     if (localStorage.Project)
       this.activeProject = localStorage.Project
+  },
+  watch: {
+    key: function() {
+      this.getUserSettings()
+    }
   }
 }
 </script>

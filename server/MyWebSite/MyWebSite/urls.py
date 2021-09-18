@@ -18,8 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_auth.views import LoginView
-
 from mainpage.views import index, not_found
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,9 +28,11 @@ urlpatterns = [
     path("api/", include("mainpage.api.urls", namespace="api_mainpage")),
     path("api-auth/", include("rest_framework.urls")),  #аутентификация в api
     path("api/rest-auth/", include("rest_auth.urls")),
+    path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),  # registration in application
     path("accounts/", include("allauth.urls")),
-    #re_path("^.*$", index, name="entry_point"),
-    path("index/", index, name="entry_point")
+    re_path("^.*$", index, name="entry_point"),
+    #path("index/", index, name="entry_point")
 ]
 
 # для кастомной 404 страницы
