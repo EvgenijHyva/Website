@@ -6,9 +6,9 @@
         @submit="login">
          <div class="form-field">
                 <div class="form-group">
-                    <label class="small mb-1" for="name">Email</label>
-                    <vee-field name="email" type="email"
-                        placeholder="Enter your email">                    
+                    <label class="small mb-1" for="username">Username</label>
+                    <vee-field name="username" type="text"
+                        placeholder="Enter your Username">                    
                     </vee-field>
                     <ErrorMessage name="email"  class="error-message" />
                 </div>
@@ -27,13 +27,15 @@
                         Reset
                     </button>
                 </div>
-                <h6 v-if="reg_show_alert" class="text text-alt">{{reg_alert_msg}}</h6>
+                <h1 v-show="log_show_alert">{{log_alert_msg}}</h1>
             </div>
         </vee-form>
     </div>
 </template>
 
 <script>
+import { apiService } from "../common/api.service";
+
 export default {
     name: "LoginForm",
     props: ["user"],
@@ -43,22 +45,30 @@ export default {
     data () {
         return {
             loginSchema: {
-               email: "required|email",
+               username: "required|min:1|max:30",
                password: "required|min:8|max:50"
             },
             log_on_submition: false,
-            reg_in_submission: false, // if request is processing
-            reg_show_alert: false,
-            reg_alert_msg: "Please wait! Your account is being created.",
+            log_show_alert: false,
+            log_alert_msg: "",
         }
     },
     methods: {
       async login(values) {
-        //const LoginPoint = "/api/dj-rest-auth/login/"
-        this.reg_show_alert = true;
+        const LoginPoint = "/api/dj-rest-auth/login/"
+        this.log_show_alert = true;
         this.log_on_submition = true;
-        this.reg_alert_msg = "Please wait! We are logging you in.";
-        console.log(values)
+        this.log_alert_msg = "Please wait! We are logging you in.";
+        apiService(LoginPoint, "POST", values)
+          .then(response => {
+            if (response.key) {
+              this.$store.state.key = response.key
+            } else {
+              this.log_on_submition = false
+              this.log_alert_msg= "Ooops error occured:" + response
+            }
+          })
+        this.$store.state.showAuth = false
       }
     }
 }
@@ -171,7 +181,7 @@ label {
       font-size: 20px;
     }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .container {
       width: 95vw; 
       font-size: 1.5vh;  

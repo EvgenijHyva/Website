@@ -3,12 +3,12 @@ from users.models import GENDER_CHOICES
 from django.db import transaction
 from rest_framework import serializers, status
 from dj_rest_auth.registration.serializers import RegisterSerializer
-
+from dj_rest_auth.serializers import LoginSerializer
 
 class AppRegisterSerializer(RegisterSerializer):
     gender = serializers.ChoiceField(GENDER_CHOICES)
     username = serializers.CharField(max_length=150)
-    email = serializers.CharField(max_length=100)
+    email = serializers.EmailField(max_length=100)
     phone = serializers.CharField(max_length=20)
     first_name = serializers.CharField(max_length=30, allow_null=True, allow_blank=True)
     last_name = serializers.CharField(max_length=150, allow_null=True, allow_blank=True)
@@ -30,3 +30,4 @@ class AppRegisterSerializer(RegisterSerializer):
             raise CustomException(detail={
                 "required": "You have to accept TOS for account registration"
             }, status_code=status.HTTP_400_BAD_REQUEST)
+

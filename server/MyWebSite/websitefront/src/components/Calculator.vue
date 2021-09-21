@@ -238,7 +238,7 @@ button:focus {
   filter: brightness(0.9);
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:800px) {
   .calculator {
     width: 95vw;
   }

@@ -614,7 +614,7 @@ button:active {
 }
 
 /* Media Query: iPhone */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .game-container{
      margin: auto;
      max-width: 100vw;

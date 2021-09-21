@@ -169,7 +169,7 @@ ACCOUNT_EMAIL_REQUIRED = (True)
 SITE_ID = 1
 
 # срабатывает когда нужно зайти на страицу авторизованым
-LOGIN_URL = "/auth/old-login-form/"
+LOGIN_URL = "/api/dj-rest-auth/login/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 

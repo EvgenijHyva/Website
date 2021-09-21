@@ -267,7 +267,7 @@ button:focus {
   outline: none;
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:800px) {
   .container {
     flex-direction: column;
   }

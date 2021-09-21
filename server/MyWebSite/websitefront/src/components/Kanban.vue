@@ -493,7 +493,7 @@ ul {
 }
 
 /* Media Query: Large Smartphone (Vertical) */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   body {
     overflow-y: auto;
   }

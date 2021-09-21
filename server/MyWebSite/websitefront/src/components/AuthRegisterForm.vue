@@ -151,20 +151,19 @@ export default{
             }
 
             apiService(enteryPoint, "POST", data)
-            .then(data => {
-                if (data.key) {
-                    this.$store.state.key = data.key
-                    this.reg_alert_msg = "Success! Your account has been created."
-                } else {
-                    this.reg_in_submission = false
-                    this.reg_alert_msg= "Ooops error occured:" + data
-                }
-            })
+                .then(response => {
+                    if (response.key) {
+                        this.$store.state.key = response.key
+                        this.reg_alert_msg = "Success! Your account has been created."
+                    } else {
+                        this.reg_in_submission = false
+                        this.reg_alert_msg= "Ooops error occured:" + response
+                    }
+                })
             this.$store.state.showAuth = false
         },
     },
     mounted () {
-       // const enteryPoint = "/api/dj-rest-auth/registration/"
            
     }
 }
@@ -306,7 +305,7 @@ select {
         width: 3vw;
     }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     label {
         width: 40vw;
     }
