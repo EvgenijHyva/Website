@@ -10,7 +10,7 @@
                     <vee-field name="username" type="text"
                         placeholder="Enter your Username">                    
                     </vee-field>
-                    <ErrorMessage name="email"  class="error-message" />
+                    <ErrorMessage name="username"  class="error-message" />
                 </div>
                 <div class="form-group">
                     <label class="small mb-1" for="password">Password</label>
@@ -20,10 +20,10 @@
                     <ErrorMessage name="password"  class="error-message" />
                 </div>
                 <div class="button-group">
-                    <button  type="submit" class="outline btn btn-primary" :disabled="log_on_submition">
+                    <button  type="submit" class="outline btn-primary" :disabled="log_on_submition">
                         Login
                     </button>
-                    <button type="reset" class="outline btn btn-primary" >
+                    <button type="reset" class="outline btn-primary" >
                         Reset
                     </button>
                 </div>
@@ -181,7 +181,7 @@ label {
       font-size: 20px;
     }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 00px) {
     .container {
       width: 95vw; 
       font-size: 1.5vh;  

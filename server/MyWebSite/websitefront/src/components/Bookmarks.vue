@@ -1,7 +1,7 @@
 <template>
     <section>
         <h1 id="show-modal" @click="showModal = !showModal" >Add Bookmark</h1>
-          <div class="container" id="bookmarks-container">
+          <div class="bookmarks-container" id="bookmarks-container">
             <transition-group name="flip"
                         enter-active-class="animate__animated animate__flipInX"
                         leave-to-class="animate__animated animate__flipOutX" >
@@ -268,7 +268,7 @@ button:focus {
 }
 
 @media screen and (max-width:800px) {
-  .container {
+  .bookmarks-container {
     flex-direction: column;
   }
 }

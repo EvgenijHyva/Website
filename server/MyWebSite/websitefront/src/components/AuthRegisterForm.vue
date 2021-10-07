@@ -125,6 +125,7 @@ export default{
             userDefaultData: {
                 gender: "D",
             },
+            genderChoices: null,
 
             reg_in_submission: false, // if request is processing
             reg_show_alert: false,

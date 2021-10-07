@@ -7,9 +7,12 @@ class PageSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PageSettings
         exclude = ("modified_at", "addition_code", "insert_addition_code")
-    user = serializers.StringRelatedField(read_only=True)
+    user = serializers.SerializerMethodField(read_only=True)
     additions = serializers.SerializerMethodField(read_only=True)
     flag = serializers.SerializerMethodField(read_only=True)
+
+    def get_user(self, instance):
+        return instance.user.username
 
     def get_additions(self, instance):
         if instance.insert_addition_code:
@@ -38,7 +41,7 @@ class ContactsSerializer(serializers.ModelSerializer):
         return str(request.user) != "AnonymousUser"
 
     def get_telegram_username(self, instance):
-        return f"https://t.me/{instance.telegram_username}"
+        return f"https://telegram.im/@{instance.telegram_username}"
 
     def get_whatsapp(self, instance):
         return f"https://wa.me/{instance.whatsapp}"

@@ -5,7 +5,7 @@
                 <h1>Math sprint Game</h1>
             </div>
             <!-- Splash Page -->
-            <div class="card" id="splash-page" ref="splashPage" >
+            <div class="game-card" id="splash-page" ref="splashPage" >
                 <vee-form id="start-form" @submit="createEquations" >
                     <div class="selection-container" >
                         <div class="radio-container" 
@@ -37,10 +37,10 @@
                 </vee-form>
             </div>
             <!-- Countdown Page -->
-            <div class="card" id="countdown-page"  ref="countdownPage" hidden >
+            <div class="game-card" id="countdown-page"  ref="countdownPage" hidden >
                 <h1 class="countdown"> {{ countdown }} </h1>
             </div>
-            <div class="card" id="game-page" hidden ref="gamePage" >
+            <div class="game-card" id="game-page" hidden ref="gamePage" >
                 <!--item container -->
                 <div class="height-240"></div>
                 <div class="selected-item"></div>
@@ -59,7 +59,7 @@
                     <button class="right" data-answer="true" value="true">Right</button>
                 </div>
             </div>
-            <div class="card" id="score-page" hidden ref="scorePage" >
+            <div class="game-card" id="score-page" hidden ref="scorePage" >
                 <!-- Score container -->
                 <div class="score-container">
                     <h1 class="title">Your Time</h1>
@@ -276,7 +276,7 @@ section {
   align-items: center;
 }
 
-.card {
+.game-card {
   height: 70vh;
   position: absolute;
   width: 100%;

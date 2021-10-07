@@ -98,5 +98,8 @@ p {
     height: 4.5vh;
     margin: 2vw;
   }
+  .text-box {
+    width: 95vw;
+  }
 }
 </style>

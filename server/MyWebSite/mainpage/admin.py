@@ -24,5 +24,5 @@ class AdminPageSettings(admin.ModelAdmin):
     readonly_fields = ("modified_at", )
     list_display = ("user", "modified_at", "user_id")
     ordering = ("user_id", "modified_at")
-    search_fields = ("user_id", )
+    search_fields = ("user_id", "user__email")
     fields = ("user", "dark", "modified_at", ("addition_code", "insert_addition_code"))

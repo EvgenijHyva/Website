@@ -188,6 +188,9 @@ section {
     line-height: 1.8rem;
 }
 
+a{
+  margin-right:0 ;
+}
 
 .nasa-container {
   position: relative;
@@ -195,7 +198,6 @@ section {
   flex-direction: column;
   align-items: center;
   margin-top: 5px;
-  margin-bottom: 25px;
 }
 
 
@@ -215,7 +217,7 @@ section {
 /* Navigation */
 .navigation-container {
   position: fixed;
-  top: 9.5vh;
+  top: 12.5vh;
 }
 
 .navigation-items {

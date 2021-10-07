@@ -3,7 +3,6 @@ from users.models import GENDER_CHOICES
 from django.db import transaction
 from rest_framework import serializers, status
 from dj_rest_auth.registration.serializers import RegisterSerializer
-from dj_rest_auth.serializers import LoginSerializer
 
 class AppRegisterSerializer(RegisterSerializer):
     gender = serializers.ChoiceField(GENDER_CHOICES)

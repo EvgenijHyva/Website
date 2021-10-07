@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="app-container">
     <navbar-component 
     :project="activeProject" 
     @project-change="changeActiveProject" />
@@ -106,6 +106,7 @@ export default {
   color: #2c3e50;
 }
 
+
 @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Comfortaa&family=Kaushan+Script&family=Lobster&family=Ma+Shan+Zheng&family=Parisienne&family=Texturina&Allan&family=Carter+One&family=Karantina&family=VT323&display=swap');
 
 :root {
@@ -133,7 +134,7 @@ export default {
   --secondary-color: #1b9999;
   --on-primary: rgb(250, 250, 250);
   --on-background: rgb(66, 66, 66);
-  --on-background-secondary: rgb(125 132 138);
+  --on-background-secondary: rgb(254 242 255);
   --on-background-alt: rgba(66, 66, 66, 0.7);
   --background: rgb(223 219 226);
   --box-shadow: 0 5px 20px 1px rgba(0, 0, 0, 0.5);

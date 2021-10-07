@@ -280,7 +280,7 @@ a .user {
   z-index: 100;
   position: fixed;
   right: 3vw;
-  top: 3.1vh;
+  top: 3.8vh;
 }
 
 .auth {

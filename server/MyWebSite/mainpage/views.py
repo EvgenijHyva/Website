@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import get_object_or_404, RetrieveAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import get_object_or_404, RetrieveAPIView, RetrieveUpdateAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from mainpage.api.serializers import PageSettingsSerializer, ContactsSerializer, PageContentSerializer
@@ -48,6 +48,5 @@ class PageContentAPIView(RetrieveAPIView):
 
     def get_object(self):
         return PageContent.objects.first()
-
 
 

@@ -13,9 +13,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import rest_framework.authentication
+import django.core.mail.backends.smtp
+from dotenv import load_dotenv # need to be commented on Herocu
+load_dotenv() # need to be commented on Herocu
 
-import MyWebSite.site_permisions
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -59,6 +60,8 @@ INSTALLED_APPS = [
     "users",
     "mainpage",
     "authapp",
+    "scraping",
+
 ]
 
 MIDDLEWARE = [
@@ -193,3 +196,10 @@ WEBPACK_LOADER = {
         "STATS_FILE": os.path.join(BASE_DIR, "websitefront", "webpack-stats.json"),
     }
 }
+
+EMAIL_BACKEND = django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TSL = True
+EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
