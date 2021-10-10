@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     "mainpage",
     "authapp",
     "scraping",
-
+    "forum",
 ]
 
 MIDDLEWARE = [
