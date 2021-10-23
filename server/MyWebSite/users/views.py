@@ -10,10 +10,6 @@ class CurrentUserAPIView(RetrieveDestroyAPIView):
     serializer_class = UserDisplaySerializer
     permission_classes = [IsAuthenticated, ]
 
-    #def get(self, request):
-     #   serializer = UserDisplaySerializer(request.user)
-     #   return Response(serializer.data)
-
     def get_object(self):
         return CustomUser.objects.filter(pk=self.request.user.id, is_active=True).first()
 

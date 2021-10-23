@@ -1,5 +1,5 @@
 from django.db import models
-from scraping.utils import from_cyrillic_to_slug
+from core.utils import from_cyrillic_to_slug
 
 
 class City(models.Model):

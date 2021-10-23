@@ -14,13 +14,6 @@ def index(request):
     }
     return render(request, "mainpage/index.html", context)
 
-def not_found(request, exception):
-    context = {
-        "title": "404 page not found",
-        "text": "Сударь страницы нет!" if request.user.is_authenticated else "искомой страницы нет :(",
-    }
-    return render(request, "404.html", context)
-
 
 class PageSettingsAPIView(RetrieveUpdateAPIView):
     serializer_class = PageSettingsSerializer
@@ -28,8 +21,8 @@ class PageSettingsAPIView(RetrieveUpdateAPIView):
 
     def get_object(self):
         """user settings is related field in custom user model"""
-        #return PageSettings.objects.filter(user=self.request.user).first() # same logic
-        return CustomUser.objects.filter(pk=self.request.user.id).first().user_settings
+        return PageSettings.objects.filter(user=self.request.user).first()
+        #return CustomUser.objects.filter(pk=self.request.user.id).first().user_settings
 
 
 class PageContactsAPIView(RetrieveAPIView): # ReadOnlyModelViewSet
@@ -39,7 +32,6 @@ class PageContactsAPIView(RetrieveAPIView): # ReadOnlyModelViewSet
 
     def get_object(self):
         return Contacts.objects.first()
-
 
 
 class PageContentAPIView(RetrieveAPIView):

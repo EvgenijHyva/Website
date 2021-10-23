@@ -17,7 +17,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
-from mainpage.views import index, not_found
+from mainpage.views import index
 
 
 urlpatterns = [
@@ -25,7 +25,8 @@ urlpatterns = [
     path("auth/", include("authapp.urls", namespace="auth")),
     path("api/", include("users.urls", namespace="api_users")),
     path("api/", include("mainpage.api.urls", namespace="api_mainpage")),
-    path("api-auth/", include("rest_framework.urls")),  #аутентификация в api
+    path("api/", include("forum.urls", namespace="api_forum")),
+    path("api-auth/", include("rest_framework.urls")),  # аутентификация в api
     path("api/rest-auth/", include("rest_auth.urls")),
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),  # registration in application
@@ -33,9 +34,6 @@ urlpatterns = [
     re_path("^.*$", index, name="entry_point"),
     #path("index/", index, name="entry_point")
 ]
-
-# для кастомной 404 страницы
-#handler404 = not_found
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

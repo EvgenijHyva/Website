@@ -30,7 +30,7 @@ import Backgrounds from "./components/Backgrounds.vue";
 import Kanban from "./components/Kanban.vue";
 import MathSprint from "./components/MathSprint.vue";
 import NasaApod from "./components/NasaApod.vue";
-
+import Forum from "./components/Forum.vue";
 
 import { apiService } from "./common/api.service";
 import { mapState } from "vuex";
@@ -43,11 +43,10 @@ export default {
   components: {
     NavbarComponent, Bookmarks, Slider, Calculator, 
     QuoteGenerator, SpockRockGame, Backgrounds, Kanban, MathSprint,
-    NasaApod, Mainpage 
+    NasaApod, Mainpage, Forum
   },
   data() {
     return {
-      settingsEndpoint: "/api/settings/",
       activeProject: "Mainpage",
       userSettings : null,
     }
@@ -58,8 +57,9 @@ export default {
       localStorage.Project = this.activeProject;
     },
 
-    getUserSettings() {  
-      apiService(this.settingsEndpoint)
+    getUserSettings() { 
+      const settingsEndpoint = "/api/settings/"
+      apiService(settingsEndpoint)
         .then(settings => {
           if (settings){
             this.$store.state.authModalShow = false, 
@@ -197,6 +197,9 @@ export default {
   --select-color: dodgerblue;
   --success: rgb(15, 158, 2);
   --danger: rgb(214, 23, 23);
+  --forum-background: #080808ba;
+  --forum-button-shadow:4px 0.3rem rgb(219 162 128);
+  --forum-card-shadow: 0 0 3px 2px #7a7a7a;
 }
 
 [data-theme="dark"] {
@@ -273,6 +276,9 @@ export default {
   --select-color: dodgerblue;
   --success: rgb(15, 158, 2);
   --danger: rgb(214, 23, 23);
+  --forum-background: #6a48699c;
+  --forum-button-shadow: 4px 0.3rem rgb(18 21 42);
+  --forum-card-shadow: 0 0 3px 2px #36033c;
 }
 
 html {

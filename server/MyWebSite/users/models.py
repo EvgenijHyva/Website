@@ -28,4 +28,4 @@ class CustomUser(AbstractUser):
     gender = models.CharField(verbose_name="пол", max_length=1, choices=GENDER_CHOICES, blank=True)
 
     def __str__(self):
-        return f"{self.username} | {self.email}"
+        return f"{self.username} "

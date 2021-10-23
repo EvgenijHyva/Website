@@ -2,7 +2,7 @@ from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from authapp.forms import UserRegisterForm, UserLoginForm, UserEditForm
+from authapp.forms import UserRegisterForm, UserLoginForm
 
 
 def register(request):
@@ -48,22 +48,5 @@ def logout(request):
     return HttpResponseRedirect(reverse("entry_point"))
 
 
-##################################### for refactoring
-def edit(request):
-    context = {
-        "title": "Редактирование"
-    }
-    if request.method == "POST":
-        edit_form = UserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse("main"))
 
-    else:
-        edit_form = UserEditForm(instance=request.user)
-    context.update({
-        "edit_form": edit_form
-    })
-
-    return render(request, "authapp/change_form.html", context)
 

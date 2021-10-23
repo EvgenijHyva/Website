@@ -1,7 +1,15 @@
 <template>
     <section id="projects">
     <!-- Projects -->
-        <h1>Buttons</h1>
+        <h1>This project was created using</h1>
+        <div class="project-icons">
+            <i class="fab fa-python"></i>
+            <i class="fab fa-js"></i>
+            <i class="fab fa-vuejs"></i>
+            <i class="fab fa-html5"></i>
+            <i class="fab fa-bootstrap"></i>
+            <i class="fab fa-font-awesome"></i>
+        </div>
         <div class="buttons">
             <button class="primary">Primary</button>
             <button class="secondary">Secondary</button>
@@ -84,6 +92,18 @@ button:hover:not(.outline) {
   color: var(--on-primary);
   border-radius: 10px;
   padding: 30px;
+}
+.project-icons {
+  display: flex;
+  flex-wrap: wrap;
+}
+.project-icons .fab{
+  font-size: 70px;
+  cursor: none;
+  padding: 0 10px;
+}
+.project-icons .fab:hover {
+  color: transparent;
 }
 
 p {

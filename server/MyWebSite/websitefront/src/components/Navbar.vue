@@ -31,7 +31,7 @@
             showMobileMenu = false" 
             replace> 
           <span class="auth-method user">{{this.user}}
-            <i class="fas fa-user icon" @click="editProfile"></i>
+            <i class="fas fa-user-edit icon" @click="editProfile"></i>
             <span class="tooltiptext">edit profile</span>
             </span> 
           </router-link> 
@@ -55,15 +55,16 @@
         <!-- Navigations -->
         <div class="main-nav">
           <select name="projects" id="projects" :value="project" @change="changeProject" >
-              <option value="Mainpage"><span title="Website mainpage">Mainpage</span></option>
-              <option value="Slider"><span title="Slider">Slider Api</span></option>
-              <option value="Bookmarks"><span title="Add your bookmarks">Bookmarks</span></option>
-              <option value="Calculator"><span title="Simple calculator">Calculator</span></option>
-              <option value="QuoteGenerator"><span title="Quote generator">Quotes</span></option>
-              <option value="SpockRockGame"><span title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</span></option>
-              <option value="Kanban"><span title="Kanban board">Kanban</span></option>
-              <option value="MathSprint"><span title="Math sprint game">Math game</span></option>
-              <option value="NasaApod"><span title="Nasa Apod">Nasa Apod</span></option>
+              <option value="Mainpage" title="Website mainpage">Mainpage</option>
+              <option value="Slider" title="Slider">Slider Api</option>
+              <option value="Bookmarks" title="Add your bookmarks">Bookmarks</option>
+              <option value="Calculator" title="Simple calculator">Calculator</option>
+              <option value="QuoteGenerator" title="Quote generator">Quotes</option>
+              <option value="SpockRockGame" title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</option>
+              <option value="Kanban" title="Kanban board">Kanban</option>
+              <option value="MathSprint" title="Math sprint game">Math game</option>
+              <option value="NasaApod" title="Nasa Apod">Nasa Apod</option>
+              <option value="Forum" :disabled="this.$store.state.authModalShow" title="require authorization">Forum</option>
           </select>
           <a href="/#home" v-show="project === 'Mainpage'">Home</a>
           <a href="#about" v-show="project === 'Mainpage'">About</a>
@@ -161,7 +162,7 @@ export default {
         this.setThemeMode()
         if (!this.initial) {
           clearTimeout(this.timeout)
-          this.timeout = setTimeout(this.uploadUserSettings, 5000)
+          this.timeout = setTimeout(this.uploadUserSettings, 3000)
         }
         this.initial = false;
       }
@@ -239,8 +240,12 @@ span {
 a .user {
   text-decoration:none;
 }
-.fa-user {
+.fa-user-edit {
   position: relative;
+}
+.fa-user-edit:hover {
+  text-shadow: 0px 0px 7px #348eaf8f;
+  color: green;
 }
 .tooltiptext {
   visibility: hidden;
@@ -269,10 +274,7 @@ a .user {
   color: #029008;
 }
 
-.fa-user:hover {
-  text-shadow: 0px 0px 7px #348eaf8f;
-  color: green;
-}
+
 /* Dark Mode Toggle */
 .theme-switch-wrapper {
   display: flex;

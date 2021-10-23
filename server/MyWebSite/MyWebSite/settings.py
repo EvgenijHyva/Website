@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import django.core.mail.backends.smtp
 from dotenv import load_dotenv # need to be commented on Herocu
+
+
 load_dotenv() # need to be commented on Herocu
 
 
@@ -53,7 +54,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
 
     "webpack_loader",
 
@@ -171,7 +171,7 @@ ACCOUNT_EMAIL_REQUIRED = (True)
 # django.contrib.sites
 SITE_ID = 1
 
-# срабатывает когда нужно зайти на страицу авторизованым
+# срабатывает когда нужно зайти на страницу авторизованым
 LOGIN_URL = "/api/dj-rest-auth/login/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
@@ -186,8 +186,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication"
     ),
     "DEFAULT_PAGINATION_CLASS":
-        "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 10,
+        "core.pagination.PageNumberPaginationNoCount",
+    "PAGE_SIZE": 3,
 }
 
 WEBPACK_LOADER = {
