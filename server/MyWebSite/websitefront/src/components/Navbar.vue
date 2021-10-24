@@ -5,8 +5,7 @@
         <div class="auth" 
         v-if="this.authModalShow" >
         <router-link :to="{ name : 'Auth', params: { tab: 'register'} }"  tag="span" 
-            @click="this.$store.state.showAuth = !this.$store.state.showAuth,
-            showMobileMenu = false" 
+            @click="showMobileMenu = false" 
             replace> 
           <span class="auth-method register" 
           href="#">Registration 
@@ -16,8 +15,7 @@
           <span class="separator">|</span>
 
           <router-link :to="{ name : 'Auth', params: { tab: 'login'} }"  tag="span" 
-           @click="this.$store.state.showAuth = !this.$store.state.showAuth,
-           showMobileMenu = false" 
+           @click="showMobileMenu = false" 
            replace> 
           <span class="auth-method login" >Login 
             <i class="fas fa-sign-in-alt icon"></i>
@@ -54,21 +52,22 @@
         </div>
         <!-- Navigations -->
         <div class="main-nav">
-          <select name="projects" id="projects" :value="project" @change="changeProject" >
-              <option value="Mainpage" title="Website mainpage">Mainpage</option>
-              <option value="Slider" title="Slider">Slider Api</option>
-              <option value="Bookmarks" title="Add your bookmarks">Bookmarks</option>
-              <option value="Calculator" title="Simple calculator">Calculator</option>
-              <option value="QuoteGenerator" title="Quote generator">Quotes</option>
-              <option value="SpockRockGame" title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</option>
-              <option value="Kanban" title="Kanban board">Kanban</option>
-              <option value="MathSprint" title="Math sprint game">Math game</option>
-              <option value="NasaApod" title="Nasa Apod">Nasa Apod</option>
-              <option value="Forum" :disabled="this.$store.state.authModalShow" title="require authorization">Forum</option>
-          </select>
-          <a href="/#home" v-show="project === 'Mainpage'">Home</a>
-          <a href="#about" v-show="project === 'Mainpage'">About</a>
-          <a href="#contact" v-if="!this.$store.state.authModalShow" v-show="project === 'Mainpage'">Contact</a>
+          
+            <router-link :to="{'path': '/'}"> 
+              <select name="projects" id="projects" :value="this.$store.state.activeProject" @change="changeProject">
+                  <option value="Mainpage" title="Website mainpage">Mainpage</option>
+                  <option value="Slider" title="Slider">Slider Api</option>
+                  <option value="Bookmarks" title="Add your bookmarks">Bookmarks</option>
+                  <option value="Calculator" title="Simple calculator">Calculator</option>
+                  <option value="QuoteGenerator" title="Quote generator">Quotes</option>
+                  <option value="SpockRockGame" title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</option>
+                  <option value="Kanban" title="Kanban board">Kanban</option>
+                  <option value="MathSprint" title="Math sprint game">Math game</option>
+                  <option value="NasaApod" title="Nasa Apod">Nasa Apod</option>
+              </select>
+            </router-link>
+          
+          <router-link :to="{'path': '/forum/'}" :class="{'disabled-link': authModalShow}" :title="authModalShow? 'Login required': 'Forum'"> Forum </router-link>
         </div>
     </nav>
         <div class="menu-bars" id="menu-bars" :class="{'change': showMobileMenu}"
@@ -86,13 +85,6 @@ import { apiService } from "../common/api.service";
 
 export default {
     name: "NavbarComponent",
-    props: {
-      project: {
-        type: String,
-        required: true
-      },
-    },
-    emits: ["project-change"],
     data() {
       return {
         initial : true,
@@ -103,12 +95,13 @@ export default {
     },
     computed: {
       //array or object can be used
-      ...mapState(["authModalShow", "user", "userDarkThemeMode"]), // maping state doesn need getter
+      ...mapState(["authModalShow", "user", "userDarkThemeMode", "activeProject"]), // maping state doesn need getter
 
     },
     methods: {
       changeProject(event) {
-        this.$emit("project-change", event.target.value)
+        this.$store.state.activeProject = event.target.value
+        localStorage.Project = this.activeProject;
       },
         
       setThemeMode() {     
@@ -215,7 +208,7 @@ select {
     background: var(--select);
 }
 
-select:hover, select:focus {
+select:focus {
   color: var(--on-background);
   border-bottom: 3px solid;
 }
@@ -389,10 +382,9 @@ input:checked + .slider::before {
 .slider.round::before {
   border-radius: 50%;
 }
-.main-nav, select {
-  text-shadow: -1px 3px 5px;
+.disabled-link {
+  pointer-events: none;
 }
-
 @media screen and (max-width: 1024px) { 
   span {
     margin: 0;

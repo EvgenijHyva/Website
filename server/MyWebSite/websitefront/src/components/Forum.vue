@@ -1,7 +1,7 @@
 <template>
     <section>
         <side-bar />
-        <div class="loader" id="loader" v-if="loading">
+        <div class="loader" id="loader" v-if="loading" >
                 <img src="../assets/Ripple-1s-200px.svg" alt="loading">
                 <span class="loading-text"> I'm load, please wait </span>
         </div> 
@@ -43,15 +43,15 @@
                     Previous page
                 </button>
             </div>
-            <question-detail />
         </div>
     </section>
 </template>
 
 <script>
-import {axios} from "@/common/api.service.js";
+import { mapState } from "vuex";
+import { axios } from "@/common/api.service.js";
 import SideBar from "../views/SideBar.vue";
-import QuestionDetail from "../views/QuestionDetail.vue";
+
 //import QuestionCreate from "@views/QuestionCreate.vue";
 
 export default {
@@ -60,7 +60,7 @@ export default {
         return "Forum"
     },
     components: {
-        SideBar, QuestionDetail, //QuestionCreate
+        SideBar, //QuestionCreate
     },
     data() {
         return {
@@ -70,6 +70,9 @@ export default {
             error: null,
             loading: false, 
         }
+    },
+    computed: {
+      ...mapState(["key",])
     },
     methods: {
         async getQuestions(endpoint) {
@@ -92,6 +95,11 @@ export default {
     },
     async created() {
         await this.getQuestions()
+    },
+    watch: {
+        key: async function() {
+            this.getQuestions()
+        }
     }
 }
 

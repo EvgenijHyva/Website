@@ -7,6 +7,7 @@ export default createStore({
     userDarkThemeMode: false,
     showAuth: false, // this property allow to hide and show Auth component.
     key: null,
+    activeProject: "Mainpage",
   },
   mutations: {
 

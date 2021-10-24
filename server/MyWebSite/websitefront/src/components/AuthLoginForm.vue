@@ -181,7 +181,7 @@ label {
       font-size: 20px;
     }
 }
-@media screen and (max-width: 00px) {
+@media screen and (max-width: 600px) {
     .container {
       width: 95vw; 
       font-size: 1.5vh;  

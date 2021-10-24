@@ -8,7 +8,9 @@
 export default {
     name: "NotFound",
     data() {
-
+        return {
+            
+        }
     }
 }
 </script>

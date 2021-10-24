@@ -1,5 +1,5 @@
 <template>
-    <section class="auth-main-container" v-if="showAuth && tab" @click="hideAuth" >
+    <section class="auth-main-container" v-show="tab" @click="hideAuth" >
         <app-register-form v-if="tab==='register'" :user=user />
         <app-login-form v-else-if="tab==='login'" :user=user />
         <app-edit-form v-else-if="tab === 'edit'" :user=user />
@@ -48,13 +48,6 @@ export default {
                 this.previous = oldVal
             this.$store.state.showAuth = true
             }
-        },
-        showAuth: function () {
-            if (!this.showAuth) {
-                this.$router.push("/")
-                if (this.$options.title)
-                    document.title = this.$options.title.call(this)
-            }
         }
     }
 }
@@ -72,9 +65,15 @@ export default {
 }
 
 .auth-main-container {
-    position: fixed;
     z-index: 10;
     background: #0000008a;
     width: 100%;
 }
+.background-hide {
+    background: #0000008a;
+    z-index: 1;
+    width:100%;
+    height: 100%;
+}
+
 </style>

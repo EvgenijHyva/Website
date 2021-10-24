@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AppAuthModal from "@/components/AuthModal.vue"
+import Base from "@/components/Base.vue";
+import AppAuthModal from '@/components/AuthModal.vue'
+
+
 
 const routes = [
   {
@@ -8,18 +11,32 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (auth.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "auth", */  '../components/AuthModal.vue'),
+    component:AppAuthModal,
     props: true
   },
   {
     path: '/'  ,
-    name: 'authmodal',
-    component: AppAuthModal
+    name: 'Base',
+    component: Base,
+    meta: {
+      KeepAlive: true
+    }
   },
- 
+  {
+    path: '/forum/',
+    name: 'Forum',
+    component: () => import(/* webpackChunkName: "NotFound",*/ "@/components/Forum.vue"),
+    meta: {
+      KeepAlive: false
+    }
+  },
   {
     path: "/:catchAll(.*)",
+    name:"Page not found",
     component: () => import(/* webpackChunkName: "NotFound", */  '../components/NotFound.vue'),
+    meta: {
+      KeepAlive: false
+    }
   }
 ]
 

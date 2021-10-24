@@ -10,17 +10,10 @@
             <i class="fab fa-bootstrap"></i>
             <i class="fab fa-font-awesome"></i>
         </div>
-        <div class="buttons">
-            <button class="primary">Primary</button>
-            <button class="secondary">Secondary</button>
-            <button class="primary" disabled>Disabled</button>
-            <button class="outline">Outline</button>
-            <button class="secondary outline">Alt Outline</button>
-            <button class="outline" disabled>Disabled</button>
-        </div>
         <div class="text-box" id="text_box">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, cumque! Lorem ipsum dolor sit, amet
-                consectetur adipisicing elit. Id vitae ratione, nobis optio rem nulla.
+            <p>
+              As project backend used Django + Django Rest Framework.
+              Project Frontend is Vue.js, Bootstrap 4, HTML5+CSS, Font Awesome.
             </p>
         </div>
     </section>
@@ -96,6 +89,7 @@ button:hover:not(.outline) {
 .project-icons {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 20px ;
 }
 .project-icons .fab{
   font-size: 70px;

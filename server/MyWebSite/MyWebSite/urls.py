@@ -25,7 +25,7 @@ urlpatterns = [
     path("auth/", include("authapp.urls", namespace="auth")),
     path("api/", include("users.urls", namespace="api_users")),
     path("api/", include("mainpage.api.urls", namespace="api_mainpage")),
-    path("api/", include("forum.urls", namespace="api_forum")),
+    path("forum/api/", include("forum.urls", namespace="api_forum")),
     path("api-auth/", include("rest_framework.urls")),  # аутентификация в api
     path("api/rest-auth/", include("rest_auth.urls")),
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')),

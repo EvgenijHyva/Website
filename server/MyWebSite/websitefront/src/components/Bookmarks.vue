@@ -16,9 +16,9 @@
           </div>
         
         <div class="modal-container" id="modal" :class="{ 'show-modal': showModal }">
-            <div class="modal">
+            <div class="modal-block">
                 <i class="fas fa-times close-icon" id="close-modal" @click="showModal = !showModal"></i>
-                <div class="modal-header">
+                <div class="modal-header-block">
                     <h3>Add Bookmark</h3>
                 </div>
                     <div class="modal-content">
@@ -116,7 +116,7 @@ label {
 }
 
 /* Bookmarks */
-.container {
+.bookmarks-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -185,7 +185,7 @@ a:hover, a:active {
   align-items: center;
 }
 
-.modal {
+.modal-block {
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
   max-width: 95%;
@@ -213,7 +213,7 @@ a:hover, a:active {
   cursor: pointer;
 }
 
-.modal-header {
+.modal-header-block {
   background: var(--primary-color);
   color: white;
   padding: 15px;
@@ -270,6 +270,13 @@ button:focus {
 @media screen and (max-width:800px) {
   .bookmarks-container {
     flex-direction: column;
+  }
+  #show-modal {
+    margin: 80px auto 10px;
+  }
+  section {
+    justify-content: normal;
+    align-items: stretch;
   }
 }
 

@@ -1,35 +1,24 @@
 <template>
   <div class="app-container">
-    <navbar-component 
-    :project="activeProject" 
-    @project-change="changeActiveProject" />
+    <navbar-component />
     <!-- name of component should be imported to component -->
     <router-view v-slot="{ Component }" >
-      <transition name="change" mode="out-in">
-        <keep-alive>
+      <transition name="change" mode="out-in" v-if="!$route.meta.keepAlive">
+        <component :is="Component" />
+      </transition>
+      <transition name="change" mode="out-in" v-else>
+        <keepAlive>
           <component :is="Component" />
-        </keep-alive>
+        </keepAlive>
       </transition>
     </router-view>
-    <transition name="change" mode="out-in">
-      <component :is="activeProject"></component>
-    </transition>
     <backgrounds />
   </div>
 </template>
 
 <script>
 import NavbarComponent from "./components/Navbar.vue";
-import Mainpage from "./components/MainPage.vue";
-import Bookmarks from "./components/Bookmarks.vue";
-import Slider from "./components/Slider.vue";
-import Calculator from "./components/Calculator.vue";
-import QuoteGenerator from "./components/QuoteGenerator.vue";
-import SpockRockGame from "./components/SpockRockGame.vue";
 import Backgrounds from "./components/Backgrounds.vue";
-import Kanban from "./components/Kanban.vue";
-import MathSprint from "./components/MathSprint.vue";
-import NasaApod from "./components/NasaApod.vue";
 import Forum from "./components/Forum.vue";
 
 import { apiService } from "./common/api.service";
@@ -41,22 +30,14 @@ export default {
       return "Main page"
   },
   components: {
-    NavbarComponent, Bookmarks, Slider, Calculator, 
-    QuoteGenerator, SpockRockGame, Backgrounds, Kanban, MathSprint,
-    NasaApod, Mainpage, Forum
+    Backgrounds, Forum, NavbarComponent
   },
   data() {
     return {
-      activeProject: "Mainpage",
       userSettings : null,
     }
   },
   methods: {
-    changeActiveProject(value) {
-      this.activeProject = value;
-      localStorage.Project = this.activeProject;
-    },
-
     getUserSettings() { 
       const settingsEndpoint = "/api/settings/"
       apiService(settingsEndpoint)
@@ -77,19 +58,22 @@ export default {
     },
   },
   computed: {
-      ...mapState(["key",]),
-
+      ...mapState(["key","showAuth",]),
   },
   async created() {
     await this.getUserSettings()
   },
-  beforeMount: function () {
-    if (localStorage.Project)
-      this.activeProject = localStorage.Project
-  },
   watch: {
     key: function() {
       this.getUserSettings()
+      this.$router.push("/")
+    },
+    showAuth: function () {
+      if (!this.showAuth) {
+        this.$router.push("/")
+        if (this.$options.title)
+          document.title = this.$options.title.call(this)
+      }
     }
   }
 }
@@ -339,6 +323,11 @@ section {
   background: #d84747;
 }
 
+.router-link-active, .router-link-exact-active{
+  color:var(--primary-color) !important;
+  filter: brightness(1.25);
+}
+
 @keyframes animated-scrollig {
     0% { 
         -webkit-transform: translate3d(0,0,0);
@@ -357,7 +346,7 @@ section {
     width: 100vw;
   }
   h1 {
-    font-size: 5vh;
+    font-size: 5vh !important;
   }
 }
 
