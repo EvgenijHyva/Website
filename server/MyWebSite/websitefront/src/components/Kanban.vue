@@ -386,7 +386,7 @@ ul {
 }
 
 .header h1 {
-  font-size: 1.25rem;
+  font-size: 1.25rem !important;
   color: #9dc10cc7
 }
 

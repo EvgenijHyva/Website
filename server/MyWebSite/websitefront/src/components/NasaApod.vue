@@ -346,7 +346,12 @@ a{
   .save-confirmed h1 {
     font-size: 2vh;
   }
-  
+  .images-container {
+    margin-top: 8vh;
+  }
+  .navigation-container{
+    top: 8.5vh;
+  }
 }
 
 ::-webkit-scrollbar {

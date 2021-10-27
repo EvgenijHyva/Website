@@ -12,8 +12,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     slug = serializers.SlugField(read_only=True)
     answers_count = serializers.SerializerMethodField()
     user_has_answered = serializers.SerializerMethodField()
-    title = serializers.SerializerMethodField()
-    content = serializers.SerializerMethodField()
+
 
     def get_created_at(self, instance):
         return instance.created_at.strftime("%B %d, %Y")
@@ -28,12 +27,6 @@ class QuestionSerializer(serializers.ModelSerializer):
     def get_author_is_admin(self, instance):
         return instance.author.is_staff
 
-    def get_title(self, instance):
-        return instance.title.capitalize()
-
-    def get_content(self, instance):
-        if instance.content:
-            return instance.content.capitalize()
 
 
 class AnswerSerializer(serializers.ModelSerializer):

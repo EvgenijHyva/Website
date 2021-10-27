@@ -13,7 +13,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         files_db = {
             "users": CustomUser.objects.all(),
-
         }
         [self.dump_json(i, k) for i, k in files_db.items()]
 

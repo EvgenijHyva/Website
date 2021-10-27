@@ -305,7 +305,7 @@ h2 {
   }
 
   h1 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
 
   .player-container {
@@ -332,7 +332,7 @@ h2 {
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 22px !important;
   }
 
   .player-container {

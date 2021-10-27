@@ -3,13 +3,13 @@
     <navbar-component />
     <!-- name of component should be imported to component -->
     <router-view v-slot="{ Component }" >
-      <transition name="change" mode="out-in" v-if="!$route.meta.keepAlive">
-        <component :is="Component" />
-      </transition>
-      <transition name="change" mode="out-in" v-else>
-        <keepAlive>
+      <transition name="change" mode="out-in">
+        <div>
+        <keep-alive v-if="$route.meta.keepAlive" >
           <component :is="Component" />
-        </keepAlive>
+        </keep-alive>
+          <component :is="Component" v-else />
+        </div>
       </transition>
     </router-view>
     <backgrounds />
@@ -184,6 +184,8 @@ export default {
   --forum-background: #080808ba;
   --forum-button-shadow:4px 0.3rem rgb(219 162 128);
   --forum-card-shadow: 0 0 3px 2px #7a7a7a;
+  --forum-comment-background: #ffffffd1;
+  --forum-delete-info: wheat;
 }
 
 [data-theme="dark"] {
@@ -263,6 +265,8 @@ export default {
   --forum-background: #6a48699c;
   --forum-button-shadow: 4px 0.3rem rgb(18 21 42);
   --forum-card-shadow: 0 0 3px 2px #36033c;
+  --forum-comment-background: antiquewhite;
+  --forum-delete-info: wheat;
 }
 
 html {

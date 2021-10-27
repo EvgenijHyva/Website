@@ -36,5 +36,18 @@ export default {
 .side-bar i:hover {
     color: green;
 }
+@media  screen and (max-width: 800px) {
+    .side-bar{
+        bottom: 0;
+        top: unset;
+        left: 45%;
+        padding: 10px;
+        border-top-left-radius: 15px;
+        border-bottom-right-radius: unset;
+    }
+    .fas {
+        margin-right: unset;
+    }
+}
 
 </style>

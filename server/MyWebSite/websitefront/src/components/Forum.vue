@@ -1,16 +1,20 @@
 <template>
     <section>
-        <side-bar />
+        <div class="error">
+            <p v-show="error !== null">{{error}}</p>
+        </div>
         <div class="loader" id="loader" v-if="loading" >
-                <img src="../assets/Ripple-1s-200px.svg" alt="loading">
-                <span class="loading-text"> I'm load, please wait </span>
+            <img src="../assets/Ripple-1s-200px.svg" alt="loading">
+            <span class="loading-text"> I'm load, please wait </span>
         </div> 
         <div class="container" v-else>
             <div class="wrapper">
                 <div v-for="question in questions" :key="question.slug" >
                     <div class="card mb-2 bg-body rounded">
                         <div class="card-body">
-                            <h5 class="card-title">{{question.title}}</h5>
+                            <router-link :to="{'name': 'Forum-question-detail', params: { 'slug': question.slug} }" :title="'question: ' + question.slug">
+                                <h5 class="card-title">{{question.title}} </h5>
+                            </router-link>
                             <p class="mb-0 card-text" v-if="question.content"><span>{{question.content}}</span></p>
                             <div class="content-info">
                                 <p class="mb-0">
@@ -50,18 +54,10 @@
 <script>
 import { mapState } from "vuex";
 import { axios } from "@/common/api.service.js";
-import SideBar from "../views/SideBar.vue";
 
-//import QuestionCreate from "@views/QuestionCreate.vue";
 
 export default {
     name: "Forum",
-    title()  {
-        return "Forum"
-    },
-    components: {
-        SideBar, //QuestionCreate
-    },
     data() {
         return {
             questions: [],
@@ -87,9 +83,8 @@ export default {
                     this.error = null;
                 this.loading = false
             } catch(err){
-                this.error = "Error " + err.response.status + " " + err.response.statusText;
-                console.log(err.response)
-                console.log(this.error)
+                this.error = "Error occured: " + err.response.status + " " + err.response.statusText;
+                console.log(err)
             }
         }
     },
@@ -99,13 +94,32 @@ export default {
     watch: {
         key: async function() {
             this.getQuestions()
-        }
+        },
     }
 }
 
 </script>
 
 <style scoped>
+a:hover h5, a:focus h5{
+    color: var(--primary-variant);
+}
+a:visited h5 {
+    color: black;
+}
+a:active h5 {
+    color: green;
+}
+
+.error{
+    position: fixed;
+    top: 30vh;
+    color: var(--on-background-alt);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "Kaushan Script", Lobster;
+    letter-spacing: 0.1rem;
+}
 .container {
     margin-top: 80px;
     background:  var(--forum-background); 
@@ -117,7 +131,7 @@ export default {
     overflow-y: scroll;
 }
 .wrapper *, ::after {
-    margin-right: 5px ;
+    margin-right: 5px;
 }
 .shadow-btn{
     box-shadow: var(--forum-button-shadow);
@@ -135,6 +149,9 @@ export default {
 }
 .card-body {
     text-align: left;
+}
+.card-title {
+    margin-bottom: 0;
 }
 .content-info {
     display: flex;
@@ -166,6 +183,8 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--on-background);
+    font-family: Lobster;
+    letter-spacing: 0.1rem;
 }
 
 

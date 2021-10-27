@@ -10,7 +10,7 @@ class AdminQuestion(admin.ModelAdmin):
 
 @admin.register(Answer)
 class AdminAnswer(admin.ModelAdmin):
-    list_display = ("question", "author", "uuid", "id")
+    list_display = ("question", "author","uuid",  "is_active", "id")
     ordering = ("id", "-created_at",)
     search_fields = ("question", "author", "id" )
     readonly_fields = ("created_at", "updated_at", "uuid")

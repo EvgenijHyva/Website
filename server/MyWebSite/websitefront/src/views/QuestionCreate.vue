@@ -7,7 +7,7 @@
 <script>
 //import {axios} from "../common/api.service.js";
 export default {
-    name: "CreateQuestion",
+    name: "Create-Question",
     data() {
         return {
 
@@ -21,6 +21,6 @@ export default {
 
 <style scoped>
 .question-create {
-    
+
 }
 </style>

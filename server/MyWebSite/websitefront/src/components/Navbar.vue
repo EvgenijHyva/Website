@@ -52,7 +52,7 @@
         </div>
         <!-- Navigations -->
         <div class="main-nav">
-          
+        
             <router-link :to="{'path': '/'}"> 
               <select name="projects" id="projects" :value="this.$store.state.activeProject" @change="changeProject">
                   <option value="Mainpage" title="Website mainpage">Mainpage</option>
@@ -96,7 +96,6 @@ export default {
     computed: {
       //array or object can be used
       ...mapState(["authModalShow", "user", "userDarkThemeMode", "activeProject"]), // maping state doesn need getter
-
     },
     methods: {
       changeProject(event) {
@@ -190,7 +189,6 @@ nav {
 }
 
 a {
-  margin-right: 2vw;
   color: var(--primary-color);
   text-decoration: none;
   border-bottom: 3px solid transparent;
@@ -202,7 +200,6 @@ select {
     font-size: 24px;
     font-weight: bold;
     border-width: 0;
-    margin-right: 2vw;
     cursor: pointer;
     color: var(--primary-color);
     background: var(--select);
@@ -383,7 +380,9 @@ input:checked + .slider::before {
   border-radius: 50%;
 }
 .disabled-link {
+  cursor: not-allowed;
   pointer-events: none;
+  text-decoration: line-through;
 }
 @media screen and (max-width: 1024px) { 
   span {
@@ -462,7 +461,7 @@ input:checked + .slider::before {
   }
   .main-nav select {
     margin: auto;
-    width: 42vw;
+    width: 50vw;
   }
   @keyframes showMenu {
     from {

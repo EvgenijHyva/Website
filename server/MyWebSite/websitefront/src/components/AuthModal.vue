@@ -31,7 +31,7 @@ export default {
         }
     },
     computed: {
-      ...mapState(["user", "showAuth"]),
+      ...mapState(["user", "showAuth","user"]),
     }, 
     methods: {
         hideAuth(event) {
@@ -48,6 +48,11 @@ export default {
                 this.previous = oldVal
             this.$store.state.showAuth = true
             }
+        },
+        user: function() {
+            if(this.user !== "Anonymous") { // if user is authenticated redirect to mainpage
+            this.$router.push("/")
+            } 
         }
     }
 }
