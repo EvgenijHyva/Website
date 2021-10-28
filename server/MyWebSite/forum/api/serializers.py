@@ -22,7 +22,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     def get_user_has_answered(self, instance):
         request = self.context.get("request")
-        return instance.answers.filter(author=request.user).exists()
+        return instance.answers.filter(author=request.user, is_active=True).exists()
 
     def get_author_is_admin(self, instance):
         return instance.author.is_staff

@@ -1,26 +1,28 @@
 <template>
-    <div class="text-muted" :class="{'deleted hidden-box' : !answer.is_active}" :title="!answer.is_active ? 'Only admin users can view deleted answers': 'Author: ' + answer.author ">
+    <transition appear name="Animate_answer" appear-active-class="animate__animated animate__zoomIn">
+    <div class="text-muted" 
+        :class="{'deleted hidden-box' : !answer.is_active}" 
+        :title="!answer.is_active ? 'Answer was deleted': 'Author: ' + answer.author">
         <div>
-            <div class="answer-body" > <div v-if="!answer.is_active">Deleted:&nbsp;</div> {{answer.body}} </div> 
-            <p class="like">
-                <i class="fas fa-trash-alt" @click="deleteAnswer(answer)" v-show="answer.author.split(' ').join('') === user && answer.is_active"></i> &nbsp;
-                <i class="fas fa-thumbs-up" v-if="answer.user_has_liked_answer"></i>
-                <i class="far fa-thumbs-up" v-else></i>
-                &nbsp;{{answer.likes_count}}</p>
-           
-                <i class="fas fa-caret-square-down" 
+            <div class="answer-body" > <div v-if="!answer.is_active">Deleted:&nbsp;</div>{{answer.body}}</div> 
+            <div class="tools">
+                <i class="fas fa-pencil-alt" v-if="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp; 
+                <i class="fas fa-trash-alt" @click="deleteAnswer(answer)" v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
+                <i class="fas fa-thumbs-up" v-if="answer.user_has_liked_answer">&nbsp;{{answer.likes_count}}</i>
+                <i class="far fa-thumbs-up" v-else>&nbsp;{{answer.likes_count}}</i>
+            </div>
+                <i class="fas fa-angle-down" 
                     v-show="!answer.is_active" 
                     v-if="!showDeletedInfo" 
                     @click="toggleDeletedAnswer"
                     key="down"></i> 
-            <i class="fas fa-caret-square-up"  v-else @click="toggleDeletedAnswer" key="up"></i>
+            <i class="fas fa-angle-up"  v-else @click="toggleDeletedAnswer" key="up"></i>
         </div>
-        <hr>    
+            <hr>    
         <div>
             <strong> <p>{{answer.author}}</p></strong>
             <p class="date"> {{answer.created_at}} </p>
-        </div>
-        
+        </div>  
         <delete-confirm 
             v-if="showDeleteAnswer" 
             @close-confirmation-module="
@@ -37,6 +39,7 @@
             </div>
         </transition>
     </div>
+    </transition>
 </template>
 
 <script>
@@ -82,6 +85,7 @@ export default {
                 mainContainer.classList.remove("hidden-box")
             } else {
                 mainContainer.classList.add("hidden-box")
+
             }
             this.showDeletedInfo = !this.showDeletedInfo
         }
@@ -99,6 +103,9 @@ export default {
 </script>
 
 <style scoped>
+.animate__animated{
+    animation-duration: 1.5s;
+}
 .deleted {
     background: #ff0047c9 !important; 
     overflow: hidden;
@@ -109,6 +116,7 @@ export default {
     height: 0;
     border-radius: 50px !important;
 }
+
 .hidden-box *, .hidden-box .answer-body div {
     color: transparent;
 }
@@ -119,13 +127,22 @@ export default {
     border-radius: 5px 10px 15px 20px;
     padding: 10px;
 }
-.fa-thumbs-up, .fa-trash-alt {
+.fa-thumbs-up, .fa-trash-alt, .fa-pencil-alt{
     font-size: 15px;
 }
 .fa-trash-alt:hover {
     color: red;
 }
-.fa-caret-square-down, .fa-caret-square-up {
+.fa-pencil-alt:hover {
+    color: black;
+}
+.fas+.fa-thumbs-up:hover {
+    color:rgb(240, 87, 60);
+}
+.fa-thumbs-up:hover {
+    color: darkgreen;
+}
+.fa-angle-up, .fa-angle-down {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -151,29 +168,37 @@ export default {
 .date {
     font-weight: 100;
 }
-.like {
+.tools {
     text-align: right; 
     padding : 5px;
+    align-items: center;
 }
 .delete-confirmed {
-  background: #253c50b8;
-  padding: 3px 16px;
-  border-radius: 10px;
-  box-shadow: 5px 6px 11px 0 rgb(0 0 0 / 50%);
-  transition: 0.3s;
-  position: fixed;
-  bottom: 25px;
-  left: 50px;
-  font-family: 'Markazi Text', sans-serif;
+    background: #253c50b8;
+    padding: 3px 16px;
+    border-radius: 10px;
+    box-shadow: 5px 6px 11px 0 rgb(0 0 0 / 50%);
+    transition: 0.3s;
+    position: fixed;
+    bottom: 25px;
+    left: 50px;
+    font-family: 'Markazi Text', sans-serif;
 }
 .delete-confirmed h2 {
     margin: auto;
     color: var(--forum-delete-info);
 }
-
+hr {
+    margin: 1px 0;
+    opacity: .5;
+}
 @media screen and (max-width: 800px){
     .delete-confirmed {
         left: unset;
+    }
+    .tools {
+        height: 5vh;
+        display: contents;
     }
 }
 

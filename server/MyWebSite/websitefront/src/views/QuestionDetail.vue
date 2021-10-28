@@ -1,15 +1,22 @@
 <template>
     <section>
+        <div class="wrapper overflow" ref="wrapper">
         <div class="question-detail">
             <div class="card" v-if="question">
                 <div class="card-body">
-                    <i class="fas fa-chevron-circle-left" @click="$router.back()"></i>
+                    <i class="fas fa-chevron-circle-left" @click="$router.back()" 
+                        title="Return to previous"></i>
+                    <i class="fas fa-plus-circle" title="Add a new answer" 
+                        @click="addNewAnswer = true"></i>
                     <h3>{{question.title}}</h3>
-                    <p class="mb-0 card-text" v-if="question.content"><span>{{question.content}}</span></p>
+                    <p class="mb-0 card-text" v-if="question.content">
+                        <span>{{question.content}}</span></p>
                     <div class="content-info">
+                        <div>
                         <p class="mb-0">
                           Posted by: <strong>{{question.author}}</strong> 
-                        <i class="fas fa-user-tie" v-if="question.author_is_admin" title="Admin user"></i>
+                        <i class="fas fa-user-tie" title="Admin user"
+                            v-if="question.author_is_admin" ></i>
                         <i class="fas fa-user" v-else 
                             :title="'User: ' + question.author">
                         </i>&nbsp;|
@@ -18,6 +25,9 @@
                         &nbsp;Answers: 
                             <strong>{{question.answers_count}}</strong>
                         </p>
+                        </div>
+                        <p class="answer-added info-text" v-if="question.user_has_answered">You have already answered that question</p>
+                        <p class="add-answer info-text" v-else @click="addNewAnswer = true">add a new answer!</p>
                     </div>
                 </div>
             </div>
@@ -29,16 +39,23 @@
             </div>
 
             <div v-if="answers" class="container">
-                <AnswerView v-for="answer in answers" 
+                <answer-view v-for="answer in answers" 
                     :key="answer.uuid"
                     :answer="answer"/>
+                <button class="load-more-button secondary" v-show="next" 
+                    @click.prevent="getQuestionAnswers(next)"  
+                    title="Load more answers">Load older answers</button>
             </div>
 
+            <answer-create-view v-show="addNewAnswer" @close-form="addNewAnswer = false" />
+
+        </div>
         </div>
     </section>
 </template>
 
 <script>
+import AnswerCreateView from "../views/ForumAnswerCreate.vue"
 import AnswerView from "../views/Answer.vue";
 import {axios} from "../common/api.service.js";
 
@@ -55,7 +72,7 @@ export default {
         }
     },
     components: {
-        AnswerView 
+        AnswerView, AnswerCreateView
     },
     data() {
         return {
@@ -63,6 +80,7 @@ export default {
             answers: [],
             next: null,
             loadingAnswers: false,
+            addNewAnswer: false,
         }
     },
     methods: {
@@ -76,8 +94,8 @@ export default {
                 this.question = null
             }
         },
-        async getQuestionAnswers() {
-            const endpoint = `/forum/api/questions/${this.slug}/answers/`
+        async getQuestionAnswers(endpoint) {
+            endpoint ? endpoint : endpoint = `/forum/api/questions/${this.slug}/answers/` 
             try {
                 let responce = await axios.get(endpoint);
                 this.next = responce.data.next
@@ -93,27 +111,90 @@ export default {
     },
     watch: {
         question: function() {
-             document.title = this.$options.title.call(this)
+            document.title = this.$options.title.call(this)
+            if(document.title === "Forum: 404 page not found") {
+                this.$refs["wrapper"].classList.contains("overflow") ? this.$refs["wrapper"].classList.remove("overflow") : ""
+            } else {
+                this.$refs["wrapper"].classList.contains("overflow") ? "" : this.$refs["wrapper"].classList.add("overflow")
+            }     
+        },
+        "answers.length": function (){
+            let initialCheck = true
+            if (initialCheck && 
+                this.answers.reduce((total, answer) => (answer.is_active === false? total: total+1), 0) < 10 && 
+                this.next) {
+                    this.getQuestionAnswers(this.next)
+            } else {
+                initialCheck = false;
+            }
         }
-    }
+    },
+    
     
 }
 </script>
 
 <style scoped>
+.wrapper {
+    margin: 80px auto 0;
+    max-height: 80vh;
+}
+.overflow {
+    overflow-y: scroll;
+}
 .card-body div {
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    box-sizing: border-box;
 }
-.question-detail{
-    margin:auto;
+.question-detail { 
+    margin-right: 10px ;
 }
+
 .content-info {
     display: flex;
+    justify-content: space-between;
+}
+.info-text {
+    font-size: 15px;
+    text-align: right;
+    border: solid 1px green;
+    border-radius: 25px;
+    padding: 1px 5px;
+}
+.answer-added {
+    color: green;  
+}
+.add-answer{
+    color: orange;
 }
 .fas {
     font-size: 15px;
+}
+.fa-chevron-circle-left {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 20px;
+}
+.fa-plus-circle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+}
+.fa-plus-circle:hover {
+    color: #356a0c;
+    filter: brightness(1.2);
+}
+.fa-plus-circle:active {
+    color: #0b59a9;
+    filter: brightness(1.2);
+}
+.fa-chevron-circle-left:hover {
+    color: #dd715f;
+    filter: brightness(1.2);
 }
 .card {
     opacity: 0.85;
@@ -139,15 +220,9 @@ export default {
     z-index: -1;
     margin: auto;
 }
-.fa-chevron-circle-left {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    font-size: 20px;
-}
-.fa-chevron-circle-left:hover {
-    color: #dd715f;
-    filter: brightness(1.2);
+
+.load-more-button {
+    margin: auto;
 }
 @media  screen and (max-width: 800px) {
     .not-found img {
@@ -156,6 +231,30 @@ export default {
     }
     .card {
         width: 95vw;
+    }
+    .card-body div {
+        align-self: center;
+    }
+    .info-text  {
+        margin: auto;
+    }
+    .content-info{
+        flex-direction: column;
+    }
+    .wrapper {
+        max-height: 75vh;
+    }
+    .question-detail {
+        margin-right: 5px;
+    }
+    .not-found h1 {
+        font-size: 30px;
+    }
+}
+
+@media  screen and (max-width: 1000px) {
+    .not-found h1 {
+            font-size: 30px;
     }
 }
 </style>

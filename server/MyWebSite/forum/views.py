@@ -32,10 +32,10 @@ class AnswerCreateAPIView(generics.CreateAPIView):
         _request_user = self.request.user
         _slug = self.kwargs.get("slug")
         _question = get_object_or_404(Question, slug=_slug)
-        print(_question)
-        if _question.answers.filter(author=_request_user).exists():
+        # if _question.answers.filter(author=_request_user, is_active=True).exists():
+        if _question.answers.filter(is_active=True).order_by("-created_at").first().author == _request_user:
             raise ValidationError({
-                "error": "You have already answered to this question"
+                "error": "You have already answered to this question, wait until other user answer's this"
             })
         serializer.save(author=_request_user, question=_question)
 
