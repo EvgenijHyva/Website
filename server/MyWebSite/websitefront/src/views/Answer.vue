@@ -1,6 +1,6 @@
 <template>
     <transition appear name="Animate_answer" appear-active-class="animate__animated animate__zoomIn">
-    <div class="text-muted" 
+    <div class="text-muted" v-if="answer.is_active || stateShowDeleted"
         :class="{'deleted hidden-box' : !answer.is_active}" 
         :title="!answer.is_active ? 'Answer was deleted': 'Author: ' + answer.author">
         <div>
@@ -30,7 +30,6 @@
                 answerToDelete=null"
             @deleted-modul="showMessage"
             :answer="answerToDelete"/>   
-
         <transition tag="div" mode="out-in" 
             enter-active-class="animate__animated animate__zoomIn"
             leave-to-class="animate__animated animate__zoomOut">
@@ -43,9 +42,9 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
 import DeleteConfirm from "../views/DeleteConfirmation.vue";
 
+import {mapState} from "vuex";
 
 export default {
     name: "Answer",
@@ -56,6 +55,10 @@ export default {
         answer: {
             type:Object,
             required: true
+        },
+        stateShowDeleted: {
+            type:Boolean,
+            required: false
         }
     },
     computed: {
