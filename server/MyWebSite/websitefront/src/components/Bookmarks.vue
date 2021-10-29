@@ -123,10 +123,10 @@ label {
 }
 
 .item {
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--bookmarks-link-background);
   color: whitesmoke;
   border-radius: 20px;
-  padding: 15px;
+  padding: 10px 30px 10px 15px ;
   margin: 10px;
   position: relative;
 }
@@ -153,13 +153,11 @@ a:hover, a:active {
   cursor: pointer;
   position: absolute;
   right: 5px;
-  top: 5px;
+  top: 15px;
   font-size: 1.2rem;
   color: #91ff2d;
 }
 .name {
-  margin-right: 20px;
-  margin-top: 20px;
   margin: auto;
 }
 
@@ -230,7 +228,6 @@ h3 {
 
 /* Form */
 .form-group {
-    height: 75px;
     display: flex;
     flex-direction: column;
 }

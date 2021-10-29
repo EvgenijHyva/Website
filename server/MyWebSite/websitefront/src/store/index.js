@@ -4,6 +4,7 @@ export default createStore({
   state: {
     authModalShow: true,
     user: "Anonymous",
+    is_staff: false,
     userDarkThemeMode: false,
     showAuth: false, // this property allow to hide and show Auth component.
     key: null,

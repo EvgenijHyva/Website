@@ -36,13 +36,20 @@ const routes = [
   {
     path: '/forum/:slug/',
     name: 'Forum-question-detail',
-    component: () => import(/* webpackChunkName: "NotFound", */ "@/views/QuestionDetail.vue"),
+    component: () => import(/* webpackChunkName: "QuestionDetail", */ "@/views/QuestionDetail.vue"),
     props: true,
     meta: {
       keepAlive: false
     },
   },
-
+  {
+    path: '/forum/ask/',
+    name: 'Forum-question-create',
+    component: () => import(/* webpackChunkName: "Create-Question", */ "@/views/QuestionCreate.vue"),
+    meta: {
+      keepAlive: false
+    },
+  },
   
   {
     path: "/:catchAll(.*)",

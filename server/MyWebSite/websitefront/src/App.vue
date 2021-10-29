@@ -46,6 +46,7 @@ export default {
             this.$store.state.authModalShow = false, 
             this.$store.state.userDarkThemeMode = settings.dark,
             this.$store.state.user = settings.user,
+            this.$store.state.is_staff = settings.is_admin
             this.$store.state.background = settings.background
             this.userSettings = settings
           }
@@ -148,11 +149,11 @@ export default {
   --quote-button-shadow: 4px 0.3rem rgb(218 117 30 / 42%);
   --quote-icons: rgb(252 160 23 / 87%);
   --quote-icons-shadow:#7979d5c7;
-  --bookmarks-root: #7450ab;
   --border-radius: 5px;   
+  --bookmarks-root: #7450ab;
   --bookmarks-title-shadow:#ffffff;
   --bookmarks-link: #3aff92;
-  --bookmarks-link-background: rgb(24 22 151 / 60%);
+  --bookmarks-link-background: rgba(0, 0, 0, 0.75);
   --Spock-rock-game-primary-color: whitesmoke;
   --header: dodgerblue;
   --container-shadow-color: rgba(0, 0 ,0, 0.5);  
@@ -239,7 +240,7 @@ export default {
   --quote-loader-alt: #2d5db5;
   --quote-button-shadow: 4px 0.3rem rgb(226 15 142 / 42%);
   --quote-icons: rgb(160 66 245);
-  --quote-icons-shadow:#fb2323de ;
+  --quote-icons-shadow:#fb2323de;
   --bookmarks-root: #7450ab;
   --bookmarks-title-shadow:#01830570;
   --bookmarks-link: #7d8ffa;

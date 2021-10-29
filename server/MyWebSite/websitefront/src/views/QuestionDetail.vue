@@ -1,6 +1,8 @@
 <template>
     <section>
-        <admin-answer-panel v-if="$store.state.user=== 'Evgeny'" @toggle-deleted="toggleDeleted" :hidenMessages="inactiveMessages" />
+        <admin-answer-panel v-if="is_staff" 
+            @toggle-deleted="toggleDeleted" 
+            :hidenMessages="inactiveMessages" />
         <div>
         <div class="wrapper overflow" ref="wrapper">
             <div class="question-detail">
@@ -73,10 +75,11 @@ import AdminAnswerPanel from "../views/AdminFeatures/ForumAdminAnswerTools.vue";
 import AnswerCreateView from "../views/ForumAnswerCreate.vue"
 import AnswerView from "../views/Answer.vue";
 import {axios} from "../common/api.service.js";
+import {mapState} from "vuex";
 
 
 export default {
-    name: "Question-Detal",
+    name: "QuestionDetail",
     title() {
         return this.question? "Forum: question-detail" : "Forum: 404 page not found"
     }, 
@@ -85,6 +88,9 @@ export default {
             type: String,
             required: true
         }
+    },
+    computed: {
+        ...mapState(["is_staff",])
     },
     components: {
         AnswerView, AnswerCreateView, AdminAnswerPanel

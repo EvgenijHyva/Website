@@ -65,6 +65,7 @@ export default {
             previous: null,
             error: null,
             loading: false, 
+            LoadFail: false,
         }
     },
     computed: {
@@ -74,22 +75,46 @@ export default {
         async getQuestions(endpoint) {
             endpoint ? endpoint : endpoint = "api/questions/"
             this.loading = true
+            this.previousPageSetter(endpoint)
             try {
                 const response = await axios.get(endpoint)
                 this.questions = response.data.results;
+                if (!this.questions && !this.LoadFail) {
+                    this.previousPageDeleter()
+                }
                 this.next = response.data.next;
                 this.previous = response.data.previous;
                 if (this.error) 
                     this.error = null;
                 this.loading = false
             } catch(err){
-                this.error = "Error occured: " + err.response.status + " " + err.response.statusText;
-                console.log(err)
+                if (!this.LoadFail) {
+                    this.previousPageDeleter();
+                }
+                this.error = "Error occured: " + err.response.status ? err.response.status : "" + " " + err.response.statusText ? err.response.statusText : "";
             }
+        },
+        previousPageSetter(page) {
+            localStorage.setItem("ForumPage", page )
+        },
+        previousPageGetter() {
+            let page = localStorage.getItem("ForumPage")
+            if (page) {
+                return page
+            } else {
+                return null
+            }
+        },
+        previousPageDeleter() {
+            localStorage.removeItem("ForumPage")
+            this.getQuestions();
+            this.LoadFail = !this.LoadFail
         }
+
     },
     async created() {
-        await this.getQuestions()
+        let page = this.previousPageGetter()
+        await this.getQuestions(page)
     },
     watch: {
         key: async function() {

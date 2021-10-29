@@ -1,8 +1,8 @@
 <template>
     <section class="auth-main-container" v-show="tab" @click="hideAuth" >
-        <app-register-form v-if="tab==='register'" :user=user />
-        <app-login-form v-else-if="tab==='login'" :user=user />
-        <app-edit-form v-else-if="tab === 'edit'" :user=user />
+        <app-register-form v-if="tab==='register'" :user="user" />
+        <app-login-form v-else-if="tab==='login'" :user="user" />
+        <app-edit-form v-else-if="tab === 'edit'" :user="user" />
     </section>
 </template>
 

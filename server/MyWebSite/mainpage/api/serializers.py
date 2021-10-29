@@ -10,6 +10,10 @@ class PageSettingsSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(read_only=True)
     additions = serializers.SerializerMethodField(read_only=True)
     flag = serializers.SerializerMethodField(read_only=True)
+    is_admin = serializers.SerializerMethodField(read_only=True)
+
+    def get_is_admin(self, instance):
+        return instance.user.is_staff
 
     def get_user(self, instance):
         return instance.user.username

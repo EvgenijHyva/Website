@@ -1,44 +1,46 @@
 <template>
-    <transition appear name="Animate_answer" appear-active-class="animate__animated animate__zoomIn">
-    <div class="text-muted" v-if="answer.is_active || stateShowDeleted"
-        :class="{'deleted hidden-box' : !answer.is_active}" 
-        :title="!answer.is_active ? 'Answer was deleted': 'Author: ' + answer.author">
-        <div>
-            <div class="answer-body" > <div v-if="!answer.is_active">Deleted:&nbsp;</div>{{answer.body}}</div> 
-            <div class="tools">
-                <i class="fas fa-pencil-alt" v-if="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp; 
-                <i class="fas fa-trash-alt" @click="deleteAnswer(answer)" v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
-                <i class="fas fa-thumbs-up" v-if="answer.user_has_liked_answer">&nbsp;{{answer.likes_count}}</i>
-                <i class="far fa-thumbs-up" v-else>&nbsp;{{answer.likes_count}}</i>
-            </div>
-                <i class="fas fa-angle-down" 
-                    v-show="!answer.is_active" 
-                    v-if="!showDeletedInfo" 
-                    @click="toggleDeletedAnswer"
-                    key="down"></i> 
-            <i class="fas fa-angle-up"  v-else @click="toggleDeletedAnswer" key="up"></i>
-        </div>
-            <hr>    
-        <div>
-            <strong> <p>{{answer.author}}</p></strong>
-            <p class="date"> {{answer.created_at}} </p>
-        </div>  
-        <delete-confirm 
-            v-if="showDeleteAnswer" 
-            @close-confirmation-module="
-                showDeleteAnswer=false; 
-                answerToDelete=null"
-            @deleted-modul="showMessage"
-            :answer="answerToDelete"/>   
-        <transition tag="div" mode="out-in" 
-            enter-active-class="animate__animated animate__zoomIn"
-            leave-to-class="animate__animated animate__zoomOut">
-            <div class="delete-confirmed" v-if="deleteInfo">
-                <h2>{{message}}</h2>
+    <div>
+        <transition appear name="Animate_answer" appear-active-class="animate__animated animate__zoomIn">
+            <div class="text-muted" v-if="answer.is_active || stateShowDeleted"
+                :class="{'deleted hidden-box' : !answer.is_active}" 
+                :title="!answer.is_active ? 'Answer was deleted': 'Author: ' + answer.author">
+                <div>
+                    <div class="answer-body" > <div v-if="!answer.is_active">Deleted:&nbsp;</div>{{answer.body}}</div> 
+                    <div class="tools">
+                        <i class="fas fa-pencil-alt" v-if="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp; 
+                        <i class="fas fa-trash-alt" @click="deleteAnswer(answer)" v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
+                        <i class="fas fa-thumbs-up" v-if="answer.user_has_liked_answer">&nbsp;{{answer.likes_count}}</i>
+                        <i class="far fa-thumbs-up" v-else>&nbsp;{{answer.likes_count}}</i>
+                    </div>
+                        <i class="fas fa-angle-down" 
+                            v-show="!answer.is_active" 
+                            v-if="!showDeletedInfo" 
+                            @click="toggleDeletedAnswer"
+                            key="down"></i> 
+                    <i class="fas fa-angle-up"  v-else @click="toggleDeletedAnswer" key="up"></i>
+                </div>
+                    <hr>    
+                <div>
+                    <strong> <p>{{answer.author}}</p></strong>
+                    <p class="date"> {{answer.created_at}} </p>
+                </div>  
+                <delete-confirm 
+                    v-if="showDeleteAnswer" 
+                    @close-confirmation-module="
+                        showDeleteAnswer=false; 
+                        answerToDelete=null"
+                    @deleted-modul="showMessage"
+                    :answer="answerToDelete" />   
             </div>
         </transition>
-    </div>
+    <transition tag="div" mode="out-in" 
+        enter-active-class="animate__animated animate__zoomIn"
+        leave-to-class="animate__animated animate__zoomOut">
+        <div class="delete-confirmed" v-if="deleteInfo">
+            <h2>{{message}}</h2>
+        </div>
     </transition>
+    </div>
 </template>
 
 <script>
@@ -95,9 +97,10 @@ export default {
     },
     watch: {
         deleteInfo: function () {
+            // For info message disappear from page
             if (this.deleteInfo) {
                 setTimeout(() => {
-                this.deleteInfo = false;
+                this.deleteInfo = false; 
             }, 3000)
             }
         }   
@@ -198,6 +201,8 @@ hr {
 @media screen and (max-width: 800px){
     .delete-confirmed {
         left: unset;
+        top: 20px;
+        bottom:unset;
     }
     .tools {
         height: 5vh;
