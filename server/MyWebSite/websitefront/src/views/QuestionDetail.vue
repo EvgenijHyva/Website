@@ -8,7 +8,7 @@
             <div class="question-detail">
                 <div class="card" v-if="question">
                     <div class="card-body">
-                        <i class="fas fa-chevron-circle-left" @click="$router.back()" 
+                        <i class="fas fa-chevron-circle-left" @click="$router.push({name:'Forum'})" 
                             title="Return to previous"></i>
                         <i class="fas fa-plus-circle" title="Add a new answer" 
                             @click="addNewAnswer = true"></i>

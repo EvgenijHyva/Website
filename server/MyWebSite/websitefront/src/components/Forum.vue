@@ -146,12 +146,13 @@ a:active h5 {
     letter-spacing: 0.1rem;
 }
 .container {
-    margin-top: 80px;
+    margin-top: 100px;
     background:  var(--forum-background); 
     padding: 15px 10px;
     border-radius: 10px;
 }
 .container .wrapper {
+    max-height: 80vh;
     overflow: hidden ;
     overflow-y: scroll;
 }
@@ -211,6 +212,13 @@ a:active h5 {
     font-family: Lobster;
     letter-spacing: 0.1rem;
 }
-
+@media screen and (max-width:800px) {
+    .container {
+        margin-top: unset;
+    }
+    .wrapper {
+        max-height: 75vh !important;
+    }
+}
 
 </style>

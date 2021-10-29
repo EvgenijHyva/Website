@@ -5,13 +5,13 @@
     <div class="answer-form">
         <form class="answer-form">
             <i class="fas fa-times" @click="close" title="Close"></i>
-            <textarea class="form-control" placeholder="Write you answer here" rows="10" v-model="newAnswerBody"></textarea>
+            <textarea class="form-control" placeholder="Write your answer here" rows="10" v-model="newAnswerBody"></textarea>
             <div class="error-container-block" v-if="errors">
                 <hr>
-                <p>{{errors}}</p>
+                <p class="mb-3">{{errors}}</p>
             </div>
             <div class="form-buttons">
-                <button class="btn btn-primary" @click.prevent="sendAnswer">Submit answer</button>
+                <button class="btn btn-primary" @click.prevent="sendAnswer">Submit</button>
                 <button type="reset" class="btn btn-warning" @click="errors = null">Clear all</button>
             </div>
         </form>

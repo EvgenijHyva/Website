@@ -187,6 +187,7 @@ export default {
   --forum-card-shadow: 0 0 3px 2px #7a7a7a;
   --forum-comment-background: #ffffffd1;
   --forum-delete-info: wheat;
+  --forum-h2: rgb(41 169 25 / 96%);
 }
 
 [data-theme="dark"] {
@@ -268,6 +269,7 @@ export default {
   --forum-card-shadow: 0 0 3px 2px #36033c;
   --forum-comment-background: antiquewhite;
   --forum-delete-info: wheat;
+  --forum-h2: var(--on-background-alt);
 }
 
 html {
@@ -290,6 +292,10 @@ section {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+textarea, input {
+  font-family: Texturina, Lora;
 }
 
 .change-enter-from {
