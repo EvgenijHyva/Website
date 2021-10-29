@@ -12,7 +12,7 @@
             </div>
             <div class="form-buttons">
                 <button class="btn btn-primary" @click.prevent="sendAnswer">Submit answer</button>
-                <button type="reset" class="btn btn-warning" @click.prevent="errors = null">Clear all</button>
+                <button type="reset" class="btn btn-warning" @click="errors = null">Clear all</button>
             </div>
         </form>
     </div>
@@ -21,6 +21,7 @@
 
 
 <script>
+import {mapState} from "vuex";
 import { axios } from "../common/api.service.js";
 export default {
     name: "ForumAnswerCreate",
@@ -32,7 +33,12 @@ export default {
         slug: {
             type: String,
             required: true
+        },
+        lastAnswer: {
+            type: Object,
+            required:false
         }
+
     },
     data() {
         return {
@@ -40,11 +46,18 @@ export default {
             errors: null,
         }
     },
+    computed: {
+      ...mapState(["user",])
+    },
     methods: {
         close() {
             this.$emit('close-form')
         },
         async sendAnswer() {
+            if (this.newAnswerBody && this.lastAnswer && this.lastAnswer.author.split(' ').join('') === this.user && this.lastAnswer.is_active) {
+                this.errors = "You can submit your answer after another user has answered this question."
+                return
+            }
             if (!this.newAnswerBody) {
                 this.errors = "You can't send a empty answer!"
                 return
@@ -56,6 +69,7 @@ export default {
                     this.$emit("answer-submited", responce.data)
                     this.close()
                 } catch (err) {
+                    console.log(err)
                     this.errors = err.message ? err.message : err
                 }
             }

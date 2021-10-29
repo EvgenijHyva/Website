@@ -56,7 +56,8 @@
                         v-if="addNewAnswer" 
                         @close-form="addNewAnswer = false" 
                         @answer-submited="newPost"
-                        :slug="slug"/>
+                        :slug="slug"
+                        :lastAnswer="answers[0]"/>
                 </div>      
             </div>
         </div>
@@ -148,7 +149,7 @@ export default {
             let initialCheck = true
             let activeAnswers = this.answers.reduce((total, answer) => (answer.is_active === false? total: total+1), 0) 
             this.inactiveMessages = this.answers.length === activeAnswers? false : true  
-            if (initialCheck && activeAnswers < 3 &&  this.next) {  
+            if (initialCheck && activeAnswers < 10 &&  this.next) {  
                 this.getQuestionAnswers(this.next)
             } else {
                 initialCheck = false;

@@ -1,7 +1,10 @@
 <template>
     <div class="admin-panel">
         <i class="fas fa-folder-minus" v-if="showDeleted" title="Hide Deleted" @click="toggleDeleted" ></i>
-        <i class="fas fa-folder-plus" v-else title="Show Deleted" @click="toggleDeleted" :class="{ 'hidden-detected':hidenMessages }"></i>
+        <i class="fas fa-folder-plus" v-else-if="!showDeleted " 
+            :title="hidenMessages?'Show Deleted': 'Deleted messeges were not found' " 
+            @click="toggleDeleted" 
+            :class="{ 'hidden-detected':hidenMessages, 'hidden-not-detected': !hidenMessages }"></i>
     </div>
 </template>
 
@@ -17,8 +20,10 @@ export default {
     emits: ["toggle-deleted"],
     methods: {
         toggleDeleted() {
-            this.showDeleted = !this.showDeleted
-            this.$emit("toggle-deleted", this.showDeleted)
+            if(this.hidenMessages) {
+                this.showDeleted = !this.showDeleted
+                this.$emit("toggle-deleted", this.showDeleted)
+            }
         }
     }
 }
@@ -46,6 +51,9 @@ export default {
 .hidden-detected {
     color: #d34573 !important;
 }
+.hidden-not-detected {
+    color: grey !important;
+}   
 @media  screen and (max-width: 800px) {
     .admin-panel{
         bottom: 0;
