@@ -7,6 +7,7 @@
 
         <div class="wrapper overflow" ref="wrapper">
             <div class="question-detail">
+
                 <div class="card" v-if="question">
                     <div class="card-body">
                         <i class="fas fa-chevron-circle-left" @click="$router.push({name:'Forum'})" 

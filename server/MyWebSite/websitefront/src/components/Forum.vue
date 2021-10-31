@@ -1,6 +1,6 @@
 <template>
     <section>
-        
+
         <div class="error">
             <p v-show="error !== null">{{error}}</p>
         </div>
@@ -12,43 +12,49 @@
 
         <div class="container" v-else>
             <div class="wrapper">
-                <div v-for="question in questions" :key="question.slug" >
-                    <div class="card mb-2 bg-body rounded">
-                        <div class="card-body">
 
-                            <div class="header-block">
-                                <router-link :to="{'name': 'Forum-question-detail', params: { 'slug': question.slug} }" :title="'question: ' + question.slug">
-                                    <h5 class="card-title">{{question.title}} </h5>
-                                </router-link>
+                <transition-group mode="out-in" name="aniamate_questions" appear
+                        appear-active-class="animate__animated animate__fadeIn"
+                        leave-active-class="animate__animated animate__backOutDown">
+                    <div v-for="question in questions" :key="question.slug" >
+                        <div class="card mb-2 bg-body rounded">
+                            <div class="card-body">
 
-                                <div class="question-editor">
-                                    <router-link :to="{'name': 'Forum-question-create-edit', params: {'slug': question.slug} }" tag="i" 
-                                        v-if="question.author.split(' ').join('') == user && !question.answers_count">
-                                        <i class="fas fa-pen-alt" title="Edit question"></i>
+                                <div class="header-block">
+                                    <router-link :to="{'name': 'Forum-question-detail', params: { 'slug': question.slug} }" :title="'question: ' + question.slug">
+                                        <h5 class="card-title">{{question.title}} </h5>
                                     </router-link>
-                                    <i class="fas fa-times" title="Delete question"
-                                        @click="deleteQuestion(question)" 
-                                        v-if="question.author.split(' ').join('') == user"></i>
-                                </div>  
-                            </div>
 
-                            <p class="mb-1 card-text" v-if="question.content"><span>{{question.content}}</span></p>
-                            <div class="content-info">
-                                <p class="mb-0">
-                                    Posted by: <strong>{{question.author}}</strong> 
-                                    <i class="fas fa-user-tie" v-if="question.author_is_admin" title="Admin user"></i>
-                                    <i class="fas fa-user" v-else 
-                                        :title="'User: ' + question.author">
-                                    </i>&nbsp;|
-                                </p>
-                                <p class="mb-0"  :title="'Users have answered to this question ' + question.answers_count + ' times' "> 
-                                    &nbsp;Answers: 
-                                    <strong>{{question.answers_count}}</strong>
-                                </p>
+                                    <div class="question-editor">
+                                        <router-link :to="{'name': 'Forum-question-create-edit', params: {'slug': question.slug} }" tag="i" 
+                                            v-if="question.author.split(' ').join('') == user && !question.answers_count">
+                                            <i class="fas fa-pen-alt" title="Edit question"></i>
+                                        </router-link>
+                                        <i class="fas fa-times" title="Delete question"
+                                            @click="deleteQuestion(question)" 
+                                            v-if="question.author.split(' ').join('') == user"></i>
+                                    </div>  
+                                </div>
+
+                                <p class="mb-1 card-text" v-if="question.content"><span>{{question.content}}</span></p>
+                                <div class="content-info">
+                                    <p class="mb-0">
+                                        Posted by: <strong>{{question.author}}</strong> 
+                                        <i class="fas fa-user-tie" v-if="question.author_is_admin" title="Admin user"></i>
+                                        <i class="fas fa-user" v-else 
+                                            :title="'User: ' + question.author">
+                                        </i>&nbsp;|
+                                    </p>
+                                    <p class="mb-0"  :title="'Users have answered to this question ' + question.answers_count + ' times' "> 
+                                        &nbsp;Answers: 
+                                        <strong>{{question.answers_count}}</strong>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </transition-group>
+
             </div>
 
             <div class="pagination"> 
@@ -162,7 +168,9 @@ export default {
 </script>
 
 <style scoped>
-
+.animate__animated {
+    animation-duration: 1.3s;
+}
 a:hover h5, a:focus h5{
     color: var(--primary-variant);
 }

@@ -24,7 +24,7 @@
                     <strong> <p>{{answer.author}}</p></strong>
                     <p class="date"> {{answer.created_at}} </p>
                 </div>  
-                
+
                 <delete-confirm 
                     v-if="showDeleteAnswer" 
                     @close-confirmation-module="
@@ -148,7 +148,7 @@ export default {
 .fas+.fa-thumbs-up:hover {
     color:rgb(240, 87, 60);
 }
-.fa-thumbs-up:hover {
+.tools .far:hover {
     color: darkgreen;
 }
 .fa-angle-up, .fa-angle-down {
