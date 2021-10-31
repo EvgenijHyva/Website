@@ -1,21 +1,38 @@
 <template>
     <section>
+        
         <div class="error">
             <p v-show="error !== null">{{error}}</p>
         </div>
+
         <div class="loader" id="loader" v-if="loading" >
             <img src="../assets/Ripple-1s-200px.svg" alt="loading">
             <span class="loading-text"> I'm load, please wait </span>
         </div> 
+
         <div class="container" v-else>
             <div class="wrapper">
                 <div v-for="question in questions" :key="question.slug" >
                     <div class="card mb-2 bg-body rounded">
                         <div class="card-body">
-                            <router-link :to="{'name': 'Forum-question-detail', params: { 'slug': question.slug} }" :title="'question: ' + question.slug">
-                                <h5 class="card-title">{{question.title}} </h5>
-                            </router-link>
-                            <p class="mb-0 card-text" v-if="question.content"><span>{{question.content}}</span></p>
+
+                            <div class="header-block">
+                                <router-link :to="{'name': 'Forum-question-detail', params: { 'slug': question.slug} }" :title="'question: ' + question.slug">
+                                    <h5 class="card-title">{{question.title}} </h5>
+                                </router-link>
+
+                                <div class="question-editor">
+                                    <router-link :to="{'name': 'Forum-question-create-edit', params: {'slug': question.slug} }" tag="i" 
+                                        v-if="question.author.split(' ').join('') == user && !question.answers_count">
+                                        <i class="fas fa-pen-alt" title="Edit question"></i>
+                                    </router-link>
+                                    <i class="fas fa-times" title="Delete question"
+                                        @click="deleteQuestion(question)" 
+                                        v-if="question.author.split(' ').join('') == user"></i>
+                                </div>  
+                            </div>
+
+                            <p class="mb-1 card-text" v-if="question.content"><span>{{question.content}}</span></p>
                             <div class="content-info">
                                 <p class="mb-0">
                                     Posted by: <strong>{{question.author}}</strong> 
@@ -33,6 +50,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="pagination"> 
                 <button class="secondary outline" :class="{'shadow-btn': next}"
                     :title=" next ? 'Load older questions page': 'You are viewing the last page'"
@@ -47,6 +65,12 @@
                     Previous page
                 </button>
             </div>
+
+            <question-delete-confirmation 
+                :question="questionToDelete" 
+                v-if="showConfirmDelete"
+                @close-confirmation-module="showConfirmDelete = false; questionToDelete = null"
+                @deleted-question="confirmedDelete" />
         </div>
     </section>
 </template>
@@ -54,10 +78,13 @@
 <script>
 import { mapState } from "vuex";
 import { axios } from "@/common/api.service.js";
-
+import QuestionDeleteConfirmation from "../views/DeleteConfirmation.vue";
 
 export default {
     name: "Forum",
+    components: {
+        QuestionDeleteConfirmation
+    },
     data() {
         return {
             questions: [],
@@ -65,11 +92,13 @@ export default {
             previous: null,
             error: null,
             loading: false, 
-            LoadFail: false,
+            loadFail: false,
+            questionToDelete: null,
+            showConfirmDelete: false,
         }
     },
     computed: {
-      ...mapState(["key",])
+      ...mapState(["key", "user"])
     },
     methods: {
         async getQuestions(endpoint) {
@@ -79,7 +108,7 @@ export default {
             try {
                 const response = await axios.get(endpoint)
                 this.questions = response.data.results;
-                if (!this.questions && !this.LoadFail) {
+                if (!this.questions && !this.loadFail) {
                     this.previousPageDeleter()
                 }
                 this.next = response.data.next;
@@ -88,7 +117,7 @@ export default {
                     this.error = null;
                 this.loading = false
             } catch(err){
-                if (!this.LoadFail) {
+                if (!this.loadFail) {
                     this.previousPageDeleter();
                 }
                 this.error = "Error occured: " + err.response.status ? err.response.status : "" + " " + err.response.statusText ? err.response.statusText : "";
@@ -109,8 +138,15 @@ export default {
             localStorage.removeItem("ForumPage")
             this.getQuestions();
             this.LoadFail = !this.LoadFail
+        },
+        deleteQuestion(question){
+            this.questionToDelete = question
+            this.showConfirmDelete = true;
+        },
+        confirmedDelete(question) {
+            let index = this.questions.indexOf(question)
+            this.questions.splice(index, 1)
         }
-
     },
     async created() {
         let page = this.previousPageGetter()
@@ -126,6 +162,7 @@ export default {
 </script>
 
 <style scoped>
+
 a:hover h5, a:focus h5{
     color: var(--primary-variant);
 }
@@ -176,17 +213,40 @@ a:active h5 {
 .card-body {
     text-align: left;
 }
+.card-body .header-block {
+    display: flex;
+    justify-content: space-between;
+    margin: unset;
+}
+
 .card-title {
     margin-bottom: 0;
 }
 .content-info {
     display: flex;
 }
-
+.header-block .question-editor i {
+    border-bottom: unset;
+    margin: unset;
+    color: #040404ba;
+}
+.header-block i:hover {
+    color: rgb(26, 201, 26);
+}
 .fas {
     font-size: 15px;
 }
-
+.header-block .question-editor {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+.fa-times {
+    font-size: 20px;
+}
+.fa-times:hover {
+    color: red !important;
+}
 .loader {
     position: fixed;
     top: 0;

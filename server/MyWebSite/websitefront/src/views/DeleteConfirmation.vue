@@ -1,9 +1,9 @@
 <template>
     <section>
         <div class="message">
-            <h2> Are you sure you want delete your answer? </h2>
+            <h2> Are you sure you want delete your {{ answer ? 'answer' : 'question' }}? </h2>
             <div>
-                <button class="outline secondary" @click="deleteAnswer(answer)">Yes</button>
+                <button class="outline secondary" @click=" answer ? deleteAnswer(answer) : deleteQuestion(question) ">Yes</button>
                 <button class="outline secondary" @click="close">No</button>
             </div>
         </div>
@@ -15,11 +15,15 @@ import {axios} from "../common/api.service.js";
 
 export default {
     name: "Delete Confirm",
-    emits: ["close-confirmation-module", "deleted-modul"],
+    emits: ["close-confirmation-module", "deleted-modul", "deleted-question"],
     props:{ 
         answer: {
             type: Object,
-            required: true
+            required: false
+        },
+        question: {
+            type:Object,
+            required: false
         }
     },
     methods: {
@@ -28,14 +32,29 @@ export default {
             let message = ""
             try {
                 let responce = await axios.delete(endpoint);
-                answer.is_active = false
-                if (responce.status === 204)
+                if (responce.status === 204) {
+                    answer.is_active = false
                     message = "Deleted succefully"
+                }
             } catch (err) {
                 console.log(err)
                 message = "Error occured"
             }
             this.$emit("deleted-modul", message)
+            this.close()
+        },
+        async deleteQuestion(question) {
+            const endpoint = `/forum/api/questions/${question.slug}/`
+            try {
+                let responce = await axios.delete(endpoint);
+                if (responce.status === 204) {
+                    this.$emit("deleted-question", question)
+                } else {
+                    alert("Error occured")
+                }
+            } catch (err) {
+                console.log(err)
+            }
             this.close()
         },
         close () {

@@ -24,6 +24,7 @@
                     <strong> <p>{{answer.author}}</p></strong>
                     <p class="date"> {{answer.created_at}} </p>
                 </div>  
+                
                 <delete-confirm 
                     v-if="showDeleteAnswer" 
                     @close-confirmation-module="
@@ -33,13 +34,15 @@
                     :answer="answerToDelete" />   
             </div>
         </transition>
-    <transition tag="div" mode="out-in" 
-        enter-active-class="animate__animated animate__zoomIn"
-        leave-to-class="animate__animated animate__zoomOut">
-        <div class="delete-confirmed" v-if="deleteInfo">
-            <h2>{{message}}</h2>
-        </div>
-    </transition>
+
+        <transition tag="div" mode="out-in" 
+            enter-active-class="animate__animated animate__zoomIn"
+            leave-to-class="animate__animated animate__zoomOut">
+            <div class="delete-confirmed" v-if="deleteInfo">
+                <h2>{{message}}</h2>
+            </div>
+        </transition>
+
     </div>
 </template>
 

@@ -1,6 +1,8 @@
 <template>
     <section>
+
         <sidebar />
+
         <div class="question-create container">
             <h2 class="mb-3">Create a new question</h2>
             <form class="question-form">
@@ -18,16 +20,27 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import {axios} from "../common/api.service.js";
+
 import Sidebar from "../views/SideBar.vue";
 
 export default {
     name: "Create-Question",
     title() {
-        return "Forum: create new question"
+        return "Forum: question editor"
     },
     components: {
         Sidebar
+    },
+    props: {
+        slug: {
+            type: String,
+            required: false
+        }
+    },
+    computed: {
+      ...mapState(["authModalShow",])
     },
     data() {
         return {
@@ -37,9 +50,13 @@ export default {
         }
     },
     methods: {
-        async createNewQuestion() {
-            let endpoint = `/forum/api/questions/`
-            let method = "POST"
+        async createOrUpdateNewQuestion() {
+            let endpoint = `/forum/api/questions/`;
+            let method = "POST";
+            if(this.slug) {
+                endpoint += `${this.slug}/`;
+                method = "PUT";
+            }
             try {
                 let responce = await axios({
                     method: method,
@@ -49,7 +66,7 @@ export default {
                         content: this.questionBody
                     }
                 });
-                if(responce.status === 201) {
+                if(responce.status === 201 || responce.status === 200) {
                     this.$router.push({name: "Forum-question-detail", params: {slug: responce.data.slug}})
                 }
             } catch (err) {
@@ -64,8 +81,29 @@ export default {
                 this.errors = "Max title length is 50 characters. You can write addition information in question detail area."
             } else {
                 if(this.errors) this.errors = null
-                this.createNewQuestion()
+                this.createOrUpdateNewQuestion()
             }
+        },
+    },
+    async beforeRouteEnter(to, from, next) {
+        if (to.params.slug && to.params.slug) {
+            const endpoint = `/forum/api/questions/${to.params.slug}/`
+            try {
+                const responce = await axios.get(endpoint)
+                return next(vm => {
+                    vm.questionTitle = responce.data.title
+                    vm.questionBody = responce.data.content
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        } else 
+            return next();
+    },   
+    watch: {
+        authModalShow: function() {
+            if(this.authModalShow == true)
+            this.$router.push("/auth/login/")
         }
     }
 }

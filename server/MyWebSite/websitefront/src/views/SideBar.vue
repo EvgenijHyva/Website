@@ -1,6 +1,6 @@
 <template>
     <div class="side-bar">
-        <router-link :to="{'name': 'Forum-question-create'}" tag="i" v-if="$router.currentRoute.value.path !== '/forum/ask/'">
+        <router-link :to="{'name': 'Forum-question-create-edit'}" tag="i" v-if="!$router.currentRoute.value.path.match(/^\/forum\/ask\//)">
             <i class="fas fa-plus-circle" title="Add new question"></i>
         </router-link>
         <i class="fas fa-chevron-circle-left" @click="$router.back()" v-else title="Return to previous"></i>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: "side-bar",
+    name: "side-bar"
 }
 </script>
 

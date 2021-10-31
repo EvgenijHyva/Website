@@ -4,6 +4,7 @@
             @toggle-deleted="toggleDeleted" 
             :hidenMessages="inactiveMessages" />
         <div>
+
         <div class="wrapper overflow" ref="wrapper">
             <div class="question-detail">
                 <div class="card" v-if="question">
@@ -28,52 +29,76 @@
                             <p class="mb-0"  :title="'Users have answered to this question ' + question.answers_count + ' times' "> 
                             &nbsp;Answers: 
                                 <strong>{{question.answers_count}}</strong>
+                            </p>&nbsp;|
+                            <p>&nbsp;
+                                <router-link :to="{'name': 'Forum-question-create-edit', params: {'slug': question.slug} }" tag="i"
+                                    v-if="question.author && question.author.split(' ').join('') == user && !question.answers_count">
+                                    <i class="fas fa-pencil-alt" title="Edit question"></i>&nbsp;
+                                </router-link>
+                                <i class="far fa-trash-alt" title="Delete question"
+                                    v-if="question.author && question.author.split(' ').join('') == user"
+                                    @click="showQuestionConfirmDelete = true"></i>&nbsp;
                             </p>
                             </div>
                             <p class="answer-added info-text" v-if="question.user_has_answered">You have already answered that question</p>
-                            <p class="add-answer info-text" v-else @click="addNewAnswer = true">add a new answer!</p>
+                            <p class="add-answer info-text" v-else @click="addNewAnswer = true">Add a new answer!</p>                           
                         </div>
+
                         <i class="fas fa-angle-up" title="Hide answers"
                             v-show="addNewAnswer" 
-                            v-if="showAnswers && addNewAnswer" 
+                            v-if="showAnswers && addNewAnswer && answers.length" 
                             @click="toggleAnswerContainer"></i>
                         <i class="fas fa-angle-down"  title="Show answers"
                             v-show="addNewAnswer" 
                             v-else-if="!showAnswers && addNewAnswer" 
                             @click="toggleAnswerContainer"></i>
+
+                        <question-delete-confirmation 
+                            :question="question" 
+                            v-if="showQuestionConfirmDelete" 
+                            @close-confirmation-module="showQuestionConfirmDelete = false;"
+                            @deleted-question="confirmedQuestionDelete"/>
+
                     </div>
                 </div>
+
                 <div class="not-found" v-else>
                     <h1 class="error text-center">Error 404: Question Not found</h1>
                     <img src="../assets/pulpFiction.gif" alt="gif-file">
                     <button class="outline" @click="$router.back()">Back to previous page</button>
                 </div>
+
                 <div v-if="answers" class="container">
                     <answer-view v-for="answer in answers" 
                         v-show="showAnswers"
                         :key="answer.uuid"
                         :answer="answer"
                         :stateShowDeleted="showDeletedMessages"/>
+                    
                     <answer-create-view 
                         v-if="addNewAnswer" 
                         @close-form="addNewAnswer = false" 
                         @answer-submited="newPost"
                         :slug="slug"
                         :lastAnswer="answers[0]"/>
-                </div>      
+                </div>    
+
             </div>
         </div>
+
         <button class="load-more-button secondary" v-show="next" 
             @click.prevent="getQuestionAnswers(next)"  
             title="Load more answers">Load older answers</button>
         </div>
+
     </section>
 </template>
 
 <script>
 import AdminAnswerPanel from "../views/AdminFeatures/ForumAdminAnswerTools.vue";
-import AnswerCreateView from "../views/ForumAnswerCreate.vue"
+import AnswerCreateView from "../views/ForumAnswerCreate.vue";
 import AnswerView from "../views/Answer.vue";
+import QuestionDeleteConfirmation from "../views/DeleteConfirmation.vue";
 import {axios} from "../common/api.service.js";
 import {mapState} from "vuex";
 
@@ -90,10 +115,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(["is_staff",])
+        ...mapState(["is_staff", "user", "authModalShow"])
     },
     components: {
-        AnswerView, AnswerCreateView, AdminAnswerPanel
+        AnswerView, AnswerCreateView, QuestionDeleteConfirmation, AdminAnswerPanel
     },
     data() {
         return {
@@ -104,7 +129,8 @@ export default {
             showAnswers: true,
             addNewAnswer: false,
             showDeletedMessages: false,
-            inactiveMessages: false
+            inactiveMessages: false,
+            showQuestionConfirmDelete: false,
         }
     },
     methods: {
@@ -136,6 +162,9 @@ export default {
         },
         toggleDeleted(state) {
             this.showDeletedMessages = state
+        },
+        confirmedQuestionDelete() {
+            this.$router.push({"name": "Forum"})
         }
     },
     created() {
@@ -166,6 +195,10 @@ export default {
             if(!this.addNewAnswer)
                 return this.showAnswers = true
         },
+        authModalShow: function() {
+            if(this.authModalShow == true)
+            this.$router.back()
+        }
     },
 }
 </script>
@@ -194,11 +227,18 @@ export default {
     display: flex;
     justify-content: space-between;
 }
+.content-info div{
+    flex-grow: 1;
+}
+a {
+    border-bottom: unset;
+}
+.fa-pencil-alt {
+    color: #040404ba;
+}
 .info-text {
     font-size: 15px;
     text-align: right;
-    border: solid 1px green;
-    border-radius: 25px;
     padding: 1px 5px;
 }
 .answer-added {
@@ -206,6 +246,7 @@ export default {
 }
 .add-answer{
     color: orange;
+    flex-grow: 1;
 }
 .fas {
     font-size: 15px;
@@ -222,11 +263,14 @@ export default {
     right: 15px;
     font-size: 20px;
 }
-.fa-plus-circle:hover {
+.fa-plus-circle:hover, 
+.fa-pencil-alt:hover {
     color: #356a0c;
     filter: brightness(1.2);
 }
-.fa-plus-circle:active {
+.fa-plus-circle:active,
+.fa-pencil-alt:active,
+.fa-trash-alt:active  {
     color: #0b59a9;
     filter: brightness(1.2);
 }
@@ -241,6 +285,12 @@ export default {
     left: 0;
     right: 0;
 }
+
+.fa-trash-alt:hover {
+    color: #fc2600;
+    filter: brightness(1.2);
+}
+
 .card {
     opacity: 0.85;
     box-shadow: var(--forum-card-shadow);

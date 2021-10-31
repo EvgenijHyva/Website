@@ -8,7 +8,6 @@
 <script>
 import Forum from  "../components/Forum.vue"
 import SideBar from "../views/SideBar.vue";
-//import QuestionCreate from "@views/QuestionCreate.vue";
 import { mapState } from "vuex";
 
 

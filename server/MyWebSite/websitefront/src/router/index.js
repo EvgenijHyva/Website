@@ -43,9 +43,10 @@ const routes = [
     },
   },
   {
-    path: '/forum/ask/',
-    name: 'Forum-question-create',
+    path: '/forum/ask/:slug?/',
+    name: 'Forum-question-create-edit',
     component: () => import(/* webpackChunkName: "Create-Question", */ "@/views/QuestionCreate.vue"),
+    props: true,
     meta: {
       keepAlive: false
     },
