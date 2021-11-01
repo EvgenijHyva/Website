@@ -5,10 +5,21 @@
                 :class="{'deleted hidden-box' : !answer.is_active}" 
                 :title="!answer.is_active ? 'Answer was deleted': 'Author: ' + answer.author">
                 <div>
-                    <div class="answer-body" > <div v-if="!answer.is_active">Deleted:&nbsp;</div>{{answer.body}}</div> 
+                    <div class="answer-body" ref="answer-body"
+                        :contenteditable="answer.is_active && editAnswer"
+                        :class="{'editable' : editAnswer}"> 
+                        <div v-if="!answer.is_active">Deleted:&nbsp;</div>
+                            {{answer.body}}</div> 
                     <div class="tools">
-                        <i class="fas fa-pencil-alt" v-if="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp; 
-                        <i class="fas fa-trash-alt" @click="deleteAnswer(answer)" v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
+                        <i class="fas fa-pencil-alt" 
+                            v-if="answer.author.split(' ').join('') === user && answer.is_active && !editAnswer && isLastAnswer" 
+                            @click="editAnswer = true; "></i>&nbsp; 
+                        <i class="fas fa-save" 
+                            @click="saveAnswer" 
+                            v-else-if="editAnswer"></i>&nbsp; 
+                        <i class="fas fa-trash-alt" 
+                            @click="deleteAnswer(answer)" 
+                            v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
                         <i class="fas fa-thumbs-up" v-if="answer.user_has_liked_answer">&nbsp;{{answer.likes_count}}</i>
                         <i class="far fa-thumbs-up" v-else>&nbsp;{{answer.likes_count}}</i>
                     </div>
@@ -49,6 +60,7 @@
 <script>
 import DeleteConfirm from "../views/DeleteConfirmation.vue";
 
+import {axios} from "../common/api.service.js";
 import {mapState} from "vuex";
 
 export default {
@@ -64,6 +76,10 @@ export default {
         stateShowDeleted: {
             type:Boolean,
             required: false
+        },
+        isLastAnswer: {
+            type: Boolean,
+            required: true
         }
     },
     computed: {
@@ -71,6 +87,7 @@ export default {
     },
     data() {
         return {
+            editAnswer: false,
             showDeleteAnswer: false,
             answerToDelete: null,
             deleteInfo: false,
@@ -96,6 +113,41 @@ export default {
 
             }
             this.showDeletedInfo = !this.showDeletedInfo
+        },
+        async changeAnswer(comment) {
+            let endpoint = `/forum/api/answers/${this.answer.uuid}/`;
+            let method = "PUT";
+            let message;
+            try {
+                let responce = await axios({
+                    method: method,
+                    url:endpoint,
+                    data: { 
+                        body: comment, 
+                    }
+                });
+                if (responce.status === 200) {
+                    message = "Changed succefully"
+                } else {
+                    message = "error occured"
+                }
+                this.showMessage(message)
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        saveAnswer () {
+            let comment = this.$refs["answer-body"].textContent
+            if (comment.length) {
+                comment = comment[0].toUpperCase() + comment.slice(1)
+                this.changeAnswer(comment)
+                this.editAnswer = false
+                this.$refs["answer-body"].textContent = comment
+            } else {
+                let message = "You cant save a empty answer"
+                this.showMessage(message)
+            }
+            
         }
     },
     watch: {
@@ -106,12 +158,25 @@ export default {
                 this.deleteInfo = false; 
             }, 3000)
             }
-        }   
+        },
+        editAnswer: function (state) {
+            if (state) {
+                this.$nextTick(() => {
+                    const range = document.createRange();
+                    range.selectNodeContents(this.$refs["answer-body"])
+                    range.collapse(false);
+                    const selector = window.getSelection();
+                    selector.removeAllRanges();
+                    selector.addRange(range);
+                })               
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
+
 .animate__animated{
     animation-duration: 1.5s;
 }
@@ -136,8 +201,13 @@ export default {
     border-radius: 5px 10px 15px 20px;
     padding: 10px;
 }
-.fa-thumbs-up, .fa-trash-alt, .fa-pencil-alt{
+.fa-thumbs-up, 
+.fa-trash-alt,
+.fa-pencil-alt {
     font-size: 15px;
+}
+.fa-save {
+    font-size: 18px;
 }
 .fa-trash-alt:hover {
     color: red;
@@ -148,7 +218,7 @@ export default {
 .fas+.fa-thumbs-up:hover {
     color:rgb(240, 87, 60);
 }
-.tools .far:hover {
+.tools .far:hover, .fa-save:hover {
     color: darkgreen;
 }
 .fa-angle-up, .fa-angle-down {
@@ -174,6 +244,22 @@ export default {
     text-align: left;
     max-width: 75%;
 }
+.editable {
+    background: #dacad7;
+    border-radius: 5px;
+    align-self: baseline;
+    color: darkorchid;
+    font-weight: bold;
+    padding: 3px 10px;
+    width: 100%;
+    height: auto;
+    resize: none;
+    text-align: left;
+}
+.editable:focus {
+  outline: none;
+}
+
 .date {
     font-weight: 100;
 }

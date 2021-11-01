@@ -439,10 +439,11 @@ ul {
   transition: all 0.3s ease-in;
   user-select: none;
 }
-
+.add-btn:hover *{
+  color: black;
+}
 .add-btn:hover {
   background-color: rgba(255, 255, 255, 0.9);
-  color: black;
 }
 
 .add-btn:active {

@@ -74,6 +74,7 @@
                         v-show="showAnswers"
                         :key="answer.uuid"
                         :answer="answer"
+                        :isLastAnswer="answers.indexOf(answer) === 0"
                         :stateShowDeleted="showDeletedMessages"/>
                     
                     <answer-create-view 
@@ -164,7 +165,8 @@ export default {
         toggleDeleted(state) {
             this.showDeletedMessages = state
         },
-        confirmedQuestionDelete() {
+        confirmedQuestionDelete(question) {
+            console.log( `${question.title} deleted`)
             this.$router.push({"name": "Forum"})
         }
     },
@@ -179,13 +181,24 @@ export default {
                 this.$refs["wrapper"].classList.contains("overflow") ? this.$refs["wrapper"].classList.remove("overflow") : ""
             } else {
                 this.$refs["wrapper"].classList.contains("overflow") ? "" : this.$refs["wrapper"].classList.add("overflow")
+            }
+            if (this.question) {
+                // Capitalize question content
+                this.question.title = this.question.title[0].toUpperCase() + this.question.title.slice(1)
+                if (this.question.content)
+                    this.question.content = this.question.content[0].toUpperCase() + this.question.content.slice(1)
             }     
         },
         "answers.length": function (){
+            this.answers.forEach(answer => {
+                //capitalize answer body
+                answer.body = answer.body[0].toUpperCase() + answer.body.slice(1)
+            });
             let initialCheck = true
             let activeAnswers = this.answers.reduce((total, answer) => (answer.is_active === false? total: total+1), 0) 
             this.inactiveMessages = this.answers.length === activeAnswers? false : true  
             if (initialCheck && activeAnswers < 10 &&  this.next) {  
+                //load automaticly answers for admin if there is hiden answers
                 this.getQuestionAnswers(this.next)
             } else {
                 initialCheck = false;
@@ -199,7 +212,7 @@ export default {
         authModalShow: function() {
             if(this.authModalShow == true)
             this.$router.back()
-        }
+        },     
     },
 }
 </script>

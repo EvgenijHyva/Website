@@ -50,6 +50,7 @@
                                         <strong>{{question.answers_count}}</strong>
                                     </p>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -162,6 +163,13 @@ export default {
         key: async function() {
             this.getQuestions()
         },
+        questions: function () {
+            return this.questions.forEach(question => {
+                question.title = question.title[0].toUpperCase() + question.title.slice(1)
+                if (question.content)
+                    question.content = question.content[0].toUpperCase() + question.content.slice(1)
+            });
+        }
     }
 }
 
