@@ -20,8 +20,11 @@
                         <i class="fas fa-trash-alt" 
                             @click="deleteAnswer(answer)" 
                             v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
-                        <i class="fas fa-thumbs-up" v-if="answer.user_has_liked_answer">&nbsp;{{answer.likes_count}}</i>
-                        <i class="far fa-thumbs-up" v-else>&nbsp;{{answer.likes_count}}</i>
+                        <i class="fas fa-thumbs-up" 
+                            v-if="userLikedAnswer" 
+                            @click="toggleAnswerLike">&nbsp;{{likesCounter}}</i>
+                        <i class="far fa-thumbs-up" v-else
+                            @click="toggleAnswerLike">&nbsp;{{likesCounter}}</i>
                     </div>
                         <i class="fas fa-angle-down" 
                             v-show="!answer.is_active" 
@@ -41,7 +44,7 @@
                     @close-confirmation-module="
                         showDeleteAnswer=false; 
                         answerToDelete=null"
-                    @deleted-modul="showMessage"
+                    @deleted-modul="confirmedDeletedAnswer"
                     :answer="answerToDelete" />   
             </div>
         </transition>
@@ -85,6 +88,7 @@ export default {
     computed: {
       ...mapState(["user",])
     },
+    emits: ["confirmed-deleted-answer"],
     data() {
         return {
             editAnswer: false,
@@ -93,12 +97,18 @@ export default {
             deleteInfo: false,
             message: "",
             showDeletedInfo: false,
+            userLikedAnswer: this.answer.user_has_liked_answer,
+            likesCounter: this.answer.likes_count
         }
     },
     methods: {
         deleteAnswer(answerObject) {
             this.answerToDelete = answerObject
             this.showDeleteAnswer = true
+        },
+        confirmedDeletedAnswer(message) {
+            this.$emit("confirmed-deleted-answer")
+            this.showMessage(message)
         },
         showMessage(message) {
             this.message = message
@@ -110,7 +120,6 @@ export default {
                 mainContainer.classList.remove("hidden-box")
             } else {
                 mainContainer.classList.add("hidden-box")
-
             }
             this.showDeletedInfo = !this.showDeletedInfo
         },
@@ -147,7 +156,37 @@ export default {
                 let message = "You cant save a empty answer"
                 this.showMessage(message)
             }
-            
+        },
+        async toggleAnswerLike() {
+            let endpoint = `/forum/api/answers/${this.answer.uuid}/like/`;
+            let method;
+            if (this.userLikedAnswer) {
+                method = "DELETE"
+            } else {
+                method = "POST"
+            }
+            try {
+                let response = await axios({
+                    method: method,
+                    url:endpoint,
+                    data: { 
+                        body: ""
+                    }
+                });
+                if (response.status === 200 && method === "POST") {
+                    console.log(response)
+                    this.likesCounter ++
+
+                }else if (response.status === 200 && method === "DELETE") {
+                    console.log(response)
+                    this.likesCounter-- 
+                } else {
+                    console.log(response)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+            this.userLikedAnswer = !this.userLikedAnswer
         }
     },
     watch: {
@@ -196,6 +235,7 @@ export default {
 }
 
 .text-muted {
+    font-family: Texturina;
     box-shadow: var(--forum-card-shadow);
     background: var(--forum-comment-background);
     border-radius: 5px 10px 15px 20px;
@@ -240,6 +280,7 @@ export default {
     margin: 0;
 }
 .answer-body {
+    font-family: Texturina;
     white-space: pre-wrap;
     text-align: left;
     max-width: 75%;

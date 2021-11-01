@@ -50,7 +50,7 @@ export default {
         }
     },
     methods: {
-        async createOrUpdateNewQuestion() {
+        async createOrUpdateQuestion() {
             let endpoint = `/forum/api/questions/`;
             let method = "POST";
             if(this.slug) {
@@ -81,7 +81,7 @@ export default {
                 this.errors = "Max title length is 50 characters. You can write addition information in question detail area."
             } else {
                 if(this.errors) this.errors = null
-                this.createOrUpdateNewQuestion()
+                this.createOrUpdateQuestion()
             }
         },
     },

@@ -70,19 +70,21 @@
                 </div>
 
                 <div v-if="answers" class="container">
-                    <answer-view v-for="answer in answers" 
-                        v-show="showAnswers"
-                        :key="answer.uuid"
-                        :answer="answer"
-                        :isLastAnswer="answers.indexOf(answer) === 0"
-                        :stateShowDeleted="showDeletedMessages"/>
-                    
                     <answer-create-view 
                         v-if="addNewAnswer" 
                         @close-form="addNewAnswer = false" 
                         @answer-submited="newPost"
                         :slug="slug"
                         :lastAnswer="answers[0]"/>
+                        
+                    <answer-view v-for="answer in answers" 
+                        v-show="showAnswers"
+                        :key="answer.uuid"
+                        :answer="answer"
+                        :isLastAnswer="answers.indexOf(answer) === 0"
+                        :stateShowDeleted="showDeletedMessages"
+                        @confirmed-deleted-answer="confirmedDeletedAnswer"/>
+                    
                 </div>    
 
             </div>
@@ -117,7 +119,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["is_staff", "user", "authModalShow"])
+        ...mapState(["is_staff", "user", "authModalShow"])   
     },
     components: {
         AnswerView, AnswerCreateView, QuestionDeleteConfirmation, AdminAnswerPanel
@@ -161,6 +163,9 @@ export default {
         },
         newPost(responce) {
             this.answers.unshift(responce)
+            if (!this.question.answers_count){
+                return this.question.answers_count++
+            } 
         },
         toggleDeleted(state) {
             this.showDeletedMessages = state
@@ -168,6 +173,12 @@ export default {
         confirmedQuestionDelete(question) {
             console.log( `${question.title} deleted`)
             this.$router.push({"name": "Forum"})
+        },
+        confirmedDeletedAnswer() {
+            if (!this.question.answers_count)
+                return this.question.answers_count = 0
+            else 
+                return this.question.answers_count --
         }
     },
     created() {
@@ -194,6 +205,7 @@ export default {
                 //capitalize answer body
                 answer.body = answer.body[0].toUpperCase() + answer.body.slice(1)
             });
+            
             let initialCheck = true
             let activeAnswers = this.answers.reduce((total, answer) => (answer.is_active === false? total: total+1), 0) 
             this.inactiveMessages = this.answers.length === activeAnswers? false : true  
@@ -218,12 +230,16 @@ export default {
 </script>
 
 <style scoped>
+
 .wrapper {
     margin: 80px auto 0;
     max-height: 80vh;
 }
+
 .overflow {
     overflow-y: scroll;
+}.card-body {
+    font-family: Texturina;
 }
 .card-body div {
     display: flex;
@@ -247,9 +263,6 @@ export default {
 a {
     border-bottom: unset;
 }
-.fa-pencil-alt {
-    color: #040404ba;
-}
 .info-text {
     font-size: 15px;
     text-align: right;
@@ -264,6 +277,9 @@ a {
 }
 .fas {
     font-size: 15px;
+}
+.fa-pencil-alt {
+    color: #040404ba;
 }
 .fa-chevron-circle-left {
     position: absolute;
@@ -364,7 +380,7 @@ a {
 
 @media  screen and (max-width: 1000px) {
     .not-found h1 {
-            font-size: 30px;
+        font-size: 30px;
     }
 }
 </style>

@@ -3,7 +3,7 @@ from forum.models import Answer, Question
 
 @admin.register(Question)
 class AdminQuestion(admin.ModelAdmin):
-    list_display = ("title", "author", "id", )
+    list_display = ("title", "is_active","author", "id")
     ordering = ("id", "-created_at",)
     search_fields = ("slug", "id")
     readonly_fields = ("created_at", "updated_at")

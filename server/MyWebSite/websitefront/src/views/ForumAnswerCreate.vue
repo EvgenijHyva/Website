@@ -8,7 +8,7 @@
             <textarea class="form-control" placeholder="Write your answer here" rows="10" v-model="newAnswerBody"></textarea>
             <div class="error-container-block" v-if="errors">
                 <hr>
-                <p class="mb-3">{{errors}}</p>
+                <p class="mb-0">{{errors}}</p>
             </div>
             <div class="form-buttons">
                 <button class="btn btn-primary" @click.prevent="sendAnswer">Submit</button>
@@ -20,7 +20,7 @@
 </template>
 
 
-<script>
+<script> 
 import {mapState} from "vuex";
 import { axios } from "../common/api.service.js";
 export default {
@@ -87,7 +87,6 @@ export default {
 }
 .form-buttons {
     display: flex;
-    justify-content: space-between;
 }
 .fa-times {
     position: absolute;
@@ -99,6 +98,7 @@ export default {
     height: 75px;
 }
 .btn {
+    flex-grow: 1;
     margin-right: unset;
 }
 .error-container-block{
@@ -110,7 +110,6 @@ hr {
 @media screen and (max-width:800px) {
     .btn {
         margin: unset;
-        flex-grow: 1;
         border-radius: unset;
     }
     .answer-form {

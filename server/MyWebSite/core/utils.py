@@ -7,7 +7,7 @@ CYRILLIC_LATTERS = {
     u'У': u'u', u'ф': u'f', u'х': u'h', u'ц': u'c',
     u'ч': u'ch', u'ш': u'sh', u'щ': u'sch', u'ь': u'',
     u'ы': u'yi', u'ъ': u'-', u'э': u'je', u'ю': u'ju',
-    u'я': u'ja'
+    u'я': u'ja', u'?': U'_', U'!': U'_'
 }
 
 def from_cyrillic_to_slug(text: str):

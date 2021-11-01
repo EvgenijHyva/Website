@@ -50,7 +50,7 @@
                                         <strong>{{question.answers_count}}</strong>
                                     </p>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -227,6 +227,7 @@ a:active h5 {
     box-shadow: var(--forum-card-shadow);
 }
 .card-body {
+    font-family: Texturina;
     text-align: left;
 }
 .card-body .header-block {
