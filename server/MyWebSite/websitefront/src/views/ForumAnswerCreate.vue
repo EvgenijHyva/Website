@@ -5,7 +5,7 @@
     <div class="answer-form">
         <form class="answer-form">
             <i class="fas fa-times" @click="close" title="Close"></i>
-            <textarea class="form-control" placeholder="Write your answer here" rows="10" v-model="newAnswerBody"></textarea>
+            <textarea class="form-control" placeholder="Write your answer here" rows="10" v-model="newAnswerBody" ref="Text-area"></textarea>
             <div class="error-container-block" v-if="errors">
                 <hr>
                 <p class="mb-0">{{errors}}</p>
@@ -74,6 +74,9 @@ export default {
                 }
             }
         }
+    },
+    mounted() {
+        this.$refs["Text-area"].focus()
     }
 }
 </script>

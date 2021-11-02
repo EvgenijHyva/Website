@@ -100,7 +100,7 @@
 
 <script>
 
-import { apiService } from "../common/api.service.js";
+import {  axios } from "../common/api.service.js";
 
 export default{
     name: "RegisterForm",
@@ -137,30 +137,34 @@ export default{
             this.reg_show_alert = true;
             this.reg_in_submission = true;
             this.reg_alert_msg= "Please wait! Your account is being created.";
-
-            const enteryPoint = "/api/dj-rest-auth/registration/"
-            const data = {
-                "username": values.name,
-                "gender": values.gender,
-                "password1": values.password,
-                "password2": values.confirm_password,
-                "first_name": values.first_name ? values.first_name : null,
-                "last_name": values.last_name ?  values.last_name : null,
-                "email":values.email,
-                "phone": values.phone,
-                "tos": values.tos
-            }
-
-            apiService(enteryPoint, "POST", data)
-                .then(response => {
-                    if (response.key) {
-                        this.$store.state.key = response.key
-                        this.reg_alert_msg = "Success! Your account has been created."
-                    } else {
-                        this.reg_in_submission = false
-                        this.reg_alert_msg= "Ooops error occured:" + response
+            const endPoint = "/api/dj-rest-auth/registration/"
+            let method = "POST"
+            try {
+                let response = await axios({
+                    method: method,
+                    url: endPoint,
+                    data: { 
+                        username: values.name,
+                        gender: values.gender,
+                        password1: values.password,
+                        password2: values.confirm_password,
+                        first_name: values.first_name ? values.first_name : null,
+                        last_name: values.last_name ?  values.last_name : null,
+                        email:values.email,
+                        phone: values.phone,
+                        tos: values.tos
                     }
                 })
+                if(response.status === 201) {
+                    this.$store.state.key = response.data.key
+                    this.reg_alert_msg = "Success! Your account has been created."
+                } else {
+                    this.reg_in_submission = false
+                    this.reg_alert_msg= "Ooops error occured:" + response
+                }
+            } catch (err) {
+                console.log(err)
+            }
             this.$store.state.showAuth = false
         },
     },
