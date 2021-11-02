@@ -195,6 +195,8 @@ a {
   font-weight: bold;
 }
 select {
+    display: inline-block;
+    width: auto;
     letter-spacing: 0.15rem;
     border-bottom: 3px solid transparent;
     font-size: 24px;
@@ -203,8 +205,13 @@ select {
     cursor: pointer;
     color: var(--primary-color);
     background: var(--select);
+    line-height: 1.3;
+    max-width: 15%;
+    box-sizing: border-box;
 }
-
+select.open::after {
+    transform: translateY(50%) rotate(180deg);
+}
 select:focus {
   color: var(--on-background);
   border-bottom: 3px solid;
