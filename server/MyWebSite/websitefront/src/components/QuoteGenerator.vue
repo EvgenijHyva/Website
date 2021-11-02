@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { apiService } from "../common/api.service";
+import { axios } from "../common/api.service";
 import { localQuotes } from "../common/localQuotes";
 
 export default {
@@ -54,24 +54,25 @@ export default {
         return {
             apiQuotes : [],
             quote: "",
-            apiUrl : "https://type.fit/api/quotes",
             loading : false,
         }
     },
     methods: {
-        getQuotes() {
+        async getQuotes() {
             this.loading = true;
-            apiService(this.apiUrl)
-            .then(data=> {
-                this.apiQuotes.push(...data)
-                this.selectQuote();
-                })
-            .catch(err => {
-                    console.log("error occured: '" + err + "'. Taken quote from local storage")
+            let endpoint = "https://type.fit/api/quotes"
+            try {
+                let response = await axios.get(endpoint)
+                if (response.status === 200) {
+                    this.apiQuotes.push(...response.data)
+                    this.selectQuote();
+                } else {
                     this.apiQuotes = localQuotes
                     this.selectQuote();
                 }
-            )     
+            } catch (err) {
+                console.log("error occured: '" + err + "'. Taken local quote")
+            } 
         },
         selectQuote() {
             this.quote = this.apiQuotes[Math.floor(Math.random()*this.apiQuotes.length)]

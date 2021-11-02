@@ -44,7 +44,7 @@
 //https://www.w3schools.com/howto/howto_js_slideshow_gallery.asp
 //https://animate.style/
 
-import { apiService } from "../common/api.service";
+import { axios } from "../common/api.service";
 
 export default {
     name: "Slider",
@@ -66,15 +66,19 @@ export default {
             const index = Math.floor(Math.random()*this.numbers.length)
             this.numbers.splice(index,0, num)
         },
-        getPhotos () {
+        async getPhotos () {
             const apiKey = 'D_aDnrARt6sVfmknOgRgeHLjqKebX9pzozYcZZCME3s';
-            let API = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${this.pictureCount}`
+            let apiEndpoint = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${this.pictureCount}`
             this.loaded = false
-            apiService(API)
-                .then(photos => {
-                    this.photosArray.push(...photos)
+            try {
+                let response = await axios.get(apiEndpoint)
+                if (response.status === 200) {
+                    this.photosArray.push(...response.data)
                     this.loaded = true
-                })
+                }
+            } catch (err) {
+                console.log(err)
+            }
         },
         showImage(e) {
             let component = this.$refs["fullScreenImage"]

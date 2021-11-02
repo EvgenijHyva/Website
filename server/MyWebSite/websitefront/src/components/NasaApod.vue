@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import {apiService} from "../common/api.service"
+import { axios } from "../common/api.service"
 //
 export default {
     name: "NasaApod",
@@ -75,17 +75,18 @@ export default {
         }
     },
     methods: {
-        getNasaArticles() {
-            const API_key = "bmAIOIxPkuiRkvTsIwJtkRXX5zIwp2sntaJY7g38"
-            let API_URL = `https://api.nasa.gov/planetary/apod?api_key=${API_key}&count=${this.count}`
-            this.articles.length = 0 // clear array
-            apiService(API_URL) 
-            .then(data => {
-                if (data) {
-                    this.articles = data
-                }
-            })
-            .catch(err=> console.log(err))
+        async getNasaArticles() {
+          const API_key = "bmAIOIxPkuiRkvTsIwJtkRXX5zIwp2sntaJY7g38"
+          let apiEndpoint = `https://api.nasa.gov/planetary/apod?api_key=${API_key}&count=${this.count}`
+          this.articles.length = 0 // clear array
+          try {
+            let response = await axios.get(apiEndpoint)
+            if (response.status === 200) {
+              this.articles = response.data
+            }
+          } catch (err) {
+            console.log(err)
+          }
         },
         toggleTabs() {
             this.tab = this.tab === "results" ? "favorites" : "results"

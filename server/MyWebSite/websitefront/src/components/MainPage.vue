@@ -13,8 +13,7 @@ import About from "../views/About.vue";
 import Projects from "../views/Projects.vue";
 import Contacts from "../views/Contacts.vue";
 
-import { apiService } from "../common/api.service";
-const pageContentEndpoint = "/api/page_content/";
+import { axios } from "../common/api.service";
 
 export default {
     name: "Mainpage",
@@ -25,9 +24,16 @@ export default {
         Home, About, Projects, Contacts,
     }, 
     methods: {
-        getPageContent() {
-            apiService(pageContentEndpoint)
-            .then(content => this.pageContent = content)
+        async getPageContent() {
+            const endpoint = "/api/page_content/"
+            try {
+                let response = await axios.get(endpoint)
+                if (response.status === 200) {
+                    this.pageContent = response.data
+                }
+            } catch (error) {
+                console.log(error)   
+            }
         }
     }, 
     data() {

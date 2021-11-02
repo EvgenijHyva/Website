@@ -13,15 +13,20 @@
 </template>
 
 <script>
-import { apiService } from "../common/api.service"
-const contactsEndpoint = "/api/contacts/"
+import { axios } from "../common/api.service"
 export default {
     name: "Contacts",
     methods: {
-      getContacts() {
-        apiService(contactsEndpoint)
-          .then(contacts => this.contacts = contacts )
-          .catch(err => console.log(err))
+      async getContacts() {
+        const endpoint = "/api/contacts/"
+        try {
+          let response = await axios.get(endpoint)
+          if (response.status === 200) {
+            this.contacts = response.data
+          }
+        } catch (err) {
+          console.log(err)
+        }
       }
     },
     data() {

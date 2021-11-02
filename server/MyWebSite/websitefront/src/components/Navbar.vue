@@ -216,7 +216,6 @@ select {
     color: var(--primary-color);
     background: var(--select);
     line-height: 1.3;
-    max-width: 15%;
     box-sizing: border-box;
 }
 select.open::after {
