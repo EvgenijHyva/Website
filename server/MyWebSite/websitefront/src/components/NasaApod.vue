@@ -60,7 +60,7 @@ import { axios } from "../common/api.service"
 export default {
     name: "NasaApod",
     title() {
-      return "Nasa API"
+      return this.tab === "results" ? "Nasa API" : "Nasa API: Favorites"
     },
     data() {
         return {
@@ -158,6 +158,7 @@ export default {
                 this.tab = "results"
             }
             this.scrollToTop()
+            document.title = this.$options.title.call(this)
         },
         favorites: {
             handler() {
