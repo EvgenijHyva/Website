@@ -167,9 +167,6 @@ export default{
             }
             this.$store.state.showAuth = false
         },
-    },
-    mounted () {
-           
     }
 }
 </script>

@@ -81,14 +81,13 @@
 
 <script>
 import { mapState } from "vuex";
-import { apiService } from "../common/api.service";
+import { axios } from "../common/api.service";
 
 export default {
     name: "NavbarComponent",
     data() {
       return {
         initial : true,
-        settingsEndpoint : "/api/settings/",
         showMobileMenu: false,
         timeout: null,
       }
@@ -108,34 +107,45 @@ export default {
         localStorage.setItem("Dark", this.userDarkThemeMode)
       },
 
-      uploadUserSettings() {
+      async uploadUserSettings() {
         if (this.user !== "Anonymous") {
           const method = "PUT";
+          const endPoint = "/api/settings/";
           const data = {
-              "dark": this.userDarkThemeMode,
-            }
-          apiService(this.settingsEndpoint, method, data)
+            dark: this.userDarkThemeMode,
+          }
+          try {
+            await axios({
+              method: method,
+              url: endPoint,
+              data: data
+            })
+          } catch (err) {
+            console.log(err)
+          }
         }
       }, 
       toggleNav() {
         this.showMobileMenu = !this.showMobileMenu
       },
-      logout() {
+      async logout() {
         const endPoint = "/api/dj-rest-auth/logout/"
         const method = "POST"
-        apiService(endPoint, method)
-          .then(request => {
-            if (request.detail) {
-              console.log("loging out")
-              this.$store.state.authModalShow = true
-              this.$store.state.user = "Anonymous"
-            } else {
-              console.log("warning",request)
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
+        try {
+          let response = await axios({
+            method: method,
+            url: endPoint,
+          })              
+          if(response.status === 200) {
+            console.log(`loging out (${response.data.detail})`)
+            this.$store.state.authModalShow = true
+            this.$store.state.user = "Anonymous"
+          } else {
+            console.log("warning ",response)
+          }
+        } catch (err) {
+          console.log(err)
+        }
       },
       editProfile() {
         console.log("editing") // TODO edit profile

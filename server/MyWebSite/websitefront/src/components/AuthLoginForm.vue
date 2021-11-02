@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { apiService } from "../common/api.service";
+import { axios } from "../common/api.service";
 
 export default {
     name: "LoginForm",
@@ -59,15 +59,22 @@ export default {
         this.log_show_alert = true;
         this.log_on_submition = true;
         this.log_alert_msg = "Please wait! We are logging you in.";
-        apiService(LoginPoint, "POST", values)
-          .then(response => {
-            if (response.key) {
-              this.$store.state.key = response.key
-            } else {
-              this.log_on_submition = false
-              this.log_alert_msg= "Ooops error occured:" + response
-            }
+        let method = "POST"
+        try {
+          let response = await axios({
+            method: method,
+            url: LoginPoint,
+            data: values
           })
+          if(response.status === 200) {
+            this.$store.state.key = response.data.key
+          } else {
+            this.log_on_submition = false
+            this.log_alert_msg= "Ooops error occured:" + response
+          }
+        } catch (err) {
+          console.log(err)
+        }
         this.$store.state.showAuth = false
       }
     }
