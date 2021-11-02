@@ -1,6 +1,8 @@
 <template>
     <div>
-        <transition appear name="Animate_answer" appear-active-class="animate__animated animate__zoomIn">
+        <transition appear name="Animate_answer" 
+            appear-active-class="animate__animated animate__zoomIn"
+            leave-to-class="animate__animated animate__fadeOut">
             <div class="text-muted" v-if="answer.is_active || stateShowDeleted"
                 :class="{'deleted hidden-box' : !answer.is_active}" 
                 :title="!answer.is_active ? 'Answer was deleted': 'Author: ' + answer.author">
@@ -39,13 +41,6 @@
                     <p class="date"> {{answer.created_at}} </p>
                 </div>  
 
-                <delete-confirm 
-                    v-if="showDeleteAnswer" 
-                    @close-confirmation-module="
-                        showDeleteAnswer=false; 
-                        answerToDelete=null"
-                    @deleted-modul="confirmedDeletedAnswer"
-                    :answer="answerToDelete" />   
             </div>
         </transition>
 
@@ -56,6 +51,15 @@
                 <h2>{{message}}</h2>
             </div>
         </transition>
+
+        <delete-confirm 
+            v-if="showDeleteAnswer" 
+            @close-confirmation-module="
+                showDeleteAnswer=false; 
+                answerToDelete=null"
+            @deleted-modul="confirmedDeletedAnswer"
+            :answer="answerToDelete" />   
+
 
     </div>
 </template>
@@ -159,12 +163,7 @@ export default {
         },
         async toggleAnswerLike() {
             let endpoint = `/forum/api/answers/${this.answer.uuid}/like/`;
-            let method;
-            if (this.userLikedAnswer) {
-                method = "DELETE"
-            } else {
-                method = "POST"
-            }
+            let method = this.userLikedAnswer ? "DELETE" : "POST"
             try {
                 let response = await axios({
                     method: method,
@@ -174,11 +173,9 @@ export default {
                     }
                 });
                 if (response.status === 200 && method === "POST") {
-                    console.log(response)
                     this.likesCounter ++
 
                 }else if (response.status === 200 && method === "DELETE") {
-                    console.log(response)
                     this.likesCounter-- 
                 } else {
                     console.log(response)

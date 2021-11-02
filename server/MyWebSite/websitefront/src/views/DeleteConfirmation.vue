@@ -1,12 +1,16 @@
 <template>
     <section>
-        <div class="message">
-            <h2> Are you sure you want delete your {{ answer ? 'answer' : 'question' }}? </h2>
-            <div>
-                <button class="outline secondary" @click=" answer ? deleteAnswer(answer) : deleteQuestion(question) ">Yes</button>
-                <button class="outline secondary" @click="close">No</button>
+        <transition appear 
+            appear-active-class="animate__animated animate__fadeIn"
+            leave-active-class="animate__animated animate__fadeOut">
+            <div class="message">
+                <h2> Are you sure you want delete your {{ answer ? 'answer' : 'question' }}? </h2>
+                <div>
+                    <button class="outline secondary" @click=" answer ? deleteAnswer(answer) : deleteQuestion(question) ">Yes</button>
+                    <button class="outline secondary" @click="close">No</button>
+                </div>
             </div>
-        </div>
+        </transition>
     </section>
 </template>
 
@@ -65,7 +69,11 @@ export default {
 </script>
 
 <style scoped>
+.animate__animated {
+    animation-duration: 1.5s;
+}
 section {
+    font-family: Lora;
     position: fixed;
     background: #000000bf;
     width: 100vw;

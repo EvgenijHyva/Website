@@ -28,7 +28,7 @@ const routes = [
   {
     path: '/forum/',
     name: 'Forum',
-    component: () => import(/* webpackChunkName: "NotFound", */ "@/components/ForumBase.vue"),
+    component: () => import(/* webpackChunkName: "ForumBase", */ "@/components/ForumBase.vue"),
     meta: {
       keepAlive: false
     }

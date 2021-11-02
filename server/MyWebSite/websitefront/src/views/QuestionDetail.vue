@@ -350,6 +350,11 @@ a {
 .load-more-button {
     margin: auto;
 }
+@media  screen and (max-width: 1000px) {
+    .not-found h1 {
+        font-size: 30px;
+    }
+}
 @media  screen and (max-width: 800px) {
     .not-found img {
         width: 95vw;
@@ -376,11 +381,16 @@ a {
     .not-found h1 {
         font-size: 30px;
     }
-}
-
-@media  screen and (max-width: 1000px) {
-    .not-found h1 {
-        font-size: 30px;
+    .fa-plus-circle {
+        right: 0;
+    }
+    .fa-chevron-circle-left {
+        left: 1px;
+    }
+    .fa-plus-circle, .fa-chevron-circle-left {
+        top:3px;
     }
 }
+
+
 </style>

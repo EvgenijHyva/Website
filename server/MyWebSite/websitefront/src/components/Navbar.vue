@@ -61,7 +61,7 @@
                   <option value="Calculator" title="Simple calculator">Calculator</option>
                   <option value="QuoteGenerator" title="Quote generator">Quotes</option>
                   <option value="SpockRockGame" title="Rock-Paper-Scissors-Lizard-Spock game">R-P-S-L-S</option>
-                  <option value="Kanban" title="Kanban board">Kanban</option>
+                  <option value="Kanban" :title="user==='Anonymous'? 'Login required': 'Kanban board' " :disabled="user==='Anonymous'" >Kanban</option>
                   <option value="MathSprint" title="Math sprint game">Math game</option>
                   <option value="NasaApod" title="Nasa Apod">Nasa Apod</option>
               </select>
