@@ -21,7 +21,7 @@ import NavbarComponent from "./components/Navbar.vue";
 import Backgrounds from "./components/Backgrounds.vue";
 import Forum from "./components/Forum.vue";
 
-import { apiService } from "./common/api.service";
+import { axios } from "./common/api.service";
 import { mapState } from "vuex";
 
 export default {
@@ -38,24 +38,25 @@ export default {
     }
   },
   methods: {
-    getUserSettings() { 
-      const settingsEndpoint = "/api/settings/"
-      apiService(settingsEndpoint)
-        .then(settings => {
-          if (settings){
-            this.$store.state.authModalShow = false, 
-            this.$store.state.userDarkThemeMode = settings.dark,
-            this.$store.state.user = settings.user,
-            this.$store.state.is_staff = settings.is_admin
-            this.$store.state.background = settings.background
-            this.userSettings = settings
-          }
-          else {
-            this.$store.state.authModalShow = true
-            console.log("Unauthorized user")
-          }
-        })
-        .catch(err=> console.log(err))
+    async getUserSettings() { 
+      const endpoint = "/api/settings/"
+      try {
+        const response = await axios.get(endpoint)
+      if (response.status === 200 && response.data) {
+        this.$store.state.authModalShow = false, 
+        this.$store.state.userDarkThemeMode = response.data.dark,
+        this.$store.state.user = response.data.user,
+        this.$store.state.is_staff = response.data.is_admin
+        this.$store.state.background = response.data.background
+        this.userSettings = response.data
+      } else {
+        this.$store.state.authModalShow = true
+      }
+      
+      } catch(err) {
+        console.log("Unauthorized user")
+        console.log(`Error occured: ${err}`)
+      }
     },
   },
   computed: {
