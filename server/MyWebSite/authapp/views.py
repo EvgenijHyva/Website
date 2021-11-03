@@ -2,12 +2,11 @@ from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from authapp.forms import UserRegisterForm, UserLoginForm, UserEditForm
+from authapp.forms import UserRegisterForm, UserLoginForm
 
 
 def register(request):
     if request.method == 'POST':
-        print("ok")
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()  # метод сохраняет данные формы в БД
@@ -35,7 +34,7 @@ def login(request):
             # messages.success(request, "Вы успешно авторизовались")
             if user and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse("api_users:current_user"))
+                return HttpResponseRedirect(reverse("entry_point"))
     else:
         form = UserLoginForm()
     content = {
@@ -46,25 +45,8 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse("auth:register"))
-    #return HttpResponseRedirect(reverse("main"))
+    return HttpResponseRedirect(reverse("entry_point"))
 
 
-##################################### for refactoring
-def edit(request):
-    context = {
-        "title": "Редактирование"
-    }
-    if request.method == "POST":
-        edit_form = UserEditForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse("main"))
 
-    else:
-        edit_form = UserEditForm(instance=request.user)
-    context.update({
-        "edit_form": edit_form
-    })
 
-    return render(request, "authapp/change_form.html", context)

@@ -13,15 +13,20 @@
 </template>
 
 <script>
-import { apiService } from "../common/api.service"
-const contactsEndpoint = "/api/contacts/"
+import { axios } from "../common/api.service"
 export default {
     name: "Contacts",
     methods: {
-      getContacts() {
-        apiService(contactsEndpoint)
-          .then(contacts => this.contacts = contacts )
-          .catch(err => console.log(err))
+      async getContacts() {
+        const endpoint = "/api/contacts/"
+        try {
+          let response = await axios.get(endpoint)
+          if (response.status === 200) {
+            this.contacts = response.data
+          }
+        } catch (err) {
+          console.log(err)
+        }
       }
     },
     data() {
@@ -47,13 +52,24 @@ export default {
 }
 
 .fab:hover {
-  color: var(--on-background);
+  color: var(--contact-hover);
 }
 
 .social-link, .social-link:hover, .social-link:focus {
   text-decoration: none;
   border-bottom: none;
+  margin: 1vw auto;
 }
 
+@media screen and (max-width: 600px) {
+  .fab {
+    font-size: 10vh;
+    margin: 1vh auto;
+  }
+  .social-icons {
+    display: flex;
+    flex-direction: column;
+  }
+}
 
 </style>

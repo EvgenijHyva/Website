@@ -4,8 +4,9 @@ from authapp.views import register, login, logout
 app_name = "authapp"
 
 urlpatterns = [
-    path("login/", login, name="login"),
-    path("register/", register, name="register"),
+    path("old-login-form/", login, name="login"),
+    path("old-register-form/", register, name="register"),
     path("logout/", logout, name="logout"),
-
 ]
+
+

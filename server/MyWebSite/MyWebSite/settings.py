@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import rest_framework.authentication
+import django.core.mail.backends.smtp
+from dotenv import load_dotenv # need to be commented on Herocu
 
-import MyWebSite.site_permisions
+
+load_dotenv() # need to be commented on Herocu
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,15 +43,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     "rest_framework",
     "rest_framework.authtoken",
+
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     "webpack_loader",
 
     "users",
     "mainpage",
     "authapp",
+    "scraping",
+    "forum",
 ]
 
 MIDDLEWARE = [
@@ -75,6 +87,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -111,6 +125,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+# allauth
+AUTHENTICATION_BACKENDS = [
+    # allauth specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    # Needed to login by username in Django admin, regardless of allauth
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # Internationalization
@@ -143,10 +164,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-# срабатывает когда нужно зайти на страицу авторизованым
-LOGIN_URL = "/auth/login/"
+# django-allauth
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_REQUIRED = (True)
+
+# django.contrib.sites
+SITE_ID = 1
+
+# срабатывает когда нужно зайти на страницу авторизованым
+LOGIN_URL = "/api/dj-rest-auth/login/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/"
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'users.serializer.AppRegisterSerializer',
+}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -154,7 +186,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication"
     ),
     "DEFAULT_PAGINATION_CLASS":
-        "rest_framework.pagination.PageNumberPagination",
+        "core.pagination.PageNumberPaginationNoCount",
     "PAGE_SIZE": 10,
 }
 
@@ -164,3 +196,10 @@ WEBPACK_LOADER = {
         "STATS_FILE": os.path.join(BASE_DIR, "websitefront", "webpack-stats.json"),
     }
 }
+
+EMAIL_BACKEND = django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TSL = True
+EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")

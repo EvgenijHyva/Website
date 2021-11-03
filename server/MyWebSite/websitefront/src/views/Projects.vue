@@ -1,18 +1,19 @@
 <template>
     <section id="projects">
     <!-- Projects -->
-        <h1>Buttons</h1>
-        <div class="buttons">
-            <button class="primary">Primary</button>
-            <button class="secondary">Secondary</button>
-            <button class="primary" disabled>Disabled</button>
-            <button class="outline">Outline</button>
-            <button class="secondary outline">Alt Outline</button>
-            <button class="outline" disabled>Disabled</button>
+        <h1>This project was created using</h1>
+        <div class="project-icons">
+            <i class="fab fa-python"></i>
+            <i class="fab fa-js"></i>
+            <i class="fab fa-vuejs"></i>
+            <i class="fab fa-html5"></i>
+            <i class="fab fa-bootstrap"></i>
+            <i class="fab fa-font-awesome"></i>
         </div>
         <div class="text-box" id="text_box">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, cumque! Lorem ipsum dolor sit, amet
-                consectetur adipisicing elit. Id vitae ratione, nobis optio rem nulla.
+            <p>
+              As project backend used Django + Django Rest Framework.
+              Project Frontend is Vue.js, Bootstrap 4, HTML5+CSS, Font Awesome.
             </p>
         </div>
     </section>
@@ -80,14 +81,39 @@ button:hover:not(.outline) {
 .text-box {
   width: 40%;
   text-align: justify;
-  background: rgb(0 0 0 / 50%);
+  background-color: var(--text-box);
   color: var(--on-primary);
   border-radius: 10px;
   padding: 30px;
+}
+.project-icons {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px ;
+}
+.project-icons .fab{
+  font-size: 70px;
+  cursor: none;
+  padding: 0 10px;
+}
+.project-icons .fab:hover {
+  color: transparent;
 }
 
 p {
   margin: 0;
   line-height: 25px;
+}
+
+@media screen and (max-width: 600px) { 
+  button {
+    font-size: 12px;
+    min-width: 25vw;
+    height: 4.5vh;
+    margin: 2vw;
+  }
+  .text-box {
+    width: 95vw;
+  }
 }
 </style>

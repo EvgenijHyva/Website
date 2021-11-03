@@ -1,9 +1,9 @@
 from django.db import models
-
+from core.models import TimeStampedModel
 from users.models import CustomUser
 
 
-class PageContent(models.Model):
+class PageContent(TimeStampedModel):
     class Meta:
         verbose_name = "контент на страницу главная"
         verbose_name_plural = "Главная (контент страницы)"
@@ -15,14 +15,11 @@ class PageContent(models.Model):
     show_image = models.BooleanField(default=True)
     about = models.TextField(blank=True, verbose_name="about")
 
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="дата обновления")
-
     def __str__(self):
         return f"{self.title} | created at: {self.created_at}"
 
 
-class Contacts(models.Model):
+class Contacts(TimeStampedModel):
     class Meta:
         verbose_name = "Контакты"
         verbose_name_plural = "Контакты"
@@ -41,9 +38,6 @@ class Contacts(models.Model):
     whatsapp = models.CharField(max_length=256, unique=True, verbose_name="Телефон для whatsapp",
                                 blank=True, null=True, default=None)
 
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="дата обновления")
-
     def __str__(self):
         return f"контакты соц. сетей"
 
@@ -58,7 +52,7 @@ class PageSettings(models.Model):
                                 related_name="user_settings", db_index=True,
                                 primary_key=True)  # primary_key use only users pk
     dark = models.BooleanField(default=False, verbose_name="Ночной режим")
-    tagline = models.CharField(verbose_name="Теги", max_length=128, blank=True)
+    background = models.CharField(verbose_name="Background", max_length=128, blank=True)
     modified_at = models.DateTimeField(auto_now=True, verbose_name="Дата Обновления")
     addition_code = models.TextField(blank=True, verbose_name="Доп. код")
     insert_addition_code = models.BooleanField(default=False, verbose_name="добавить код")

@@ -54,23 +54,5 @@ class UserRegisterForm(UserCreationForm):  # форма регистрации r
             field.help_text = ''
 
 
-    ############################################     for refactoring
-class UserEditForm(UserChangeForm):
 
-    class Meta:
-        model = CustomUser
-        fields = ("username", "first_name", "email", "avatar", "age")
 
-    def __init__(self, *args, **kwargs):
-        super(UserEditForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs["class"] = "form-control"
-            field.help_text = ""
-            if field_name == "password":
-                field.widget = forms.HiddenInput()
-
-    def clean_age(self):
-        data = self.cleaned_data["age"]
-        if data < 18:
-            raise forms.ValidationError("Вы слишком молоды")
-        return data

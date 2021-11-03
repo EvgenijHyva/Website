@@ -3,8 +3,8 @@
         "model": "users.customuser",
         "pk": 1,
         "fields": {
-            "password": "pbkdf2_sha256$150000$CupXNFQd8u00$ZMh8lXpBMvRMfSla+slPvkV+7eN+nXRoKdU/A6BvUVg=",
-            "last_login": "2021-08-03T14:08:36.282Z",
+            "password": "pbkdf2_sha256$150000$USkeZfrDPctV$H4sQLoVKmEMCv+WoQDrxTnXw7SAuOXWmWiQIQaa6Gzg=",
+            "last_login": "2021-09-22T21:26:14Z",
             "is_superuser": true,
             "username": "Evgeny",
             "first_name": "Evgeny",
@@ -12,55 +12,12 @@
             "email": "evgeny.hyvarinen@gmail.com",
             "is_staff": true,
             "is_active": true,
-            "date_joined": "2021-07-30T08:57:51Z",
+            "date_joined": "2021-09-22T21:25:59Z",
             "avatar": "",
             "age": 29,
             "city": "Helsinki",
-            "phone": null,
-            "groups": [],
-            "user_permissions": []
-        }
-    },
-    {
-        "model": "users.customuser",
-        "pk": 2,
-        "fields": {
-            "password": "pbkdf2_sha256$150000$Zv9qof1XdMFH$t3ywvlghQGR5UUl9hXSxs9lPWBXtiVQecJoVhDJ1hpw=",
-            "last_login": null,
-            "is_superuser": false,
-            "username": "testing",
-            "first_name": "Testingform",
-            "last_name": "Forming",
-            "email": "evgeny.hyvarinen@gmail.coma",
-            "is_staff": false,
-            "is_active": true,
-            "date_joined": "2021-08-02T07:53:00.030Z",
-            "avatar": "",
-            "age": null,
-            "city": null,
             "phone": 445873935,
-            "groups": [],
-            "user_permissions": []
-        }
-    },
-    {
-        "model": "users.customuser",
-        "pk": 3,
-        "fields": {
-            "password": "pbkdf2_sha256$150000$LkoW0oYHfpdA$5tpMkCbMQ++q/ZBN6BfVbUM3Z9MYbyVOMSEpHT70V4U=",
-            "last_login": "2021-08-02T18:19:03.458Z",
-            "is_superuser": false,
-            "username": "Supertest",
-            "first_name": "dag",
-            "last_name": "afawdfaf",
-            "email": "rengasplan@gmail.com",
-            "is_staff": false,
-            "is_active": true,
-            "date_joined": "2021-08-02T08:30:17.141Z",
-            "avatar": "",
-            "age": null,
-            "city": null,
-            "phone": 400151128,
+            "gender": "M",
             "groups": [],
             "user_permissions": []
         }

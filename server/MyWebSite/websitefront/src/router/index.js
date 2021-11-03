@@ -1,32 +1,72 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-//import MainPage from '../components/MainPage.vue'
+import Base from "@/components/Base.vue";
+import AppAuthModal from '@/components/AuthModal.vue'
+
+
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },  
-  {
-    path: '/about',
-    name: 'About',
+    path: '/auth/:tab/',
+    name: 'Auth',
     // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
+    // this generates a separate chunk (auth.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component:AppAuthModal,
+    props: true,
+    meta: {
+      keepAlive:false
+    }
+  },
+  {
+    path: '/'  ,
+    name: 'Base',
+    component: Base,
+    meta: {
+      keepAlive: true
+    }
+  },
+  {
+    path: '/forum/',
+    name: 'Forum',
+    component: () => import(/* webpackChunkName: "ForumBase", */ "@/components/ForumBase.vue"),
+    meta: {
+      keepAlive: false
+    }
+  },
+  {
+    path: '/forum/:slug/',
+    name: 'Forum-question-detail',
+    component: () => import(/* webpackChunkName: "QuestionDetail", */ "@/views/QuestionDetail.vue"),
+    props: true,
+    meta: {
+      keepAlive: false
+    },
+  },
+  {
+    path: '/forum/ask/:slug?/',
+    name: 'Forum-question-create-edit',
+    component: () => import(/* webpackChunkName: "Create-Question", */ "@/views/QuestionCreate.vue"),
+    props: true,
+    meta: {
+      keepAlive: false
+    },
   },
   
-  /*{
-    path: '/Main',
-    name: 'main',
-    component: MainPage
-  }*/
+  {
+    path: "/:catchAll(.*)",
+    name:"Page not found",
+    component: () => import(/* webpackChunkName: "NotFound", */  '../components/NotFound.vue'),
+    meta: {
+      keepAlive: false
+    }
+  }
 ]
 
 const router = createRouter({
-  history: createWebHistory(), // process.env.BASE_URL
+  history: createWebHistory("/"), // process.env.BASE_URL
   routes
 })
+
+
 
 export default router
