@@ -4,12 +4,11 @@
       <div class="title-group">
         <transition appear
           enter-active-class="animate__animated animate__fadeInDown"
-          enter-leave-class="animate__animated animate__bounceOut"
-        >
+          enter-leave-class="animate__animated animate__bounceOut">
           <h1>{{ this.content ? this.content.title : "" }}</h1>
         </transition>      
           <transition name="zoom" type="animation" appear>
-            <h2 class="home" >{{ this.content ? this.content.home : "" }}</h2>  
+            <h2 class="home" >{{ this.content ? this.content.home : "Error occured" }}</h2>  
           </transition>
       </div>
     </section>
@@ -24,12 +23,7 @@ export default {
     content: {
       required: true
     }
-  },
-  data() {
-    return {
-      flag : false,
-    }
-  },
+  }
 }
 </script>
 
@@ -46,7 +40,7 @@ export default {
 }
 h1 {
   font-family: Caveat, sans-serif ;
-  font-size: 100px;
+  font-size: 80px;
   margin-bottom: 0;
   color: var(--title-alt);
   text-shadow: 10px 18px 5px var(--title-shadow);

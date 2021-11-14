@@ -2,15 +2,102 @@
     <section v-if="user !== 'Anonymous'">
         <div>
             <h1>{{message}}</h1>
-            <vee-form>
-
-            </vee-form> 
+                    <vee-form 
+            :validation-schema="schema" 
+            @submit="change"
+            :initial-values="userDefaultData">
+            <div class="form-field name">
+                <div  class="form-group">
+                    <label for="username">Username</label>
+                    <vee-field name="username" type="text"
+                    placeholder="Enter you username">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="username" class="error-message" />
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="name">Email</label>
+                    <vee-field name="email" type="email"
+                    placeholder="Enter you email">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="email"  class="error-message" />
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="first_name">Firstname</label>
+                    <vee-field name="first_name" type="text"
+                    placeholder="Enter your firstname">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="first_name"  class="error-message" />
+            </div>
+            <div  >
+                <div class="form-group">
+                    <label for="last_name">Lastname</label>
+                    <vee-field name="last_name" type="text"
+                    placeholder="Enter your lastname">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="last_name"  class="error-message" />
+            </div>
+            <div >
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <vee-field name="phone" type="number"
+                    placeholder="Enter your phone">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="phone"  class="error-message" />
+            </div>
+            <div >
+                <div class="form-group gender">
+                    <label for="gender">Gender</label>
+                    <vee-field as="select" name="gender" >
+                        <option value="D" disabled>----</option> 
+                        <option v-for="(key, value) in meta_choices" :value="key" :key="value">{{value}}</option>            
+                    </vee-field>
+                </div>
+                <ErrorMessage name="gender"  class="error-message" />
+            </div>
+            <div  >
+                <div class="form-group">
+                    <label for="password1">Password</label>
+                    <vee-field name="password1" type="password"
+                        placeholder="Enter your password">             
+                    </vee-field>
+                </div>  
+                <ErrorMessage name="password1"  class="error-message" />
+            </div>
+            <div >
+                <div class="form-group">
+                    <label for="password2">Confirm password</label>
+                    <vee-field name="password2" type="password"
+                        placeholder="Confirm password">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="password2" class="error-message" />
+            </div>
+            <div class="form-group tos">
+                    <label for="send_mail">Allow to send me email</label>
+                    <vee-field name="send_mail" type="checkbox" :value="userDefaultData['send_mail']" />                    
+                <ErrorMessage name="send_mail"  class="error-message" />
+            </div>
+            <div class="button-group">
+                <button type="submit" class="outline" >
+                    Save
+                </button>
+            </div>
+        </vee-form>
         </div>
     </section>
 </template>
 
 <script>
 import { axios } from "../common/api.service.js";
+import { mapState } from "vuex";
+
 
 export default {
     name: "EditForm",
@@ -22,35 +109,40 @@ export default {
         return {
             message: "Edit form is under construction",
             schema: {
-                name: "required|min:3|max:150|alpha_spaces",
+                username: "required|min:3|max:150|alpha_spaces",
                 email: "required|min:3|max:100|email",
-                first_name: "required|min:2|max:30",
-                last_name: "required|min:2|max:150",
-                password: "required|min:8|max:50",
-                confirm_password: "password_mismatch:@password",
+                first_name: "min:2|max:30",
+                last_name: "min:2|max:150",
+                password1: "required|min:8|max:50",
+                password2: "password_mismatch:@password1",
                 phone: "required|min_value:010000000|max_value:9999999999",
                 gender: "required|exclude_gender:U,E,A,D",
-                tos: "tos"
             },
             userDefaultData: {
-                gender: "",
+                username: "",
+                email: null,
+                first_name: "",
+                last_name: "",
+                gender: "D",
+                phone: null,
+                send_mail: false,
+                avatar:null,
+                age: null,
             },
         }
+    },
+    computed: {
+      ...mapState(["meta_choices",]),
     },
     methods: {
         async change(values) {
             let method = "PUT"
-            let endpoint = ""
-
-            console.log(values)
-            let data = {
-                
-            }
+            let endpoint = "/api/user/"
             try {
                 let response = await axios({
                     method: method,
                     url: endpoint,
-                    data: data
+                    data: values
                 })
                 if (response.status==200){
                     console.log(response)
@@ -62,23 +154,21 @@ export default {
             }
         },
         async getRegisteredData() {
-            let endpoint = ""
+            let endpoint = "/api/user/"
             try {
                 let response = await axios.get(endpoint)
                 if (response.status === 200) {
-                    console.log(response.data)
-
-
-                } else {
-                    console.log("else get",response)
-                }
+                    for ( let i in response.data) {
+                        this.userDefaultData[i] = response.data[i]
+                    }
+                } 
             } catch (err) {
                 console.log(err)
             }
         }
     },
     created() {
-        console.log("created")
+        this.getRegisteredData()
     }
 }
 </script>

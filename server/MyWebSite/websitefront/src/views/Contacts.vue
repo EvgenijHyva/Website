@@ -1,6 +1,6 @@
 <template>
     <section id="contact" v-if="this.contacts !== null && this.contacts.user_is_authorized">
-      <h1>Contact</h1>
+      <h1>Contact me</h1>
         <div class="social-icons">
             <a :href="this.contacts.github" target="blank" class="social-link"><i class="fab fa-github-square"></i></a>
             <a :href="this.contacts.vk" target="blank" class="social-link"><i class="fab fa-vk"></i></a>

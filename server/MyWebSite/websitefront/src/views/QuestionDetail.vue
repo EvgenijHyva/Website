@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="not-found" v-else>
-                    <h1 class="error text-center">Error 404: Question Not found</h1>
+                    <h2 class="error text-center">Error 404: Question Not found</h2>
                     <img src="../assets/pulpFiction.gif" alt="gif-file">
                     <button class="outline" @click="$router.back()">Back to previous page</button>
                 </div>

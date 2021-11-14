@@ -1,5 +1,5 @@
 from django.contrib import admin
-from scraping.models import City, Language, Vacancy
+from scraping.models import City, Specialization, Vacancy
 
 @admin.register(City)
 class AdminCity(admin.ModelAdmin):
@@ -8,8 +8,8 @@ class AdminCity(admin.ModelAdmin):
     search_fields = ("name", "id")
     readonly_fields = ("created_at", "updated_at")
 
-@admin.register(Language)
-class AdminLanguage(admin.ModelAdmin):
+@admin.register(Specialization)
+class AdminSpecialization(admin.ModelAdmin):
     list_display = ("id", "name")
     ordering = ("id", "-created_at",)
     search_fields = ("name", "id")

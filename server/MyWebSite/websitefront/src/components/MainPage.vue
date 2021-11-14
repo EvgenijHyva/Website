@@ -30,6 +30,7 @@ export default {
                 let response = await axios.get(endpoint)
                 if (response.status === 200) {
                     this.pageContent = response.data
+                    this.$store.state.meta_choices = response.data.meta_choices
                 }
             } catch (error) {
                 console.log(error)   
@@ -41,8 +42,8 @@ export default {
             pageContent: null,
         }
     }, 
-    created: function() {
-        this.getPageContent()
+    created: async function() {
+        await this.getPageContent()
     }
 }
 </script>

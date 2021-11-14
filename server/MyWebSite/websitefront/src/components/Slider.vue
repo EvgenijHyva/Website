@@ -107,7 +107,7 @@ h1 {
 }
 img {
     height: 32.3vh;
-    width: 20vw;
+    width: 300px;
 }
 .image-container {
     border: none;
@@ -211,10 +211,10 @@ img {
     padding-top: 15vh; /* Location of the box */
     margin: auto;
     display: block;
-    width: 80%;
+    width: auto;
     max-width: 50vw;
     max-height: 80vh;
-    height: 80%;
+    height: auto;
 }
 .full-screen-image-wrapper {
     position: relative;

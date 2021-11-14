@@ -1,5 +1,5 @@
 from django.urls import path
-from mainpage.views import PageSettingsAPIView, PageContactsAPIView,PageContentAPIView
+from mainpage.views import PageSettingsAPIView, PageContactsAPIView, PageContentAPIView
 
 app_name="api_mainpage"
 
