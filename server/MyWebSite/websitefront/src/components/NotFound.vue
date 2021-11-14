@@ -27,5 +27,6 @@ export default {
 .video-fluid {
     border-radius: 5px;
     z-index: -1;
+    height: 65vh;
 }
 </style>

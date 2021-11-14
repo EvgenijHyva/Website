@@ -29,7 +29,7 @@
             showMobileMenu = false" 
             replace> 
           <span class="auth-method user">{{this.user}}
-            <i class="fas fa-user-edit icon" @click="editProfile"></i>
+            <i class="fas fa-user-edit icon" ></i>
             <span class="tooltiptext">edit profile</span>
             </span> 
           </router-link> 
@@ -146,9 +146,6 @@ export default {
         } catch (err) {
           console.log(err)
         }
-      },
-      editProfile() {
-        console.log("editing") // TODO edit profile
       },
     },
     mounted() {

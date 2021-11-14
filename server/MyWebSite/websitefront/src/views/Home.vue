@@ -15,8 +15,6 @@
 </template>
 
 <script>
-
-
 export default {
   name: 'Home',
   props: {
@@ -35,6 +33,7 @@ export default {
 
 /* Home Section */
 .title-group {
+  margin-top: 50px;
   text-align: center;
   max-width: 1000px;
 }

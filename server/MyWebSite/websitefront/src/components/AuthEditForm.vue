@@ -1,6 +1,6 @@
 <template>
     <section v-if="user !== 'Anonymous'">
-        <div>
+        <div class="container">
             <h1>{{message}}</h1>
                     <vee-form 
             :validation-schema="schema" 
@@ -42,7 +42,16 @@
                 </div>
                 <ErrorMessage name="last_name"  class="error-message" />
             </div>
-            <div >
+            <div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <vee-field name="age" type="number"
+                        placeholder="Enter your age">                    
+                    </vee-field>
+                </div>
+                <ErrorMessage name="age"  class="error-message" />
+            </div>
+            <div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
                     <vee-field name="phone" type="number"
@@ -79,9 +88,9 @@
                 </div>
                 <ErrorMessage name="password2" class="error-message" />
             </div>
-            <div class="form-group tos">
+            <div class="form-group send_mail">
                     <label for="send_mail">Allow to send me email</label>
-                    <vee-field name="send_mail" type="checkbox" :value="userDefaultData['send_mail']" />                    
+                    <vee-field name="send_mail" type="checkbox" :value="!userDefaultData.send_mail" v-model="userDefaultData.send_mail" />                    
                 <ErrorMessage name="send_mail"  class="error-message" />
             </div>
             <div class="button-group">
@@ -98,7 +107,6 @@
 import { axios } from "../common/api.service.js";
 import { mapState } from "vuex";
 
-
 export default {
     name: "EditForm",
     props: ["user"],
@@ -107,12 +115,13 @@ export default {
     },
     data() {
         return {
-            message: "Edit form is under construction",
+            message: "Edit your information",
             schema: {
                 username: "required|min:3|max:150|alpha_spaces",
                 email: "required|min:3|max:100|email",
                 first_name: "min:2|max:30",
                 last_name: "min:2|max:150",
+                age: "min_value:18|max_value:99",
                 password1: "required|min:8|max:50",
                 password2: "password_mismatch:@password1",
                 phone: "required|min_value:010000000|max_value:9999999999",
@@ -147,7 +156,7 @@ export default {
                 if (response.status==200){
                     console.log(response)
                 } else {
-                    console.log("else", response)
+                    console.log("resp_change", response)
                 }
             } catch (err) {
                 console.log(err)
@@ -161,7 +170,7 @@ export default {
                     for ( let i in response.data) {
                         this.userDefaultData[i] = response.data[i]
                     }
-                } 
+                }
             } catch (err) {
                 console.log(err)
             }
@@ -263,14 +272,14 @@ label {
 .gender label{
     width: 5.7vw;
 }
-.tos label{
+.send_mail label{
     width: 11vw;
     
 }
-.tos {
+.send_mail {
     flex-direction: row;
 }
-.tos input {
+.send_mail input {
     width: 3vw;
 }
 
@@ -299,19 +308,22 @@ select {
       width: 95vw; 
       font-size: 1.5vh;  
     }
-    .tos label{
+    .send_mail label{
         width: 21vw;
     }
-    .tos {
+    .send_mail {
         flex-direction: row;
     }
-    .tos input {
+    .send_mail input {
         width: 3vw;
     }
 }
 @media screen and (max-width: 800px) {
     label {
         width: 40vw;
+    }
+    select {
+        font-size: 10px;
     }
     .gender label {
         width: 26.7vw;
