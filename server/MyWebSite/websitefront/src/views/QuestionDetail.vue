@@ -163,6 +163,7 @@ export default {
         },
         newPost(responce) {
             this.answers.unshift(responce)
+            this.question.user_has_answered = true
             if (!this.question.answers_count){
                 return this.question.answers_count++
             } 
@@ -223,7 +224,7 @@ export default {
         },
         authModalShow: function() {
             if(this.authModalShow == true)
-            this.$router.back()
+            this.$router.push("/auth/login/")
         },     
     },
 }

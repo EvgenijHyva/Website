@@ -161,7 +161,7 @@ export default {
         this.setThemeMode()
         if (!this.initial) {
           clearTimeout(this.timeout)
-          this.timeout = setTimeout(this.uploadUserSettings, 3000)
+          this.timeout = setTimeout(this.uploadUserSettings, 2000)
         }
         this.initial = false;
       }

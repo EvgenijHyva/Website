@@ -9,7 +9,8 @@ export default createStore({
     showAuth: false, // this property allow to hide and show Auth component.
     key: null,
     activeProject: "Mainpage",
-    meta_choices: Object
+    meta_choices: Object,
+    background: ""
   },
   mutations: {
 

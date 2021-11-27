@@ -1,7 +1,7 @@
 <template>
     <section v-if="user !== 'Anonymous'">
         <div class="container">
-            <h1>{{message}}</h1>
+            <h1>Edit your information</h1>
                     <vee-form 
             :validation-schema="schema" 
             @submit="change"
@@ -33,7 +33,7 @@
                 </div>
                 <ErrorMessage name="first_name"  class="error-message" />
             </div>
-            <div  >
+            <div>
                 <div class="form-group">
                     <label for="last_name">Lastname</label>
                     <vee-field name="last_name" type="text"
@@ -60,7 +60,7 @@
                 </div>
                 <ErrorMessage name="phone"  class="error-message" />
             </div>
-            <div >
+            <div>
                 <div class="form-group gender">
                     <label for="gender">Gender</label>
                     <vee-field as="select" name="gender" >
@@ -70,7 +70,7 @@
                 </div>
                 <ErrorMessage name="gender"  class="error-message" />
             </div>
-            <div  >
+            <div>
                 <div class="form-group">
                     <label for="password1">Password</label>
                     <vee-field name="password1" type="password"
@@ -100,6 +100,13 @@
             </div>
         </vee-form>
         </div>
+        <transition tag="div" mode="out-in" 
+            enter-active-class="animate__animated animate__zoomIn"
+            leave-to-class="animate__animated animate__zoomOut">
+            <div class="delete-confirmed" v-if="deleteInfo">
+                <h2>{{message}}</h2>
+            </div>
+        </transition>
     </section>
 </template>
 
@@ -115,7 +122,8 @@ export default {
     },
     data() {
         return {
-            message: "Edit your information",
+            message: "",
+            deleteInfo: false,
             schema: {
                 username: "required|min:3|max:150|alpha_spaces",
                 email: "required|min:3|max:100|email",
@@ -145,8 +153,9 @@ export default {
     },
     methods: {
         async change(values) {
-            let method = "PUT"
-            let endpoint = "/api/user/"
+            let method = "PUT";
+            let endpoint = "/api/user/";
+            let message;
             try {
                 let response = await axios({
                     method: method,
@@ -154,13 +163,16 @@ export default {
                     data: values
                 })
                 if (response.status==200){
-                    console.log(response)
+                    console.log(response.statusText)
+                    message = "Information saved"
                 } else {
                     console.log("resp_change", response)
                 }
             } catch (err) {
                 console.log(err)
+                message = "Error occured"
             }
+            this.showMessage(message)
         },
         async getRegisteredData() {
             let endpoint = "/api/user/"
@@ -174,15 +186,44 @@ export default {
             } catch (err) {
                 console.log(err)
             }
-        }
+        },
+        showMessage(message) {
+            this.message = message
+            this.deleteInfo = true
+        },
     },
     created() {
         this.getRegisteredData()
+    },
+    watch: {
+        deleteInfo: function () {
+            // For info message disappear from page
+            if (this.deleteInfo) {
+                setTimeout(() => {
+                this.deleteInfo = false; 
+            }, 3000)
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
+.delete-confirmed {
+    background: #253c50b8;
+    padding: 3px 16px;
+    border-radius: 10px;
+    box-shadow: 5px 6px 11px 0 rgb(0 0 0 / 50%);
+    transition: 0.3s;
+    position: fixed;
+    bottom: 25px;
+    left: 50px;
+    font-family: 'Markazi Text', sans-serif;
+}
+.delete-confirmed h2 {
+    margin: auto;
+    color: var(--forum-delete-info);
+}
 
 h1 {
   font-size: 2vh;
@@ -342,6 +383,11 @@ select {
     }
     .tos input {
         width: 3vw;
+    }
+    .delete-confirmed {
+        left: unset;
+        top: 20px;
+        bottom:unset;
     }
 }
 

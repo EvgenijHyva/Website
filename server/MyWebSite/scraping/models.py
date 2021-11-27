@@ -25,8 +25,8 @@ class City(TimeStampedModel):
 
 class Specialization(models.Model):
     class Meta:
-        verbose_name = "Специализация"
-        verbose_name_plural = "Специализацию"
+        verbose_name = "Специализацию"
+        verbose_name_plural = "Специализация"
 
     name = models.CharField(max_length=50, verbose_name="название специализации")
     slug = models.CharField(max_length=50, verbose_name="Слаг-поле", unique=True, blank=True)
