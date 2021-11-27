@@ -7,7 +7,7 @@
          <div class="form-field">
                 <div class="form-group">
                     <label class="small mb-1" for="username">Username</label>
-                    <vee-field name="username" type="text"
+                    <vee-field name="username" type="text" 
                         placeholder="Enter your Username">                    
                     </vee-field>
                     <ErrorMessage name="username"  class="error-message" />
@@ -70,10 +70,11 @@ export default {
             this.$store.state.key = response.data.key
           } else {
             this.log_on_submition = false
-            this.log_alert_msg= "Ooops error occured:" + response
           }
         } catch (err) {
           console.log(err)
+          this.log_alert_msg= "Ooops error occured:" + err
+          this.log_on_submition = false
         }
         this.$store.state.showAuth = false
       }

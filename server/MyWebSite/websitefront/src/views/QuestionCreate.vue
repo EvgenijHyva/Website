@@ -1,6 +1,5 @@
 <template>
     <section>
-
         <sidebar />
 
         <div class="question-create container">

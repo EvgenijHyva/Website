@@ -29,7 +29,7 @@
             showMobileMenu = false" 
             replace> 
           <span class="auth-method user">{{this.user}}
-            <i class="fas fa-user-edit icon" @click="editProfile"></i>
+            <i class="fas fa-user-edit icon" ></i>
             <span class="tooltiptext">edit profile</span>
             </span> 
           </router-link> 
@@ -147,9 +147,6 @@ export default {
           console.log(err)
         }
       },
-      editProfile() {
-        console.log("editing") // TODO edit profile
-      },
     },
     mounted() {
       if (!this.userDarkThemeMode) {
@@ -164,7 +161,7 @@ export default {
         this.setThemeMode()
         if (!this.initial) {
           clearTimeout(this.timeout)
-          this.timeout = setTimeout(this.uploadUserSettings, 3000)
+          this.timeout = setTimeout(this.uploadUserSettings, 2000)
         }
         this.initial = false;
       }
@@ -175,7 +172,7 @@ export default {
 <style>
 /* Navigation */
 #nav {
-  padding: 3.3vh;
+  padding: 20px 0;
 }
 
 #nav a {
@@ -264,9 +261,8 @@ a .user {
   z-index: 1;
   opacity: 0;
   transition: opacity 2s;
-  margin-top: 8vh;
+  top: 25px;
   font-size: 10px;
-  margin-left: 3.5vw;
   width: 55px;
   letter-spacing: 0.1px;
   filter: brightness(1.5);
@@ -286,15 +282,15 @@ a .user {
   display: flex;
   align-items: center;
   z-index: 100;
-  position: fixed;
-  right: 3vw;
-  top: 3.8vh;
+  position: absolute;
+  right: 15px;
+  top: 20px;
 }
 
 .auth {
-    position: fixed;
-    top: 3.1vh;
-    left: 2.2vw;
+    position: absolute;
+    top: 15px;
+    left: 10px;
 }
 .auth a  {
   margin-right: auto;
@@ -319,10 +315,11 @@ a .user {
 }
 
 .theme-switch-wrapper span {
-  margin-right: .5vw;
+    margin-right: 7px;
     color:var(--mode-text);
     text-shadow: 10px 20px 10px var(--mode-text);
     font-size: 1.1rem;
+    display: inline-block;
 }
 
 .theme-switch-wrapper:hover {
@@ -406,10 +403,6 @@ input:checked + .slider::before {
   }
   .theme-switch-wrapper {
     right: 1vw;
-  }
-  .toggle-text {
-    top: -3vh;
-    right: -11vw;
   }
 }
 

@@ -1,6 +1,6 @@
-from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from mainpage.models import PageSettings, Contacts, PageContent
+from users.models import GENDER_CHOICES
 
 
 class PageSettingsSerializer(serializers.ModelSerializer):
@@ -45,7 +45,7 @@ class ContactsSerializer(serializers.ModelSerializer):
         return str(request.user) != "AnonymousUser"
 
     def get_telegram_username(self, instance):
-        return f"https://telegram.im/@{instance.telegram_username}"
+        return f"https://telegram.im/{instance.telegram_username}"
 
     def get_whatsapp(self, instance):
         return f"https://wa.me/{instance.whatsapp}"
@@ -54,12 +54,18 @@ class PageContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PageContent
         exclude = ("created_at", "updated_at", "show_image", "id", )
+
+    meta_choices = serializers.SerializerMethodField(read_only=True)
     post_number = serializers.SerializerMethodField()
     image = serializers.SerializerMethodField()
 
+    def get_meta_choices(self, instance):
+        return {gender[1]: gender[0] for gender in GENDER_CHOICES}
+
     def get_image(self, instance):
-        if instance.show_image:
-            return instance.image if instance.image else None
+        if instance.show_image and hasattr(instance.image, "url"):
+            request = self.context.get("request")
+            return request.build_absolute_uri(instance.image.url) if instance.image else None
         else:
             return None
 

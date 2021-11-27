@@ -31,7 +31,7 @@ export default {
         }
     },
     computed: {
-      ...mapState(["user", "showAuth","user"]),
+      ...mapState(["user", "showAuth",]),
     }, 
     methods: {
         hideAuth(event) {
@@ -71,7 +71,6 @@ export default {
 
 .auth-main-container {
     z-index: 10;
-    background: #0000008a;
     width: 100%;
 }
 .background-hide {

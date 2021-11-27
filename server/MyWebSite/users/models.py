@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(blank=True, null=True)
     city = models.ForeignKey("scraping.City", help_text='Required. 150 characters or fewer. Letters, digits and '
                                         '@/./+/-/_ only.', blank=True, null=True, on_delete=models.SET_NULL)
-    #language = models.ForeignKey("scraping.Language", null=True, blank=True, on_delete=models.SET_NULL)
+    #specialization = models.ForeignKey("scraping.Specialization", null=True, blank=True, on_delete=models.SET_NULL)
     phone = models.BigIntegerField(blank=True, null=True, unique=True, verbose_name="Телефон для связи")
     gender = models.CharField(verbose_name="пол", max_length=1, choices=GENDER_CHOICES, blank=True)
 

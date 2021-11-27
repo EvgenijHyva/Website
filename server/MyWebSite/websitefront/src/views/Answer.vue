@@ -12,7 +12,7 @@
                         :class="{'editable' : editAnswer}"> 
                         <div v-if="!answer.is_active">Deleted:&nbsp;</div>
                             {{answer.body}}</div> 
-                    <div class="tools">
+                    <div class="tools" >
                         <i class="fas fa-pencil-alt" 
                             v-if="answer.author.split(' ').join('') === user && answer.is_active && !editAnswer && isLastAnswer" 
                             @click="editAnswer = true; "></i>&nbsp; 
@@ -22,10 +22,10 @@
                         <i class="fas fa-trash-alt" 
                             @click="deleteAnswer(answer)" 
                             v-show="answer.author.split(' ').join('') === user && answer.is_active"></i>&nbsp;
-                        <i class="fas fa-thumbs-up" 
+                        <i class="fas fa-thumbs-up"
                             v-if="userLikedAnswer" 
                             @click="toggleAnswerLike">&nbsp;{{likesCounter}}</i>
-                        <i class="far fa-thumbs-up" v-else
+                        <i class="far fa-thumbs-up" v-else 
                             @click="toggleAnswerLike">&nbsp;{{likesCounter}}</i>
                     </div>
                         <i class="fas fa-angle-down" 
@@ -162,28 +162,33 @@ export default {
             }
         },
         async toggleAnswerLike() {
-            let endpoint = `/forum/api/answers/${this.answer.uuid}/like/`;
-            let method = this.userLikedAnswer ? "DELETE" : "POST"
-            try {
-                let response = await axios({
-                    method: method,
-                    url:endpoint,
-                    data: { 
-                        body: ""
-                    }
-                });
-                if (response.status === 200 && method === "POST") {
-                    this.likesCounter ++
+            if (this.answer.is_active) {
+                let endpoint = `/forum/api/answers/${this.answer.uuid}/like/`;
+                let method = this.userLikedAnswer ? "DELETE" : "POST"
+                try {
+                    let response = await axios({
+                        method: method,
+                        url:endpoint,
+                        data: { 
+                            body: ""
+                        }
+                    });
+                    if (response.status === 200 && method === "POST") {
+                        this.likesCounter ++
 
-                }else if (response.status === 200 && method === "DELETE") {
-                    this.likesCounter-- 
-                } else {
-                    console.log(response)
+                    }else if (response.status === 200 && method === "DELETE") {
+                        this.likesCounter-- 
+                    } else {
+                        console.log(response)
+                    }
+                } catch (err) {
+                    console.log(err)
                 }
-            } catch (err) {
-                console.log(err)
+                this.userLikedAnswer = !this.userLikedAnswer
+            } else {
+                let message = "You can't change deleted answer"
+                this.showMessage(message)
             }
-            this.userLikedAnswer = !this.userLikedAnswer
         }
     },
     watch: {

@@ -16,6 +16,7 @@
 </template>
 
 <script>
+
 export default {
     name: "Backgrounds",
     data() {
@@ -24,6 +25,7 @@ export default {
             toggle: false
         }
     },
+    
     methods: {
         changeBackground(num) {
             this.previousBackground = ""
@@ -46,7 +48,7 @@ export default {
                     this.previousBackground = ""
                     break;
             }
-        }
+        },
     }
 }
 </script>

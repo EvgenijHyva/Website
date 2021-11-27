@@ -1,8 +1,9 @@
 from django.db import models
 from core.utils import from_cyrillic_to_slug
+from core.models import TimeStampedModel
 
 
-class City(models.Model):
+class City(TimeStampedModel):
     class Meta:
         verbose_name = "Город"
         verbose_name_plural = "Города"
@@ -12,8 +13,6 @@ class City(models.Model):
                             verbose_name="Название города", unique=True)
     slug = models.CharField(max_length=50, blank=True, verbose_name="Слаг-поле",
                             unique=True)
-    created_at = models.DateField(auto_now_add=True, verbose_name="дата создания")
-    updated_at = models.DateField(auto_now=True, verbose_name="дата обновления")
 
     def __str__(self):
         return self.name
@@ -24,12 +23,12 @@ class City(models.Model):
         super().save(*args, **kwargs)
 
 
-class Language(models.Model):
+class Specialization(models.Model):
     class Meta:
-        verbose_name = "Язык програмирования"
-        verbose_name_plural = "Языки програмирования"
+        verbose_name = "Специализацию"
+        verbose_name_plural = "Специализация"
 
-    name = models.CharField(max_length=50, verbose_name="язык програмирования")
+    name = models.CharField(max_length=50, verbose_name="название специализации")
     slug = models.CharField(max_length=50, verbose_name="Слаг-поле", unique=True, blank=True)
     created_at = models.DateField(auto_now_add=True, verbose_name="дата создания")
 
@@ -53,8 +52,8 @@ class Vacancy(models.Model):
     description = models.TextField(verbose_name="Описание дожности")
     salary = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Зарплата")
     city = models.ForeignKey("City", on_delete=models.CASCADE, verbose_name="Город")
-    language = models.ForeignKey("Language", on_delete=models.CASCADE, blank=True, null=True,
-                                 verbose_name="Язык програмирования", default=None)
+    specialization = models.ForeignKey("Specialization", on_delete=models.CASCADE, blank=True, null=True,
+                                 verbose_name="Специализация", default=None)
     timestamp = models.DateField(auto_now_add=True, verbose_name="дата создания")
 
     def __str__(self):

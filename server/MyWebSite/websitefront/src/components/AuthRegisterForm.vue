@@ -56,10 +56,7 @@
                     <label for="gender">Gender</label>
                     <vee-field as="select" name="gender" >
                         <option value="D" disabled>----</option> 
-                        <option value="M">Male</option> 
-                        <option value="W">Female</option>               
-                        <option value="T">Transgender</option>               
-                        <option value="O">Other</option>
+                        <option v-for="(key, value) in meta_choices" :value="key" :key="value">{{value}}</option>            
                         <option value="U">UFO</option>               
                     </vee-field>
                 </div>
@@ -99,7 +96,7 @@
 </template>
 
 <script>
-
+import { mapState } from "vuex";
 import { axios } from "../common/api.service.js";
 
 export default{
@@ -126,11 +123,13 @@ export default{
                 gender: "D",
             },
             genderChoices: null,
-
             reg_in_submission: false, // if request is processing
             reg_show_alert: false,
             reg_alert_msg: "",
         }
+    },
+    computed: {
+      ...mapState(["meta_choices",]),
     },
     methods: {
         async register(values) {
@@ -164,6 +163,8 @@ export default{
                 }
             } catch (err) {
                 console.log(err)
+                this.reg_in_submission = false
+                this.reg_alert_msg= "Ooops error occured, try to register later"
             }
             this.$store.state.showAuth = false
         },

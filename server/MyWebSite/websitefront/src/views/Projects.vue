@@ -3,18 +3,12 @@
     <!-- Projects -->
         <h1>This project was created using</h1>
         <div class="project-icons">
-            <i class="fab fa-python"></i>
-            <i class="fab fa-js"></i>
-            <i class="fab fa-vuejs"></i>
-            <i class="fab fa-html5"></i>
-            <i class="fab fa-bootstrap"></i>
-            <i class="fab fa-font-awesome"></i>
-        </div>
-        <div class="text-box" id="text_box">
-            <p>
-              As project backend used Django + Django Rest Framework.
-              Project Frontend is Vue.js, Bootstrap 4, HTML5+CSS, Font Awesome.
-            </p>
+            <i class="fab fa-python" title="Python"></i>
+            <i class="fab fa-js" title="JavaScript"></i>
+            <i class="fab fa-vuejs" title="Vue.js"></i>
+            <i class="fab fa-html5" title="Html 5"></i>
+            <i class="fab fa-bootstrap" title="Bootstrap 4"></i>
+            <i class="fab fa-font-awesome" title="Font-awesome"></i>
         </div>
     </section>
 </template>
@@ -78,18 +72,11 @@ button:hover:not(.outline) {
   color: var(--on-primary);
 }
 
-.text-box {
-  width: 40%;
-  text-align: justify;
-  background-color: var(--text-box);
-  color: var(--on-primary);
-  border-radius: 10px;
-  padding: 30px;
-}
+
 .project-icons {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 20px ;
+  margin: 40px 0 20px ;
 }
 .project-icons .fab{
   font-size: 70px;
@@ -112,8 +99,6 @@ p {
     height: 4.5vh;
     margin: 2vw;
   }
-  .text-box {
-    width: 95vw;
-  }
+ 
 }
 </style>
