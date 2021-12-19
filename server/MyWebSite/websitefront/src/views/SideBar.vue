@@ -17,6 +17,9 @@ export default {
 a {
     border: unset;
 }
+a:hover {
+    border-bottom:unset ;
+}
 .side-bar {
     display: flex;
     flex-direction: column;

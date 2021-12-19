@@ -155,6 +155,8 @@ STATIC_URL = '/static/'
 # указываем где установлена папка static
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "websitefront/src/assets"),
+    os.path.join(BASE_DIR, "websitefront/dist"),
 )
 
 # для работы с медиафайлами (картинки)
@@ -203,3 +205,4 @@ EMAIL_USE_TSL = True
 EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")

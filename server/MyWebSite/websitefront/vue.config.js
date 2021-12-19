@@ -30,11 +30,11 @@ module.exports = {
             .headers({"Access-Control-Allow-Origin": ["\*"]})
     },
     //uncomment before executing "npm run build"
-    /*css: {
+    css: {
         extract: {
             filename: "bundle.css",
-            chunkFilename: "bundle.css",
+            chunkFilename: "[name].bundle.css",
         },
-    }*/
+    }
 
 };

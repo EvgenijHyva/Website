@@ -1,0 +1,38 @@
+{% extends "mainpage/base.html" %}
+{% load staticfiles %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'bundle.css' %}"/>
+    <link rel="stylesheet" href="{% static 'ForumBase.bundle.css' %}"/>
+    <link rel="stylesheet" href="{% static 'CreateQuestion.bundle.css' %}"/>
+    <link rel="stylesheet" href="{% static 'NotFound.bundle.css' %}"/>
+    <link rel="stylesheet" href="{% static 'QuestionDetail.bundle.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<body>
+    <noscript>
+      <strong>We're sorry but
+          <%= htmlWebpackPlugin.options.title %>
+          doesn't work properly without JavaScript enabled.
+          Please enable it to continue.</strong>
+    </noscript>
+
+    <div id="app"></div>
+
+    <footer>
+        <h4 class="text"><i class="fas fa-calendar-day"></i> {% now "d-n-o" %}
+            <i class="fas fa-calendar-week"></i> {% now "W" %}</h4>
+        <h3 class="text">Helsinki &copy; Jekku-battery. </h3>
+    </footer>
+</body>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'bundle.js' %}"></script>
+    <script src="{% static 'js/QuestionDetail.75d5be0c.js' %}"></script>
+    <script src="{% static 'js/CreateQuestion.a93b8867.js' %}"></script>
+    <script src="{% static 'js/ForumBase.c8ed3a53.js' %}"></script>
+    <script src="{% static 'js/NotFound.b4c8640b.js' %}"></script>
+
+{% endblock %}

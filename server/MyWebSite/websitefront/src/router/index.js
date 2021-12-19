@@ -2,12 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Base from "@/components/Base.vue";
 import AppAuthModal from '@/components/AuthModal.vue'
 
-
-
 const routes = [
   {
-    path: '/auth/:tab/',
-    name: 'Auth',
+    path: "/auth/:tab/",
+    name: "Auth",
     // route level code-splitting
     // this generates a separate chunk (auth.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -18,34 +16,34 @@ const routes = [
     }
   },
   {
-    path: '/'  ,
-    name: 'Base',
+    path: "/"  ,
+    name: "Base",
     component: Base,
     meta: {
       keepAlive: true
     }
   },
   {
-    path: '/forum/',
-    name: 'Forum',
-    component: () => import(/* webpackChunkName: "ForumBase", */ "@/components/ForumBase.vue"),
+    path: "/forum/",
+    name: "Forum",
+    component: () => import( /* webpackChunkName: "ForumBase" */  "@/components/ForumBase.vue"),
     meta: {
       keepAlive: false
     }
   },
   {
-    path: '/forum/:slug/',
-    name: 'Forum-question-detail',
-    component: () => import(/* webpackChunkName: "QuestionDetail", */ "@/views/QuestionDetail.vue"),
+    path: "/forum/:slug/",
+    name: "Forum-question-detail",
+    component: () => import( /* webpackChunkName: "QuestionDetail" */ "@/views/QuestionDetail.vue"),
     props: true,
     meta: {
       keepAlive: false
     },
   },
   {
-    path: '/forum/ask/:slug?/',
-    name: 'Forum-question-create-edit',
-    component: () => import(/* webpackChunkName: "Create-Question", */ "@/views/QuestionCreate.vue"),
+    path: "/forum/ask/:slug?/",
+    name: "Forum-question-create-edit",
+    component: () => import(/* webpackChunkName: "CreateQuestion" */  "@/views/QuestionCreate.vue"),
     props: true,
     meta: {
       keepAlive: false
@@ -55,7 +53,7 @@ const routes = [
   {
     path: "/:catchAll(.*)",
     name:"Page not found",
-    component: () => import(/* webpackChunkName: "NotFound", */  '../components/NotFound.vue'),
+    component: () => import( /* webpackChunkName: "NotFound" */ '@/components/NotFound.vue'),
     meta: {
       keepAlive: false
     }
@@ -66,7 +64,5 @@ const router = createRouter({
   history: createWebHistory("/"), // process.env.BASE_URL
   routes
 })
-
-
 
 export default router
