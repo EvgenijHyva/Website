@@ -13,25 +13,15 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import django.core.mail.backends.smtp
-from dotenv import load_dotenv # need to be commented on Herocu
 
 
-load_dotenv() # need to be commented on Herocu
-
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '^r34la!xs$wj=fo_fhv05j=#-q-i-^yegrs89qrk&450gl-ja*'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -155,7 +145,10 @@ STATIC_URL = '/static/'
 # указываем где установлена папка static
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "websitefront/src/assets"),
+    os.path.join(BASE_DIR, "websitefront/dist"),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
 
 # для работы с медиафайлами (картинки)
 MEDIA_URL = '/media/'
@@ -190,12 +183,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "BUNDLE_DIR_NAME": "dist/",
-        "STATS_FILE": os.path.join(BASE_DIR, "websitefront", "webpack-stats.json"),
-    }
-}
+
 
 EMAIL_BACKEND = django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST = "smtp.gmail.com"
@@ -203,3 +191,4 @@ EMAIL_USE_TSL = True
 EMAIL_PORT = int(os.getenv("EMAIL_PORT"))
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("EMAIL_HOST_USER")
