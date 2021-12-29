@@ -32,10 +32,10 @@ urlpatterns = [
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
     path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),  # registration in application
     path("accounts/", include("allauth.urls")),
-    re_path("^.*$", IndexTemplateView.as_view(), name="entry_point"),
-    #path("index/", index, name="entry_point")
+    path("", IndexTemplateView.as_view(), name="entry_point")
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

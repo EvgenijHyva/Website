@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Base from "@/components/Base.vue";
-import AppAuthModal from '@/components/AuthModal.vue'
+import AppAuthModal from '@/components/AuthModal.vue';
+
 
 const routes = [
   {
